@@ -11,13 +11,12 @@
         <meta name="robots" content="NONE,NOARCHIVE" />
         {% endblock %}
 
-        <title>{% block title %}YABA - Yet Another Bookmark App{% endblock %}</title>
+        <title>{% block title %}YABA - Yet Another Bookmarking App{% endblock %}</title>
 
         {% block style %}
         {% block bootstrap_theme %}
             <link rel="stylesheet" type="text/css" href="{% static "yaba0/css/bootstrap.min.css" %}"/>
-            <!--<link rel="stylesheet" type="text/css" href="{% static "rest_framework/css/bootstrap-tweaks.css" %}"/>-->
-            <link rel="stylesheet" type="text/css" href="{% static "yaba0/css/bootstrap-theme.min.css" %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static "rest_framework/css/bootstrap-tweaks.css" %}"/>
             <link rel="stylesheet" type="text/css" href="{% static "yaba0/css/navbar-fixed-top.css" %}"/>
         {% endblock %}
         <link rel="stylesheet" type="text/css" href="{% static "rest_framework/css/prettify.css" %}"/>
@@ -34,7 +33,7 @@
         <div class="navbar-inner">
             <div class="container-fluid">
                 <span href="/">
-                    {% block branding %}<a class='brand' rel="nofollow" href='http://localhost:8000/yaba0/api'>YABA - Yet Another Bookmark App <span class="version">{{ version }}</span></a>{% endblock %}
+                    {% block branding %}<a class='brand' rel="nofollow" href='http://localhost:8000/yaba0/api'>YABA - Yet Another Bookmarking App <span class="version">{{ version }}</span></a>{% endblock %}
                 </span>
                 <ul class="nav pull-right">
                     {% block userlinks %}
@@ -58,6 +57,7 @@
     </div>
     {% endblock %}
 
+<!--
     {% block breadcrumbs %}
     <ul class="breadcrumb">
         {% for breadcrumb_name, breadcrumb_url in breadcrumblist %}
@@ -67,20 +67,25 @@
         {% endfor %}
     </ul>
     {% endblock %}
+-->
 
     <!-- Content -->
     <div id="content">
 
         <div class="content-main">
-            <div class="row">
-                <div class="col-sm-4">
-                    <ul class="list-group">
-                        {% for item in content_native %}
-                            <li class="list-group-item"><a href="{{ item.url }}">{{ item.name }}</a></li>
-                        {% endfor %}
-                    </ul>
+            {% if user.is_authenticated %}
+                <div class="row">
+                    <div class="col-sm-4">
+                        <ul class="list-group">
+                            {% for item in content_native %}
+                                <li class="list-group-item"><a href="{{ item.url }}">{{ item.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            {% else %}
+                {% optional_login request %}
+            {% endif %}
             
         </div>
 

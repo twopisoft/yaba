@@ -25,7 +25,7 @@ class BookmarkDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = BookMark.objects.all()
     serializer_class = BmSerializer
     permission_classes = (permissions.IsAuthenticated,IsOwner,)
-    renderer_classes = (JSONRenderer)
+    renderer_classes = (YabaBrowsableAPIRenderer,JSONRenderer)
 
     def pre_save(self, obj):
         obj.owner = self.request.user

@@ -21,6 +21,8 @@ DATABASES = {
     }
 }
 
+LOGIN_URL='/api-auth/login'
+
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = []
@@ -112,6 +114,10 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
+
+#TEMPLATE_CONTEXT_PROCESSORS = (
+#    'yaba0.context_processors.login_url_with_redirect',
+#)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
