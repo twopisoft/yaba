@@ -15,26 +15,27 @@
 
         {% block style %}
         {% block bootstrap_theme %}
+            <!--<link rel="stylesheet" type="text/css" href="{% static "yaba0/css/yaba.css" %}"/>-->
             <link rel="stylesheet" type="text/css" href="{% static "yaba0/css/bootstrap.min.css" %}"/>
-            <link rel="stylesheet" type="text/css" href="{% static "rest_framework/css/bootstrap-tweaks.css" %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static "yaba0/css/bootstrap-glyphicons.css" %}"/>
             <link rel="stylesheet" type="text/css" href="{% static "yaba0/css/navbar-fixed-top.css" %}"/>
         {% endblock %}
-        <link rel="stylesheet" type="text/css" href="{% static "rest_framework/css/prettify.css" %}"/>
-        <link rel="stylesheet" type="text/css" href="{% static "rest_framework/css/default.css" %}"/>
         {% endblock %}
 
     {% endblock %}
     </head>
 
-  <body class="{% block bodyclass %}{% endblock %} container">
+  <body class="{% block bodyclass %}{% endblock %} container" style="background: #cacadc">
 
     {% block navbar %}
     <div class="navbar {% block bootstrap_navbar_variant %}navbar-inverse{% endblock %} navbar-fixed-top" role="navigation">
+        <style>.body{padding-top: 70px}</style>
         <div class="navbar-inner">
             <div class="container-fluid">
                 <span href="/">
-                    {% block branding %}<a class='brand' rel="nofollow" href='http://localhost:8000/yaba0/api'>YABA - Yet Another Bookmarking App <span class="version">{{ version }}</span></a>{% endblock %}
+                    {% block branding %}<a class='navbar-brand' rel="nofollow" href='http://localhost:8000/yaba0/api'>YABA - Yet Another Bookmarking App <span class="version">{{ version }}</span></a>{% endblock %}
                 </span>
+                
                 <ul class="nav pull-right">
                     {% block userlinks %}
                         {% if user.is_authenticated %}
@@ -57,34 +58,117 @@
     </div>
     {% endblock %}
 
-<!--
-    {% block breadcrumbs %}
-    <ul class="breadcrumb">
-        {% for breadcrumb_name, breadcrumb_url in breadcrumblist %}
-            <li>
-                <a href="{{ breadcrumb_url }}" {% if forloop.last %}class="active"{% endif %}>{{ breadcrumb_name }}</a> {% if not forloop.last %}<span class="divider">&rsaquo;</span>{% endif %}
-            </li>
-        {% endfor %}
-    </ul>
-    {% endblock %}
--->
-
     <!-- Content -->
     <div id="content">
 
-        <div class="content-main">
+        <div class="container-fluid">
+            
             {% if user.is_authenticated %}
-                <div class="row">
-                    <div class="col-sm-4">
-                        <ul class="list-group">
-                            {% for item in content_native %}
-                                <li class="list-group-item"><a href="{{ item.url }}">{{ item.name }}</a></li>
-                            {% endfor %}
-                        </ul>
+                {% if item|length > 0 %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input type="checkbox" id="bm_selectall" class="" value="false" rel="tooltip" title="Select All">
+                            <button type="button" class="btn btn-success btn-xs dropdown-toggle" data-toggle="dropdown"
+                                                rel="tooltip" title="Share Selected" disabled="disabled">
+                                <span class="glyphicon glyphicon-globe"></span> 
+                                <span class="caret"></span>
+                            </button>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Facebook</a></li>
+                                <li><a href="#">Twitter</a></li>
+                                <li><a href="#">Google+</a></li>
+                            </ul>
+
+                            <button type="button" class="btn btn-danger btn-xs" rel="tooltip" title="Delete Selected" disabled="disabled">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                            
+                        </div>
                     </div>
-                </div>
+                {% endif %}
+                {% for item in content_native %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="panel panel-success" >
+                                <div class="panel-heading" style="background: #BDFF9C">
+                                    <h3 class="panel-title">
+                                        <a href="{{ item.url }}">{{ item.name }}</a> 
+                                        <input type="checkbox" id="bm_select_{{ forloop.counter0 }}" class="pull-right" value="false">
+                                    </h3>
+                                </div>
+                                     
+                                <div id="bm_details_{{ forloop.counter0 }}" class="panel-collapse collapse">                        
+                                    <div class="panel-body">
+                                        <form class="form-horizontal" role="form">
+                                            <div class="form-group">
+                                                <label for="bm_name_{{ forloop.counter0 }}" class="col-sm-1 control-label text-primary">Name:</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="bm_name_{{ forloop.counter0 }}" value="{{ item.name }}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="bm_synopsis_{{ forloop.counter0 }}" class="col-sm-1 control-label text-primary">Synopsis:</label>
+                                                <div class="col-sm-10">
+                                                    <textarea class="form-control" style="resize: none;" id="bm_synopsis_{{ forloop.counter0 }}" rows="4">{{ item.description }}
+                                                    </textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="bm_url_{{ forloop.counter0 }}" class="col-sm-1 control-label text-primary">URL:</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="bm_url_{{ forloop.counter0 }}" value="{{ item.url }}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="bm_tags_{{ forloop.counter0 }}" class="col-sm-1 control-label text-primary">Tags:</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="bm_tags_{{ forloop.counter0 }}" value="{{ item.tags }}">
+                                                </div>
+                                            </div>
+                                            
+                                            <dl class="dl-horizontal text-primary pull-right" style="font-style:italic; font-size: x-small;">
+                                                <dt>Last Updated:</dt>
+                                                <dd id="bm_date_updated_{{ forloop.counter0}}">{{ item.added }}</dd>
+                                                <dt>Added:</dt>
+                                                <dd id="bm_date_added_{{ forloop.counter0}}">{{ item.added }}</dd>
+                                            </dl>
+                                            
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer" style="background: #BDFF9C">
+                                    <div class="btn-group btn-group-xs">
+                                        <button type="button" class="btn btn-info btn-xs" data-toggle="collapse" 
+                                                data-target="#bm_details_{{ forloop.counter0 }}" rel="tooltip" title="Edit">
+                                            <span class="glyphicon glyphicon-cog"></span>
+                                        </button>
+                                        <button type="button" class="btn btn-success btn-xs dropdown-toggle" data-toggle="dropdown"
+                                                rel="tooltip" title="Share">
+                                            <span class="glyphicon glyphicon-globe"></span> 
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">Facebook</a></li>
+                                            <li><a href="#">Twitter</a></li>
+                                            <li><a href="#">Google+</a></li>
+                                        </ul>
+                                        <button type="button" class="btn btn-primary btn-xs" rel="tooltip" title="Save" disabled="disabled">
+                                            <span class="glyphicon glyphicon-floppy-save"></span>
+                                        </button>
+
+                                    </div>
+                                    <button type="button" class="btn btn-danger btn-xs pull-right" rel="tooltip" title="Delete">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             {% else %}
-                {% optional_login request %}
+                
             {% endif %}
             
         </div>
@@ -99,15 +183,23 @@
 
     </div>
 
+    <nav class="navbar navbar-default navbar-fixed-bottom"  style="background: grey;" role="navigation">
+        <div class="container">
+            <form class="navbar-form" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control center-block" placeholder="Search">
+                </div>
+            </form>
+        </div>
+    </nav>
 
     {% block footer %}
     {% endblock %}
 
     {% block script %}
-    <script src="{% static "rest_framework/js/jquery-1.8.1-min.js" %}"></script>
-    <script src="{% static "rest_framework/js/bootstrap.min.js" %}"></script>
-    <script src="{% static "rest_framework/js/prettify-min.js" %}"></script>
-    <script src="{% static "rest_framework/js/default.js" %}"></script>
+    <script src="{% static "yaba0/js/jquery-1.11.0.min.js" %}"></script>
+    <script src="{% static "yaba0/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "yaba0/js/yaba.js" %}"></script>
     {% endblock %}
   </body>
 </html>

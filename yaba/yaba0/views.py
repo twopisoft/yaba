@@ -15,7 +15,8 @@ class BookmarksList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return BookMark.objects.filter(owner=user)
+        #return BookMark.objects.filter(owner=user)
+        return BookMark.objects.all()
 
     def pre_save(self, obj):
         obj.owner = self.request.user
