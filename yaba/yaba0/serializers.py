@@ -6,6 +6,7 @@ from .models import BookMark
 class BmSerializer(serializers.Serializer):
     id = serializers.Field()
     added = serializers.DateTimeField()
+    updated = serializers.DateTimeField()
     name = serializers.CharField(max_length=200)
     url = serializers.URLField(max_length=400)
     description = serializers.CharField(max_length=10000, required=False)
