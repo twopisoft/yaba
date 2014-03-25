@@ -6,6 +6,10 @@ $(document).ready(function() {
     setup()
 });
 
+var errorMessages= {
+    FORBIDDEN: "No enough permission"
+}
+
 function setup () {
     setupDate();
     setupCheckBoxes()
@@ -55,7 +59,83 @@ function setupSaveButtons() {
 }
 
 function setupDeleteButtons () {
-    // body...
+    $('[id^=bm_delete_]').click(function() {
+        deleteBookmark(getId(this.id))
+    })
+    $('#bm_deleteall').click(function() {
+        deleteSelected()
+    })
+}
+
+function deleteBookmark(id) {
+    var name=$('#bm_name_'+id).val().trim()
+    $('#deleteConfirmMsg').text('This will Delete the following Bookmark:')
+    $('#deleteConfirmText').text("'"+name+"'")
+    $('#deleteOkButton').click(function() {
+        executeDelete([id])
+    })
+    $('#deleteConfirm').modal('show')
+}
+
+function deleteSelected() {
+    var selected = $('[id^=bm_select_]').filter(':checked')
+    if (selected.length > 0) {
+        var ids = []
+        for (i=0; i<selected.length; i++) {
+            ids.push(getId(selected[i].id))
+        }
+        var n = (selected.length > 4) ? 4 : selected.length
+        var text = ""
+        for (i=0; i<n; i++) {
+            text += $('#bm_name_'+ids[i]).val().trim()+ "<br/>"
+        }
+        $('#deleteConfirmMsg').text('This will Delete the following Bookmark'+(selected.length>1?"s:":":"))
+        $('#deleteConfirmText').html(text)
+        $('#deleteOkButton').click(function() {
+            executeDelete(ids)
+        })
+        $('#deleteConfirm').modal('show')
+    }
+}
+
+function executeDelete(ids) {
+    $('#deleteConfirm').modal('hide')
+    var success=[]
+    var error=[]
+    $.each(ids, function(index, id) {       
+        var name=$('#bm_name_'+id).val().trim()
+        $.ajax({
+            url: "/yaba0/api/"+$('#bm_id_'+id).val()+"/.json",
+            type: "delete",
+            success: function(d, stat, xhr) {
+                success.push(id)
+                $('#bm_row_'+id).hide()
+            },
+            error: function(xhr, stat, err) {
+                error.push({id: id, name: name, error: error})
+            },
+            complete: function(xhr, stat) {
+                if ((success.length + error.length) == ids.length) {
+                    if (error.length > 0) {
+                        var n = error.length > 4 ? 4 : error.length
+                        var bodyText=""
+                        for (i=0; i<n; i++) {
+                            bodyText += error[i].name + "<br/>"
+                        }
+                        $('#resultTitle').text('Bookmark Deletion Failed')
+                        $('#resultMsg').text("Error while Deleting following Bookmark"+(error.length>1?"s:":":"))
+                        $('[id^=bm_select_').prop('checked', false)
+                        $('#bm_selectall').prop('checked', false)
+                        $('#resultText').html(bodyText)
+                        $('#result').modal('show')
+                    }
+                }
+            },
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'))
+            },
+        })
+    })
 }
 
 function enableSaveButton(id) {
@@ -90,7 +170,10 @@ function saveBookmark(id) {
             $('#bm_date_updated_'+id).text(curDate)
         },
         error: function(xhr, stat, err) {
-            alert("Error: "+err)
+            $('#resultMsg').text("Error while updating following Bookmark:")
+            $('#resultText').text("'"+data.name+"'")
+            $('#resultTitle').text('Bookmark Update Failed')
+            $('#result').modal('show')
         },
         beforeSend: function(xhr, settings) {
             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'))

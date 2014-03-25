@@ -88,7 +88,7 @@
                     </div>
                 {% endif %}
                 {% for item in content_native %}
-                    <div class="row">
+                    <div class="row" id="bm_row_{{ forloop.counter0 }}">
                         <div class="col-sm-12">
                             <div class="panel panel-success" >
                                 <div class="panel-heading" style="background: #BDFF9C">
@@ -175,14 +175,44 @@
             
         </div>
 
-            
-        <!-- END content-main -->
-
     </div>
     <!-- END Content -->
 
-        <div id="push"></div>
+    <div class="modal fade" id="deleteConfirm" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content"> 
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title text-danger" id="deleteConfirmTitle">Confirm Delete</h4>
+                </div>
+                <div class="modal-body" id="deleteConfirmBody">
+                    <p class="text-danger" id="deleteConfirmMsg"></p>
+                    <div class="text-primary" id="deleteConfirmText"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="deleteOkButton">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="modal fade" id="result" tabindex="-1" role="dialog" aria-labelledby="resultTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content"> 
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title text-danger" id="resultTitle"></h4>
+                </div>
+                <div class="modal-body" id="resultBody">
+                    <p class="text-danger" id="resultMsg"></p>
+                    <div class="text-primary" id="resultText"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <nav class="navbar navbar-default navbar-fixed-bottom"  style="background: grey;" role="navigation">
