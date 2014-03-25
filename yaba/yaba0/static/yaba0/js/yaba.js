@@ -15,6 +15,7 @@ function setup () {
     setupCheckBoxes()
     setupSaveButtons()
     setupDeleteButtons()
+    setupRestoreButtons()
 }
 
 function setupDate() {
@@ -47,12 +48,25 @@ function setupCheckBoxes () {
 }
 
 function setupSaveButtons() {
-    $("input:text").change(function() {
-        enableSaveButton(getId(this.id))
+    $(".bm-form-required").keydown(function(e) {
+        enableSaveButton(getId(e.target.id), true)
     });
-    $('textarea').change(function() {
-        enableSaveButton(getId(this.id))
+
+    $(".bm-form-required").keyup(function(e) {
+        var val=$('#'+e.target.id).val().trim()
+        if (val == '') {
+            $('#'+e.target.id).parent().addClass('has-error')
+            enableSaveButton(getId(e.target.id), false)
+        } else {
+            $('#'+e.target.id).parent().removeClass('has-error')
+            enableSaveButton(getId(e.target.id), true)
+        }
     });
+
+    $(".bm-form-optional").keydown(function(e) {
+        enableSaveButton(getId(e.target.id), true)
+    });
+    
     $('[id^=bm_save_]').click(function() {
         saveBookmark(getId(this.id))
     });
@@ -64,6 +78,27 @@ function setupDeleteButtons () {
     })
     $('#bm_deleteall').click(function() {
         deleteSelected()
+    })
+}
+
+function setupRestoreButtons() {
+    $('[id^=bm_restore_]').click(function() {
+        restoreBookmark(getId(this.id))
+    })
+}
+
+function restoreBookmark(id) {
+    $.ajax({
+        url: "/yaba0/api/"+$('#bm_id_'+id).val()+"/.json",
+        type: "get",
+        success: function(d, stat, xhr) {
+            $('#bm_name_'+id).val(d.name)
+            $('#bm_url_'+id).val(d.url)
+            $('#bm_synopsis_'+id).val(d.description)
+            $('#bm_tags_'+id).val(d.tags)
+
+            enableSaveButton(id, false)
+        }
     })
 }
 
@@ -138,9 +173,9 @@ function executeDelete(ids) {
     })
 }
 
-function enableSaveButton(id) {
+function enableSaveButton(id, flag) {
     assert (id != null, "enableSaveButton: Id is null");
-    $('#bm_save_'+id).prop('disabled', false)
+    $('#bm_save_'+id).prop('disabled', !flag)
 }
 
 function toggleGlobalButtons(check) {
@@ -161,6 +196,9 @@ function saveBookmark(id) {
         has_notify  : false
     };
 
+    $('#bm_title_'+id).text(data.name)
+    $('#bm_title_'+id).attr('href',data.url)
+
     $.ajax({
         url: "/yaba0/api/"+$('#bm_id_'+id).val()+"/.json",
         type: "put",
@@ -168,6 +206,8 @@ function saveBookmark(id) {
         success: function(d, stat, xhr) {
             $('#bm_save_'+id).prop('disabled', true)
             $('#bm_date_updated_'+id).text(curDate)
+            $('#bm_save_success_'+id).show()
+            $('#bm_save_success_'+id).fadeOut(5000)
         },
         error: function(xhr, stat, err) {
             reloadDataAndShowError(id)
@@ -188,11 +228,14 @@ function reloadDataAndShowError(id) {
             $('#bm_url_'+id).val(d.url)
             $('#bm_synopsis_'+id).val(d.description)
             $('#bm_tags_'+id).val(d.tags)
-            
+            $('#bm_title_'+id).text(d.name)
+            $('#bm_title_'+id).attr('href',d.url)
+
             $('#resultMsg').text("Error while updating following Bookmark:")
             $('#resultText').text("'"+d.name+"'")
             $('#resultTitle').text('Bookmark Update Failed')
             $('#result').modal('show')
+            $('#bm_save_'+id).prop('disabled', true)
         }
     })
 }

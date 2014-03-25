@@ -93,40 +93,55 @@
                             <div class="panel panel-success" >
                                 <div class="panel-heading" style="background: #BDFF9C">
                                     <h3 class="panel-title">
-                                        <a href="{{ item.url }}">{{ item.name }}</a> 
-                                        <input type="checkbox" id="bm_select_{{ forloop.counter0 }}" class="pull-right">
+                                        <a href="{{ item.url }}" id="bm_title_{{ forloop.counter0 }}">{{ item.name }}</a> 
+                                        <div class="pull-right">
+                                            <span class="glyphicon glyphicon-ok-sign label label-success" id="bm_save_success_{{ forloop.counter0 }}"
+                                                  style="margin-right: 5px; font-size: 14px; display:none;">Saved</span>
+                                            <input type="checkbox" id="bm_select_{{ forloop.counter0 }}">
+                                        </div>
                                     </h3>
+                                    
                                 </div>
                                      
                                 <div id="bm_details_{{ forloop.counter0 }}" class="panel-collapse collapse">                        
                                     <div class="panel-body">
                                         <form class="form-horizontal" role="form">
                                             <input type="hidden" id="bm_id_{{ forloop.counter0 }}" value={{ item.id }}>
-                                            <div class="form-group">
+                                            <div class="form-group bm-form-required">
                                                 <label for="bm_name_{{ forloop.counter0 }}" class="col-sm-1 control-label text-primary">Name:</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="bm_name_{{ forloop.counter0 }}" value="{{ item.name }}">
+                                                    <input type="text" class="form-control " id="bm_name_{{ forloop.counter0 }}" value="{{ item.name }}">
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group bm-form-optional">
                                                 <label for="bm_synopsis_{{ forloop.counter0 }}" class="col-sm-1 control-label text-primary">Synopsis:</label>
                                                 <div class="col-sm-10">
                                                     <textarea class="form-control" style="resize: none;" id="bm_synopsis_{{ forloop.counter0 }}" rows="4">{{ item.description }}
                                                     </textarea>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group bm-form-required">
                                                 <label for="bm_url_{{ forloop.counter0 }}" class="col-sm-1 control-label text-primary">URL:</label>
                                                 <div class="col-sm-10">
                                                     <input type="text" class="form-control" id="bm_url_{{ forloop.counter0 }}" value="{{ item.url }}">
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            
+                                            <div class="form-group bm-form-optional">
                                                 <label for="bm_tags_{{ forloop.counter0 }}" class="col-sm-1 control-label text-primary">Tags:</label>
                                                 <div class="col-sm-10">
                                                     <input type="text" class="form-control" id="bm_tags_{{ forloop.counter0 }}" value="{{ item.tags }}">
                                                 </div>
                                             </div>
+
+                                            <!--
+                                            <div class="form-group bm-form-required">
+                                                <label for="bm_notify_{{ forloop.counter0 }}" class="col-sm-1 control-label text-primary">Remind After:</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="bm_notify_{{ forloop.counter0 }}">
+                                                </div>
+                                            </div>
+                                            -->
                                             
                                             <dl class="dl-horizontal text-primary pull-right" style="font-style:italic; font-size: x-small;">
                                                 <dt>Last Updated:</dt>
@@ -159,6 +174,10 @@
                                                 title="Save" disabled="disabled">
                                             <span class="glyphicon glyphicon-floppy-save"></span>
                                         </button>
+                                        <button type="button" id="bm_restore_{{ forloop.counter0 }}" class="btn btn-warning btn-xs" rel="tooltip" 
+                                                title="Restore">
+                                            <span class="glyphicon glyphicon-repeat"></span>
+                                        </button>
 
                                     </div>
                                     <button type="button" id="bm_delete_{{ forloop.counter0 }}" class="btn btn-danger btn-xs pull-right" rel="tooltip" title="Delete">
@@ -181,7 +200,7 @@
     <div class="modal fade" id="deleteConfirm" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmTitle" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content"> 
-                <div class="modal-header">
+                <div class="modal-header" style="background: #FFB2B2">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title text-danger" id="deleteConfirmTitle">Confirm Delete</h4>
                 </div>
@@ -200,7 +219,7 @@
     <div class="modal fade" id="result" tabindex="-1" role="dialog" aria-labelledby="resultTitle" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content"> 
-                <div class="modal-header">
+                <div class="modal-header" style="background: #FFB2B2">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title text-danger" id="resultTitle"></h4>
                 </div>
