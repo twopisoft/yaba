@@ -170,16 +170,31 @@ function saveBookmark(id) {
             $('#bm_date_updated_'+id).text(curDate)
         },
         error: function(xhr, stat, err) {
-            $('#resultMsg').text("Error while updating following Bookmark:")
-            $('#resultText').text("'"+data.name+"'")
-            $('#resultTitle').text('Bookmark Update Failed')
-            $('#result').modal('show')
+            reloadDataAndShowError(id)
         },
         beforeSend: function(xhr, settings) {
             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'))
         },
     });
     
+}
+
+function reloadDataAndShowError(id) {
+    $.ajax({
+        url: "/yaba0/api/"+$('#bm_id_'+id).val()+"/.json",
+        type: "get",
+        success: function(d, stat, xhr) {
+            $('#bm_name_'+id).val(d.name)
+            $('#bm_url_'+id).val(d.url)
+            $('#bm_synopsis_'+id).val(d.description)
+            $('#bm_tags_'+id).val(d.tags)
+            
+            $('#resultMsg').text("Error while updating following Bookmark:")
+            $('#resultText').text("'"+d.name+"'")
+            $('#resultTitle').text('Bookmark Update Failed')
+            $('#result').modal('show')
+        }
+    })
 }
 
 function getId(targetId) {
