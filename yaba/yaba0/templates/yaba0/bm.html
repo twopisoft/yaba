@@ -19,6 +19,7 @@
             <link rel="stylesheet" type="text/css" href="{% static "yaba0/css/bootstrap.min.css" %}"/>
             <link rel="stylesheet" type="text/css" href="{% static "yaba0/css/bootstrap-glyphicons.css" %}"/>
             <link rel="stylesheet" type="text/css" href="{% static "yaba0/css/navbar-fixed-top.css" %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static "yaba0/css/datepicker3.css" %}"/>
         {% endblock %}
         {% endblock %}
 
@@ -68,19 +69,19 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <input type="checkbox" id="bm_selectall" class="" rel="tooltip" title="Select All">
-                            <button type="button" id="bm_shareall" class="btn btn-success btn-xs dropdown-toggle" data-toggle="dropdown"
+                            <button type="button" id="bm_shareall" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"
                                                 rel="tooltip" title="Share Selected" disabled="true">
                                 <span class="glyphicon glyphicon-globe"></span> 
                                 <span class="caret"></span>
                             </button>
 
-                            <ul class="dropdown-menu" role="menu">
+                            <ul class="dropdown-menu" role="menu" style="margin-left: 30px;">
                                 <li><a href="#">Facebook</a></li>
                                 <li><a href="#">Twitter</a></li>
                                 <li><a href="#">Google+</a></li>
                             </ul>
 
-                            <button type="button" id="bm_deleteall" class="btn btn-danger btn-xs" rel="tooltip" title="Delete Selected" disabled="true">
+                            <button type="button" id="bm_deleteall" class="btn btn-danger btn-sm" rel="tooltip" title="Delete Selected" disabled="true">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                             
@@ -134,14 +135,21 @@
                                                 </div>
                                             </div>
 
-                                            <!--
-                                            <div class="form-group bm-form-required">
-                                                <label for="bm_notify_{{ forloop.counter0 }}" class="col-sm-1 control-label text-primary">Remind After:</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="bm_notify_{{ forloop.counter0 }}">
+                                            
+                                            <div class="form-group">
+                                                <label class="col-sm-1 control-label text-primary">Remind On:</label>
+                                                <div class="col-sm-3" style="margin-top: 8px;">
+                                                    <div class="input-group date">
+                                                        <input type="text" id="bm_notify_date_{{ forloop.counter0 }}" class="form-control" 
+                                                               {% if not item.has_notify %}disabled{% endif %} readonly value="{{ item.notify_on }}">
+                                                        <span class="input-group-addon">
+                                                            <input type="checkbox" id="bm_has_notify_{{ forloop.counter0 }}" 
+                                                            {% if item.has_notify %}checked{% endif %}>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            -->
+                                            
                                             
                                             <dl class="dl-horizontal text-primary pull-right" style="font-style:italic; font-size: x-small;">
                                                 <dt>Last Updated:</dt>
@@ -155,32 +163,32 @@
                                 </div>
 
                                 <div class="panel-footer" style="background: #BDFF9C">
-                                    <div class="btn-group btn-group-xs">
-                                        <button type="button" class="btn btn-info btn-xs" data-toggle="collapse" 
+                                    <!--<div class="btn-group btn-group-sm">-->
+                                        <button type="button" class="btn btn-info btn-sm" data-toggle="collapse" 
                                                 data-target="#bm_details_{{ forloop.counter0 }}" rel="tooltip" title="Edit">
                                             <span class="glyphicon glyphicon-cog"></span>
                                         </button>
-                                        <button type="button" class="btn btn-success btn-xs dropdown-toggle" data-toggle="dropdown"
+                                        <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"
                                                 rel="tooltip" title="Share">
                                             <span class="glyphicon glyphicon-globe"></span> 
                                             <span class="caret"></span>
                                         </button>
-                                        <ul class="dropdown-menu" role="menu">
+                                        <ul class="dropdown-menu" role="menu" style="margin-top: -30px; margin-left: 70px;">
                                             <li><a href="#">Facebook</a></li>
                                             <li><a href="#">Twitter</a></li>
                                             <li><a href="#">Google+</a></li>
                                         </ul>
-                                        <button type="button" id="bm_save_{{ forloop.counter0 }}" class="btn btn-primary btn-xs" rel="tooltip" 
+                                        <button type="button" id="bm_save_{{ forloop.counter0 }}" class="btn btn-primary btn-sm" rel="tooltip" 
                                                 title="Save" disabled="disabled">
                                             <span class="glyphicon glyphicon-floppy-save"></span>
                                         </button>
-                                        <button type="button" id="bm_restore_{{ forloop.counter0 }}" class="btn btn-warning btn-xs" rel="tooltip" 
+                                        <button type="button" id="bm_restore_{{ forloop.counter0 }}" class="btn btn-warning btn-sm" rel="tooltip" 
                                                 title="Restore">
                                             <span class="glyphicon glyphicon-repeat"></span>
                                         </button>
 
-                                    </div>
-                                    <button type="button" id="bm_delete_{{ forloop.counter0 }}" class="btn btn-danger btn-xs pull-right" rel="tooltip" title="Delete">
+                                    <!--</div>-->
+                                    <button type="button" id="bm_delete_{{ forloop.counter0 }}" class="btn btn-danger btn-sm pull-right" rel="tooltip" title="Delete">
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </button>
                                 </div>
@@ -251,6 +259,7 @@
     {% block script %}
     <script src="{% static "yaba0/js/jquery.min.js" %}"></script>
     <script src="{% static "yaba0/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "yaba0/js/bootstrap-datepicker.js" %}"></script>
     <script src="{% static "yaba0/js/yaba.js" %}"></script>
     {% endblock %}
   </body>

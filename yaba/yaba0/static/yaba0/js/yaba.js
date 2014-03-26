@@ -16,17 +16,20 @@ function setup () {
     setupSaveButtons()
     setupDeleteButtons()
     setupRestoreButtons()
+    setupNotify()
 }
 
 function setupDate() {
-    $('#content').on('show.bs.collapse', function(event) {
-        var id = event.target.id
-        if (id.lastIndexOf("bm_details_") == 0) {
-            var seq=id.substring(id.lastIndexOf("_"))
-            var bm_date_added_id="#bm_date_added"+seq
-            var bm_date_updated_id="#bm_date_updated"+seq
-            $(bm_date_added_id).text(utcToLocal($(bm_date_added_id).text()))
-            $(bm_date_updated_id).text(utcToLocal($(bm_date_updated_id).text()))
+    $('[id^=bm_details_]').on('show.bs.collapse', function() {
+        var id = getId(this.id)
+        $('#bm_date_added_'+id).text(utcToLocal($('#bm_date_added_'+id).text()))
+        $('#bm_date_updated_'+id).text(utcToLocal($('#bm_date_updated_'+id).text()))
+        
+        var nd = $('#bm_notify_date_'+id)
+        if (nd.val() != 'None') {
+            nd.datepicker('setDate', new Date(nd.val()))
+        } else {
+            nd.val('')
         }
     })
 }
@@ -87,6 +90,33 @@ function setupRestoreButtons() {
     })
 }
 
+function setupNotify() {
+    $('[id^=bm_notify_date_]').datepicker({
+        format: "MM dd, yyyy",
+        startDate: addDays(new Date(), 1),
+        todayHighlight: true,
+    })
+
+    $('[id^=bm_has_notify_]').change(function() {
+        var nd = $('#bm_notify_date_'+getId(this.id))
+        nd.prop('disabled',!this.checked)
+        nd.val("")
+        if (this.checked) {
+            nd.datepicker('setDate', addDays(new Date(), 1))
+        } 
+        enableSaveButton(getId(this.id), true)
+    })
+
+    $('[id^=bm_notify_date_]').change(function(event) {
+        var nd = $('#'+this.id)
+        var val = nd.val()
+        if (val == undefined || val == '' || val == 'None') {
+            nd.datepicker('setDate', addDays(new Date(), 1))
+        } 
+        enableSaveButton(getId(this.id), true)
+    })
+}
+
 function restoreBookmark(id) {
     $.ajax({
         url: "/yaba0/api/"+$('#bm_id_'+id).val()+"/.json",
@@ -96,6 +126,15 @@ function restoreBookmark(id) {
             $('#bm_url_'+id).val(d.url)
             $('#bm_synopsis_'+id).val(d.description)
             $('#bm_tags_'+id).val(d.tags)
+            $('#bm_has_notify_'+id).prop('checked',d.has_notify)
+
+            var nd = $('#bm_notify_date_'+id)
+            nd.datepicker('setDate',new Date(d.notify_on))
+            if (d.has_notify) {
+                nd.prop('disabled', false)
+            } else {
+                $('#bm_has_notify_'+id).trigger('change')
+            }
 
             enableSaveButton(id, false)
         }
@@ -193,7 +232,12 @@ function saveBookmark(id) {
         url         : $('#bm_url_'+id).val().trim(),
         description : $('#bm_synopsis_'+id).val().trim(),
         tags        : $('#bm_tags_'+id).val().trim(),
-        has_notify  : false
+        has_notify  : $('#bm_has_notify_'+id).prop('checked'),
+        notify_on   : (function() {
+                        var flag = $('#bm_has_notify_'+id).prop('checked')
+                        if (flag) return localToUtc($('#bm_notify_date_'+id).val())
+                        else return null
+                      })(),
     };
 
     $('#bm_title_'+id).text(data.name)
@@ -230,6 +274,13 @@ function reloadDataAndShowError(id) {
             $('#bm_tags_'+id).val(d.tags)
             $('#bm_title_'+id).text(d.name)
             $('#bm_title_'+id).attr('href',d.url)
+            $('#bm_has_notify_'+id).prop('checked',d.has_notify)
+            $('#bm_notify_date_'+id).datepicker('setDate',new Date(d.notify_on))
+            if (d.has_notify) {
+                $('#bm_notify_date_'+id).prop('disabled', false)
+            } else {
+                $('#bm_has_notify_'+id).trigger('change')
+            }
 
             $('#resultMsg').text("Error while updating following Bookmark:")
             $('#resultText').text("'"+d.name+"'")
@@ -268,6 +319,10 @@ function localToUtc(localDate) {
            utcDate.getUTCHours()+":"+
            utcDate.getUTCMinutes()+":"+
            utcDate.getUTCSeconds()+"Z"
+}
+
+function addDays(date, days) {
+    return new Date(date.getFullYear(),date.getMonth(),date.getDate()+days)
 }
 
 function assert(condition, message) {
