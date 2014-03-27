@@ -20,17 +20,11 @@ function setup () {
 }
 
 function setupDate() {
+
     $('[id^=bm_details_]').on('show.bs.collapse', function() {
         var id = getId(this.id)
         $('#bm_date_added_'+id).text(utcToLocal($('#bm_date_added_'+id).text()))
         $('#bm_date_updated_'+id).text(utcToLocal($('#bm_date_updated_'+id).text()))
-        
-        var nd = $('#bm_notify_date_'+id)
-        if (nd.val() != 'None') {
-            nd.datepicker('setDate', new Date(nd.val()))
-        } else {
-            nd.val('')
-        }
     })
 }
 
@@ -93,7 +87,9 @@ function setupRestoreButtons() {
 function setupNotify() {
     $('[id^=bm_notify_date_]').datepicker({
         format: "MM dd, yyyy",
-        startDate: addDays(new Date(), 1),
+        startDate: '+1d',
+        endDate: '+30d',
+        autoclose: true,
         todayHighlight: true,
     })
 
@@ -102,17 +98,21 @@ function setupNotify() {
         nd.prop('disabled',!this.checked)
         nd.val("")
         if (this.checked) {
-            nd.datepicker('setDate', addDays(new Date(), 1))
+            nd.datepicker('setDate', '+1d')
         } 
         enableSaveButton(getId(this.id), true)
     })
 
-    $('[id^=bm_notify_date_]').change(function(event) {
-        var nd = $('#'+this.id)
-        var val = nd.val()
-        if (val == undefined || val == '' || val == 'None') {
-            nd.datepicker('setDate', addDays(new Date(), 1))
-        } 
+    $.each($('[id^=bm_notify_date_]'), function(index, e) {
+        if ($('#bm_has_notify_'+index).prop('checked')) {
+            $(e).datepicker('setDate', new Date($(e).val()))
+        } else {
+            $(e).val("")
+        }
+    })
+
+    // careful when updating this method. Can cause problem with datepicker
+    $('[id^=bm_notify_date_]').change(function() {
         enableSaveButton(getId(this.id), true)
     })
 }
