@@ -25,7 +25,11 @@ class BmSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     bm = serializers.PrimaryKeyRelatedField(many=True)
 
+    #def get_default_fields(self):
+        #print("get_default_fields")
+        #super(UserSerializer, self).get_default_fields()
+
     class Meta:
         model = User
-        fields = ('id', 'username', 'bm')
+        #fields = ('id', 'username', 'email', 'bm')
 

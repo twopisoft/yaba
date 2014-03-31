@@ -17,6 +17,7 @@ function setup () {
     setupDeleteButtons()
     setupRestoreButtons()
     setupNotify()
+    setupLogin()
 }
 
 function setupDate() {
@@ -91,6 +92,7 @@ function setupNotify() {
         endDate: '+30d',
         autoclose: true,
         todayHighlight: true,
+        orientation: "bottom left",
     })
 
     $('[id^=bm_has_notify_]').change(function() {
@@ -105,7 +107,7 @@ function setupNotify() {
 
     $.each($('[id^=bm_notify_date_]'), function(index, e) {
         if ($('#bm_has_notify_'+index).prop('checked')) {
-            $(e).datepicker('setDate', new Date($(e).val()))
+            $(e).datepicker('setDate', new Date(utcToLocal($(e).val())))
         } else {
             $(e).val("")
         }
@@ -114,6 +116,12 @@ function setupNotify() {
     // careful when updating this method. Can cause problem with datepicker
     $('[id^=bm_notify_date_]').change(function() {
         enableSaveButton(getId(this.id), true)
+    })
+}
+
+function setupLogin() {
+    $('#bm_btn_login').click(function() {
+        $('#login_modal').modal('show')
     })
 }
 

@@ -1,6 +1,10 @@
 {% load url from future %}
 {% load rest_framework %}
 {% load staticfiles %}
+{% load socialaccount %}
+{% load i18n %}
+{% load account %}
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,11 +19,11 @@
 
         {% block style %}
         {% block bootstrap_theme %}
-            <!--<link rel="stylesheet" type="text/css" href="{% static "yaba0/css/yaba.css" %}"/>-->
             <link rel="stylesheet" type="text/css" href="{% static "yaba0/css/bootstrap.min.css" %}"/>
             <link rel="stylesheet" type="text/css" href="{% static "yaba0/css/bootstrap-glyphicons.css" %}"/>
             <link rel="stylesheet" type="text/css" href="{% static "yaba0/css/navbar-fixed-top.css" %}"/>
             <link rel="stylesheet" type="text/css" href="{% static "yaba0/css/datepicker3.css" %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static "yaba0/css/yaba.css" %}"/>
         {% endblock %}
         {% endblock %}
 
@@ -41,16 +45,27 @@
                     {% block userlinks %}
                         {% if user.is_authenticated %}
                             <li class="dropdown">
-                                <a href="#" id="bm_user_id" class="dropdown-toggle" data-toggle="dropdown">
-                                    {{ user }}
-                                    <b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>{% optional_logout request %}</li>
-                                </ul>
+                                
+                                <img src="{{ user.profile.profile_image_url }}" height="40" width="40"/>
+                                <span>
+                                    <a href="#" id="bm_user_id" class="dropdown-toggle" data-toggle="dropdown">
+                                        {% if user.profile.profile_fullname %}
+                                          {{ user.profile.profile_fullname }}
+                                          <b class="caret"></b>
+                                        {% else %}
+                                          {{ user.username }}
+                                          <b class="caret"></b>
+                                        {% endif %}
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>{% optional_logout request %}</li>
+                                    </ul>
+                                </span>
                             </li>
                         {% else %}
-                            <li>{% optional_login request %}</li>
+                            <button type="button" id="bm_btn_login" class="btn btn-primary" style="margin-top: 9px;">
+                                    Sign Up / Login
+                            </button>
                         {% endif %}
                     {% endblock %}
                 </ul>
@@ -65,7 +80,7 @@
         <div class="container-fluid">
             
             {% if user.is_authenticated %}
-                {% if item|length > 0 %}
+                {% if content_native|length > 0 %}
                     <div class="row">
                         <div class="col-sm-12">
                             <input type="checkbox" id="bm_selectall" class="" rel="tooltip" title="Select All">
@@ -138,7 +153,7 @@
                                             
                                             <div class="form-group">
                                                 <label class="col-sm-1 control-label text-primary">Remind On:</label>
-                                                <div class="col-sm-3" style="margin-top: 8px;">
+                                                <div class="col-sm-4" style="margin-top: 8px;">
                                                     <div class="input-group date">
                                                         <input type="text" id="bm_notify_date_{{ forloop.counter0 }}" class="form-control" 
                                                                {% if not item.has_notify %}disabled{% endif %} readonly value="{{ item.notify_on }}">
@@ -237,6 +252,24 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-warning" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="login_modal" tabindex="-1" role="dialog" aria-labelledby="resultTitle" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content"> 
+                <div class="modal-header" style="background: #6C91DA">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title text-default">Sign Up or Login</h4>
+                </div>
+                <div class="modal-body">
+                        <a href="{% provider_login_url 'facebook' method='oauth2' %}"><div class="fb"></div></a>
+                        <a href="{% provider_login_url 'google' method='oauth2' %}"><div class="google"></div></a>
+                        {% include "socialaccount/snippets/login_extra.html" %}
                 </div>
             </div>
         </div>
