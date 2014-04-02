@@ -137,6 +137,7 @@ function restoreBookmark(id) {
             $('#bm_synopsis_'+id).val(d.description)
             $('#bm_tags_'+id).val(d.tags)
             $('#bm_has_notify_'+id).prop('checked',d.has_notify)
+            $('#bm_date_updated_'+id).text(utcToLocal(d.updated))
 
             var nd = $('#bm_notify_date_'+id)
             nd.datepicker('setDate',new Date(d.notify_on))

@@ -20,6 +20,17 @@ class BookmarksList(generics.ListCreateAPIView):
     def pre_save(self, obj):
         obj.owner = self.request.user
 
+        try:
+            other = BookMark.objects.get(owner_id=obj.owner,url=obj.url)
+            obj.id = other.id
+            obj.added = other.added
+            obj.description = other.description
+            obj.tags = other.tags
+            obj.has_notify = other.has_notify
+            obj.notify_on = other.notify_on
+        except BookMark.DoesNotExist:
+            pass
+
 class BookmarkDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = BookMark.objects.all()
     serializer_class = BmSerializer

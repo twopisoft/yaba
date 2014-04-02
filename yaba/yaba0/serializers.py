@@ -2,6 +2,7 @@ from django.forms import widgets
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import BookMark
+#from rest_framework import exceptions
 
 class BmSerializer(serializers.Serializer):
     id = serializers.Field()
@@ -18,10 +19,13 @@ class BmSerializer(serializers.Serializer):
     def restore_object(self, attrs, instance=None):
         if instance is not None:
             for k, v in attrs.iteritems():
-                print("k=%s, v=%s"%(k,v))
                 setattr(instance, k, v)
             return instance
+
         return BookMark(**attrs)
+
+    def save_object(self, obj, **kwargs):
+        obj.save()
 
 class UserSerializer(serializers.ModelSerializer):
     bm = serializers.PrimaryKeyRelatedField(many=True)
