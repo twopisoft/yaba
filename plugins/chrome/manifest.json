@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "name": "YABA",
+    "description": "Yet Another Bookmarking App",
+    "version": "0.0.2",
+
+    "permissions": [
+        "http://localhost:8000/yaba0/api",
+        "tabs",
+        "background",
+        "alarms",
+        "cookies"
+    ],
+
+    "icons": { 
+        "16":   "img/yaba16.png",
+        "48":   "img/yaba48.png",
+        "128":  "img/yaba128.png" 
+    },
+
+    "background": {
+        "scripts": ["js/yaba.bg.js"],
+        "persistent": false
+    },
+
+    "browser_action": {
+        "default_title": "YABA",
+        "default_icon": "img/yaba19.png"
+    }
+}
