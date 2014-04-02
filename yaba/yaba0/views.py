@@ -7,7 +7,6 @@ from rest_framework.renderers import JSONRenderer
 from yaba0.permissions import IsOwner
 from yaba0.renderers import YabaBrowsableAPIRenderer
 
-
 class BookmarksList(generics.ListCreateAPIView):
     renderer_classes = (YabaBrowsableAPIRenderer,JSONRenderer)
     serializer_class = BmSerializer
@@ -20,7 +19,6 @@ class BookmarksList(generics.ListCreateAPIView):
 
     def pre_save(self, obj):
         obj.owner = self.request.user
-
 
 class BookmarkDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = BookMark.objects.all()

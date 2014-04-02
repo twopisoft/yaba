@@ -18,6 +18,7 @@ class BmSerializer(serializers.Serializer):
     def restore_object(self, attrs, instance=None):
         if instance is not None:
             for k, v in attrs.iteritems():
+                print("k=%s, v=%s"%(k,v))
                 setattr(instance, k, v)
             return instance
         return BookMark(**attrs)
