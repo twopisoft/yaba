@@ -10,6 +10,8 @@ var errorMessages= {
     FORBIDDEN: "No enough permission"
 }
 
+var base_url='/yaba0/api/'
+
 function setup () {
     setupDate();
     setupCheckBoxes()
@@ -46,11 +48,11 @@ function setupCheckBoxes () {
 }
 
 function setupSaveButtons() {
-    $(".bm-form-required").keydown(function(e) {
+    $(".bm-form-required").unbind('keydown').keydown(function(e) {
         enableSaveButton(getId(e.target.id), true)
     });
 
-    $(".bm-form-required").keyup(function(e) {
+    $(".bm-form-required").unbind('keyup').keyup(function(e) {
         var val=$('#'+e.target.id).val().trim()
         if (val == '') {
             $('#'+e.target.id).parent().addClass('has-error')
@@ -61,26 +63,26 @@ function setupSaveButtons() {
         }
     });
 
-    $(".bm-form-optional").keydown(function(e) {
+    $(".bm-form-optional").unbind('keydown').keydown(function(e) {
         enableSaveButton(getId(e.target.id), true)
     });
     
-    $('[id^=bm_save_]').click(function() {
+    $('[id^=bm_save_]').unbind('click').click(function() {
         saveBookmark(getId(this.id))
     });
 }
 
 function setupDeleteButtons () {
-    $('[id^=bm_delete_]').click(function() {
+    $('[id^=bm_delete_]').unbind('click').click(function() {
         deleteBookmark(getId(this.id))
     })
-    $('#bm_deleteall').click(function() {
+    $('#bm_deleteall').unbind('click').click(function() {
         deleteSelected()
     })
 }
 
 function setupRestoreButtons() {
-    $('[id^=bm_restore_]').click(function() {
+    $('[id^=bm_restore_]').unbind('click').click(function() {
         restoreBookmark(getId(this.id))
     })
 }
@@ -95,7 +97,7 @@ function setupNotify() {
         orientation: "bottom left",
     })
 
-    $('[id^=bm_has_notify_]').change(function() {
+    $('[id^=bm_has_notify_]').unbind('change').change(function() {
         var nd = $('#bm_notify_date_'+getId(this.id))
         nd.prop('disabled',!this.checked)
         nd.val("")
@@ -114,20 +116,20 @@ function setupNotify() {
     })
 
     // careful when updating this method. Can cause problem with datepicker
-    $('[id^=bm_notify_date_]').change(function() {
+    $('[id^=bm_notify_date_]').unbind('change').change(function() {
         enableSaveButton(getId(this.id), true)
     })
 }
 
 function setupLogin() {
-    $('#bm_btn_login').click(function() {
+    $('#bm_btn_login').unbind('click').click(function() {
         $('#login_modal').modal('show')
     })
 }
 
 function restoreBookmark(id) {
     $.ajax({
-        url: "/yaba0/api/"+$('#bm_id_'+id).val()+"/.json",
+        url: base_url+$('#bm_id_'+id).val()+"/.json",
         type: "get",
         success: function(d, stat, xhr) {
             $('#bm_name_'+id).val(d.name)
@@ -153,7 +155,7 @@ function deleteBookmark(id) {
     var name=$('#bm_name_'+id).val().trim()
     $('#deleteConfirmMsg').text('This will Delete the following Bookmark:')
     $('#deleteConfirmText').text("'"+name+"'")
-    $('#deleteOkButton').click(function() {
+    $('#deleteOkButton').unbind('click').click(function() {
         executeDelete([id])
     })
     $('#deleteConfirm').modal('show')
@@ -173,7 +175,7 @@ function deleteSelected() {
         }
         $('#deleteConfirmMsg').text('This will Delete the following Bookmark'+(selected.length>1?"s:":":"))
         $('#deleteConfirmText').html(text)
-        $('#deleteOkButton').click(function() {
+        $('#deleteOkButton').unbind('click').click(function() {
             executeDelete(ids)
         })
         $('#deleteConfirm').modal('show')
@@ -187,17 +189,21 @@ function executeDelete(ids) {
     $.each(ids, function(index, id) {       
         var name=$('#bm_name_'+id).val().trim()
         $.ajax({
-            url: "/yaba0/api/"+$('#bm_id_'+id).val()+"/.json",
+            url: base_url+$('#bm_id_'+id).val()+"/.json",
             type: "delete",
             success: function(d, stat, xhr) {
                 success.push(id)
-                $('#bm_row_'+id).hide()
+                
             },
             error: function(xhr, stat, err) {
                 error.push({id: id, name: name, error: error})
             },
             complete: function(xhr, stat) {
                 if ((success.length + error.length) == ids.length) {
+                    for (i=0; i < success.length; i++) {
+                        $('#bm_row_'+success[i]).remove()
+                    }
+
                     if (error.length > 0) {
                         var n = error.length > 4 ? 4 : error.length
                         var bodyText=""
@@ -252,7 +258,7 @@ function saveBookmark(id) {
     $('#bm_title_'+id).attr('href',data.url)
 
     $.ajax({
-        url: "/yaba0/api/"+$('#bm_id_'+id).val()+"/.json",
+        url: base_url+$('#bm_id_'+id).val()+"/.json",
         type: "put",
         data: data,
         success: function(d, stat, xhr) {
@@ -273,7 +279,7 @@ function saveBookmark(id) {
 
 function reloadDataAndShowError(id) {
     $.ajax({
-        url: "/yaba0/api/"+$('#bm_id_'+id).val()+"/.json",
+        url: base_url+$('#bm_id_'+id).val()+"/.json",
         type: "get",
         success: function(d, stat, xhr) {
             $('#bm_name_'+id).val(d.name)
