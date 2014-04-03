@@ -162,6 +162,11 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
+REST_FRAMEWORK = {
+    'PAGINATE_BY': 10,                 # Default to 10
+    'MAX_PAGINATE_BY': 100             # Maximum limit allowed when using `?page_size=xxx`.
+}
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -208,19 +213,19 @@ LOGGING = {
             'class': 'django.utils.log.AdminEmailHandler'
         },
         'console': {
-            'level': 'DEBUG',
+            'level': 'ERROR',
             'class': 'logging.StreamHandler'
         }
     },
     'loggers': {
         'django.request': {
             'handlers': ['mail_admins', 'console'],
-            'level': 'DEBUG',
+            'level': 'ERROR',
             'propagate': True,
         },
         'django': {
             'handlers' : ['console'],
-            'level': 'DEBUG'
+            'level': 'ERROR'
         }
     }
 }

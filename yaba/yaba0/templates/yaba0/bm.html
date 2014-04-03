@@ -103,6 +103,7 @@
                         </div>
                     </div>
                 {% endif %}
+                
                 {% for item in content_native %}
                     <div class="row" id="bm_row_{{ forloop.counter0 }}">
                         <div class="col-sm-12">
@@ -276,13 +277,29 @@
     </div>
 
     <nav class="navbar navbar-default navbar-fixed-bottom"  style="background: grey;" role="navigation">
-        <div class="container">
-            <form class="navbar-form" role="search">
-                <div class="form-group">
+        <div class="container-fluid">
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group" style="margin-top: 10px;">
                     <input type="text" class="form-control center-block" placeholder="Search">
                 </div>
             </form>
-            <div 
+
+            {% if paged %}
+            <ul class="nav navbar-nav pull-right pager">
+                <li {% if prev_page %} class="active" {% else %} class="disabled" {% endif %}>
+                    <a title="First Page" {% if prev_page %}href="/yaba0/api/?page=1" {% else %} href="#"  {% endif %}>&laquo;</a>
+                </li>
+                <li {% if prev_page %} class="active" {% else %} class="disabled" {% endif %}>
+                    <a title="Previous Page"{% if prev_page %}href="{{ prev_page }}" class="enabled" {% else %} href="#" {% endif %}>&lt;</a>
+                </li>
+                <li {% if next_page %} class="active" {% else %} class="disabled" {% endif %}>
+                    <a title="Next Page" {% if next_page %}href="{{ next_page }}" class="enabled" {% else %} href="#" {% endif %}>&gt;</a>
+                </li>
+                <li {% if next_page %} class="active" {% else %} class="disabled" {% endif %}>
+                    <a title="Last Page" {% if next_page %}href="/yaba0/api/?page=last" class="enabled" {% else %} href="#"  {% endif %}>&raquo;</a>
+                </li>
+            </ul>
+            {% endif %}
         </div>
     </nav>
 

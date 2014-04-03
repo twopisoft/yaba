@@ -6,11 +6,13 @@ from rest_framework import permissions
 from rest_framework.renderers import JSONRenderer
 from yaba0.permissions import IsOwner
 from yaba0.renderers import YabaBrowsableAPIRenderer
+from yaba0.paginators import BmPaginator
 
 class BookmarksList(generics.ListCreateAPIView):
     renderer_classes = (YabaBrowsableAPIRenderer,JSONRenderer)
     serializer_class = BmSerializer
     permission_classes = (permissions.IsAuthenticated,)
+    paginator_class = BmPaginator
 
     def get_queryset(self):
         user = self.request.user

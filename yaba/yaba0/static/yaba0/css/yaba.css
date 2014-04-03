@@ -22,3 +22,6 @@
 	font-style: bold;
 	color: red;
 }
+
+a.disabled { color:gray; }
+a.enabled { color:blue; }

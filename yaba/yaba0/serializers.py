@@ -2,7 +2,6 @@ from django.forms import widgets
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import BookMark
-#from rest_framework import exceptions
 
 class BmSerializer(serializers.Serializer):
     id = serializers.Field()
