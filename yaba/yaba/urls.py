@@ -1,5 +1,8 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from django.views.generic import RedirectView
+from .settings import MEDIA_URL
+
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -18,4 +21,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api-auth/', include('rest_framework.urls',namespace='rest_framework')),
     url(r'^accounts/', include('allauth.urls')),
+    #url(r'^favicon\.ico$', RedirectView.as_view(url=MEDIA_URL + 'favicon.ico'))
 )

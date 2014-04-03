@@ -205,7 +205,7 @@ function executeDelete(ids) {
                         $('#bm_row_'+success[i]).remove()
                     }
 
-                    if ($('[id^=bm_row_').length == 0) {
+                    if ($('[id^=bm_row_]').length == 0) {
                             nextPage()
                     }
 
@@ -242,9 +242,8 @@ function toggleGlobalButtons(check) {
 }
 
 function nextPage() {
-    var page_buttons = $('[id^=bm_page_')
+    var page_buttons = $('[id^=bm_page_]')
     if (page_buttons.length > 0) {
-        console.log('page_buttons.length='+page_buttons.length)
         for (i=page_buttons.length-1; i>=0; i--) {
            var href = $(page_buttons[i]).attr('href')
            if (href == '#') {
