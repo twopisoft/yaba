@@ -81,7 +81,7 @@
             
             {% if user.is_authenticated %}
                 {% if content_native|length > 0 %}
-                    <div class="row">
+                    <div class="row" id="bm_top_row">
                         <div class="col-sm-12">
                             <input type="checkbox" id="bm_selectall" class="" rel="tooltip" title="Select All">
                             <button type="button" id="bm_shareall" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"
@@ -287,16 +287,16 @@
             {% if paged %}
             <ul class="nav navbar-nav pull-right pager">
                 <li {% if prev_page %} class="active" {% else %} class="disabled" {% endif %}>
-                    <a title="First Page" {% if prev_page %}href="/yaba0/api/?page=1" {% else %} href="#"  {% endif %}>&laquo;</a>
+                    <a  {% if prev_page %}href="/yaba0/api/?page=1" title="First Page" {% else %} href="#"  {% endif %}>&laquo;</a>
                 </li>
                 <li {% if prev_page %} class="active" {% else %} class="disabled" {% endif %}>
-                    <a title="Previous Page"{% if prev_page %}href="{{ prev_page }}" class="enabled" {% else %} href="#" {% endif %}>&lt;</a>
+                    <a id = "bm_page_prev" {% if prev_page %}href="{{ prev_page }}" title="Previous Page" {% else %} href="#" {% endif %}>&lt;</a>
                 </li>
                 <li {% if next_page %} class="active" {% else %} class="disabled" {% endif %}>
-                    <a title="Next Page" {% if next_page %}href="{{ next_page }}" class="enabled" {% else %} href="#" {% endif %}>&gt;</a>
+                    <a id = "bm_page_next" {% if next_page %}href="{{ next_page }}" title="Next Page" {% else %} href="#" {% endif %}>&gt;</a>
                 </li>
                 <li {% if next_page %} class="active" {% else %} class="disabled" {% endif %}>
-                    <a title="Last Page" {% if next_page %}href="/yaba0/api/?page=last" class="enabled" {% else %} href="#"  {% endif %}>&raquo;</a>
+                    <a {% if next_page %}href="/yaba0/api/?page=last" title="Last Page" {% else %} href="#"  {% endif %}>&raquo;</a>
                 </li>
             </ul>
             {% endif %}

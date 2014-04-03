@@ -205,6 +205,10 @@ function executeDelete(ids) {
                         $('#bm_row_'+success[i]).remove()
                     }
 
+                    if ($('[id^=bm_row_').length == 0) {
+                            nextPage()
+                    }
+
                     if (error.length > 0) {
                         var n = error.length > 4 ? 4 : error.length
                         var bodyText=""
@@ -217,7 +221,7 @@ function executeDelete(ids) {
                         $('#bm_selectall').prop('checked', false)
                         $('#resultText').html(bodyText)
                         $('#result').modal('show')
-                    }
+                    } 
                 }
             },
             beforeSend: function(xhr, settings) {
@@ -235,6 +239,28 @@ function enableSaveButton(id, flag) {
 function toggleGlobalButtons(check) {
     $('#bm_shareall').prop('disabled', !check);
     $('#bm_deleteall').prop('disabled', !check)
+}
+
+function nextPage() {
+    var page_buttons = $('[id^=bm_page_')
+    if (page_buttons.length > 0) {
+        console.log('page_buttons.length='+page_buttons.length)
+        for (i=page_buttons.length-1; i>=0; i--) {
+           var href = $(page_buttons[i]).attr('href')
+           if (href == '#') {
+                if (i==0) {
+                    $("#bm_top_row").remove()
+                } else {
+                    continue
+                }
+           } else {
+             $(page_buttons[i])[0].click()
+             break  
+           }
+        }
+    } else {
+      $("#bm_top_row").remove()
+    }  
 }
 
 function saveBookmark(id) {
