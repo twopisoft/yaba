@@ -8,8 +8,9 @@
         "http://localhost:8000/yaba0/api",
         "tabs",
         "background",
-        "alarms",
-        "cookies"
+        "cookies",
+        "contextMenus",
+        "alarms"
     ],
 
     "icons": { 

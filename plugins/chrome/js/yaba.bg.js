@@ -18,6 +18,17 @@ chrome.browserAction.onClicked.addListener(function(tab) {
     saveBookmark(tab);
 });
 
+chrome.contextMenus.create({type: 'normal', title: 'Save to YABA', id: 'save_to_yaba', contexts: ['page','frame', 'link', 'image', 'video', 'audio']})
+chrome.contextMenus.create({type: 'normal', title: 'Goto to YABA', id: 'go_to_yaba', contexts: ['page','frame', 'link', 'image', 'video', 'audio']})
+
+chrome.contextMenus.onClicked.addListener(function(info, tab) {
+    if (info.menuItemId == 'save_to_yaba') {
+        saveBookmark(tab)
+    } else if (info.menuItemId == 'go_to_yaba') {
+        openHomePage()
+    }
+})
+
 function saveBookmark(tab) {
     setTitle(titles.saving)
     setIcon(icons.saving)
@@ -112,8 +123,8 @@ function setSaving() {
     setIcon(icons.saving)
 }
 
-chrome.alarms.onAlarm.addListener(function(alarm) {
-    if (alarm.name === 'revert') {
-        setNormal()
-    }
-})
+//chrome.alarms.onAlarm.addListener(function(alarm) {
+//    if (alarm.name === 'revert') {
+//        setNormal()
+//    }
+//})
