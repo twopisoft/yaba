@@ -1,0 +1,27 @@
+#!/bin/sh
+
+has_commit=`git status -uno -s`
+if [ -n "$has_commit" ]; then
+  echo "Commits pending on develop branch. Please commit work before merging to master"
+  exit 0
+fi
+
+remote_develop_insync=`git diff develop remotes/origin/develop`
+if [ -n "$remote_develop_insync" ]; then
+  echo "Remote develop branch is not synced. Please push local develop to remote"
+  exit 0
+fi
+
+needs_merge=`git diff develop master`
+if [ -z "$needs_merge" ]; then
+  echo "Develop and Master are in sync. No merging needed"
+  exit 0
+fi
+
+git checkout master
+git branch
+git merge develop
+git push origin master
+git checkout develop
+git branch
+
