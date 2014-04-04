@@ -85,6 +85,7 @@
                     <div class="row" id="bm_top_row">
                         <div class="col-sm-12">
                             <input type="checkbox" id="bm_selectall" class="" rel="tooltip" title="Select All">
+                            <!--
                             <button type="button" id="bm_shareall" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"
                                                 rel="tooltip" title="Share Selected" disabled="true">
                                 <span class="glyphicon glyphicon-globe"></span> 
@@ -92,11 +93,10 @@
                             </button>
 
                             <ul class="dropdown-menu" role="menu" style="margin-left: 30px;">
-                                <li><a href="#">Facebook</a></li>
-                                <li><a href="#">Twitter</a></li>
-                                <li><a href="#">Google+</a></li>
+                                <li><a id="bm_shareall_fb" href="#">Facebook</a></li>
+                                <li><a id="bm_shareall_gl" href="#">Google+</a></li>
                             </ul>
-
+                            -->
                             <button type="button" id="bm_deleteall" class="btn btn-danger btn-sm" rel="tooltip" title="Delete Selected" disabled="true">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
@@ -190,10 +190,22 @@
                                             <span class="glyphicon glyphicon-globe"></span> 
                                             <span class="caret"></span>
                                         </button>
-                                        <ul class="dropdown-menu" role="menu" style="margin-top: -30px; margin-left: 70px;">
-                                            <li><a href="#">Facebook</a></li>
-                                            <li><a href="#">Twitter</a></li>
-                                            <li><a href="#">Google+</a></li>
+                                        <ul class="dropdown-menu" role="menu" style="margin-top: -30px; margin-left: 70px; background-color: #B2B2CC;">
+                                            <li role="presentation">
+                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ item.url }}" target="_blank">
+                                                    <span class="glyphicon icon-fb-share"></span>Facebook
+                                                </a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a href="https://twitter.com/home?status={{ item.url }}" target="_blank">
+                                                    <span class="glyphicon icon-tw-share"></span>Twitter
+                                                </a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a href="https://plus.google.com/share?url={{ item.url }}" target="_blank">
+                                                    <span class="glyphicon icon-gl-share"></span>Google+
+                                                </a>
+                                            </li>
                                         </ul>
                                         <button type="button" id="bm_save_{{ forloop.counter0 }}" class="btn btn-primary btn-sm" rel="tooltip" 
                                                 title="Save" disabled="disabled">

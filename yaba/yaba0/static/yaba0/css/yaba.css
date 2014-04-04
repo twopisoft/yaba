@@ -9,13 +9,41 @@
 }
 
 .google {
-    background: url('/static/yaba0/img/google_plus.png') no-repeat center top;
-    box-shadow: 2px 2px 8px rgba(0,0,0,.7);
+    background: url('/static/yaba0/img/gl_signin_active.png') no-repeat center top;
+    box-shadow: 2px 2px 2px rgba(0,0,0,.7);
     border-radius: 5px;
-    width: 50px;
-    height: 50px;
+    width: 198px;
+    height: 37px;
     margin: 20px auto;
     overflow: hidden;
+}
+
+.icon-fb-share {
+    background: url('/static/yaba0/img/fb20.png') no-repeat center center;
+    border-radius: 3px;
+    margin-left: -10px;
+    margin-right: 5px;
+    width: 20px;
+    height: 20px;
+}
+
+.icon-tw-share {
+    background: url('/static/yaba0/img/tw22.png') no-repeat center center ;
+    border-radius: 3px;
+    margin-left: -10px;
+    margin-right: 5px;
+    width: 22px;
+    height: 18px;
+}
+
+.icon-gl-share {
+    background: url('/static/yaba0/img/gl20.png') no-repeat center center;
+    border-radius: 3px;
+    margin-left: -10px;
+    margin-right: 5px;
+    margin-botton: 5px;
+    width: 20px;
+    height: 20px;
 }
 
 .errorlist {
