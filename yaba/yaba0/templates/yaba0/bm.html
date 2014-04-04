@@ -111,7 +111,7 @@
                             <div class="panel panel-success" >
                                 <div class="panel-heading" style="background: #BDFF9C">
                                     <h3 class="panel-title">
-                                        <a href="{{ item.url }}" id="bm_title_{{ forloop.counter0 }}">{{ item.name }}</a> 
+                                        <a href="{{ item.url }}" id="bm_title_{{ forloop.counter0 }}" target="_blank">{{ item.name }}</a> 
                                         <div class="pull-right">
                                             <span class="glyphicon glyphicon-ok-sign label label-success" id="bm_save_success_{{ forloop.counter0 }}"
                                                   style="margin-right: 5px; font-size: 14px; display:none;">Saved</span>
@@ -291,9 +291,10 @@
 
     <nav class="navbar navbar-default navbar-fixed-bottom"  style="background: grey;" role="navigation">
         <div class="container-fluid">
+            {% if user.is_authenticated %}
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group" style="margin-top: 10px;">
-                    <input type="text" class="form-control center-block" placeholder="Search">
+                    <input type="text" class="form-control center-block" placeholder="Search" size="50" id="bm_search">
                 </div>
             </form>
 
@@ -312,6 +313,7 @@
                     <a {% if next_page %}href="/yaba0/api/?page=last" title="Last Page" {% else %} href="#"  {% endif %}>&raquo;</a>
                 </li>
             </ul>
+            {% endif %}
             {% endif %}
         </div>
     </nav>

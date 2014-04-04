@@ -20,6 +20,7 @@ function setup () {
     setupRestoreButtons()
     setupNotify()
     setupLogin()
+    setupSearch()
 }
 
 function setupDate() {
@@ -125,6 +126,26 @@ function setupLogin() {
     $('#bm_btn_login').unbind('click').click(function() {
         $('#login_modal').modal('show')
     })
+}
+
+function setupSearch() {
+    $('#bm_search').unbind('keypress').keypress(function(e) {
+        if (e.which == 13) {
+            e.preventDefault()
+            searchBookmark($(this).val().trim())
+        }
+    })
+}
+
+function searchBookmark(query) {
+    var url = base_url
+
+    if (query != undefined && query != null && query != '') {
+        url += 'search/?q='+encodeURIComponent(query)
+    }
+
+    console.log('url='+url)
+    $("#content").load(url+' #content')
 }
 
 function restoreBookmark(id) {
