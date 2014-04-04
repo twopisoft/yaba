@@ -206,8 +206,11 @@ function executeDelete(ids) {
                     }
 
                     if ($('[id^=bm_row_]').length == 0) {
-                            nextPage()
+                        nextPage()
+                    } else if (success.length > 0) {
+                        location.reload()
                     }
+
 
                     if (error.length > 0) {
                         var n = error.length > 4 ? 4 : error.length
