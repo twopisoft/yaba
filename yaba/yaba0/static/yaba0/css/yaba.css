@@ -1,6 +1,5 @@
 .fb {
     background: url('/static/yaba0/img/fb_active_404.png') no-repeat center top;
-    box-shadow: 2px 2px 8px rgba(0,0,0,.7);
     border-radius: 5px;
     width: 198px;
     height: 37px;
@@ -10,7 +9,6 @@
 
 .google {
     background: url('/static/yaba0/img/gl_signin_active.png') no-repeat center top;
-    box-shadow: 2px 2px 2px rgba(0,0,0,.7);
     border-radius: 5px;
     width: 198px;
     height: 37px;
