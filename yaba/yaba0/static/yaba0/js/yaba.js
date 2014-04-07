@@ -273,6 +273,7 @@ function nextPage() {
            if (href == '#') {
                 if (i==0) {
                     $("#bm_top_row").remove()
+                    $("#bm_info_no_bm").show()
                 } else {
                     continue
                 }
@@ -283,6 +284,7 @@ function nextPage() {
         }
     } else {
       $("#bm_top_row").remove()
+      $("#bm_info_no_bm").show()
     }  
 }
 

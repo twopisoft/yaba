@@ -104,6 +104,19 @@
                         </div>
                     </div>
                 {% endif %}
+
+                <div class="row" style="display:{% if content_native|length > 0 %}none;{%endif%}" id="bm_info_no_bm">
+                    <div class="col-md-5 col-md-offset-3" style="margin-top:130px;">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <p class="info1">You don't seem to have any Bookmarks in YABA.</p> 
+                                <span class="info1">Use the </span>
+                                <img src="{% static "yaba0/img/yaba16.png" %}"/>
+                                <span class="info1"> button to add a few.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 
                 {% for item in content_native %}
                     <div class="row" id="bm_row_{{ forloop.counter0 }}">
@@ -226,7 +239,21 @@
                     </div>
                 {% endfor %}
             {% else %}
-                
+                <div class="jumbotron">
+                    <h1><img src="{% static "yaba0/img/yaba128.png" %}"/> Welcome to YABA!</h1>
+                    <p class="info1">(or Yet Another Bookmarking App)</p>
+                    <p> With YABA, you can:</p>
+                    <ul>
+                        <li>Access your Bookmarks on any of the devices (Desktop, Mobile)</li>
+                        <li>Set reminders for 'Read Me Later' blog posts</li>
+                        <li>Set Bookmarks on videos and continue watching where you left off</li>
+                        <li>Generate summaries for blog articles</li>
+                        <li>Put 'Micro Bookmark' on a page</li>
+                        <li style="font-style: italic;">and much more...</li>
+                    </ul>
+
+                    <p class="info1">Sign Up or Sign In to YABA now!</p>
+                </div>
             {% endif %}
             
         </div>
