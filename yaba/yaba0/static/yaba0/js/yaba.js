@@ -123,7 +123,7 @@ function setupNotify() {
 }
 
 function setupLogin() {
-    $('#bm_btn_login').unbind('click').click(function() {
+    $('[id^=bm_btn_login]').unbind('click').click(function() {
         $('#login_modal').modal('show')
     })
 }

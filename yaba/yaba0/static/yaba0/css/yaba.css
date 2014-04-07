@@ -57,3 +57,24 @@ a.enabled { color:blue; }
     font-family: "Times New Roman", Times, serif;
     font-size: 18px;
 }
+
+#bm_fine_print {
+    font-size: 12px;
+    text-shadow: 1px 1px #FFF;
+}
+
+a.bm_fine_print {
+    color: grey;
+}
+
+
+.bg-grad {
+    background: #596a72;
+    background: -moz-radial-gradient(center, ellipse cover,  #596a72 0%, #cedce7 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#596a72), color-stop(100%,#cedce7));
+    background: -webkit-radial-gradient(center, ellipse cover,  #596a72 0%,#cedce7 100%);
+    background: -o-radial-gradient(center, ellipse cover,  #596a72 0%,#cedce7 100%);
+    background: -ms-radial-gradient(center, ellipse cover,  #596a72 0%,#cedce7 100%);
+    background: radial-gradient(ellipse at center,  #596a72 0%,#cedce7 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#596a72', endColorstr='#cedce7',GradientType=1 );
+}
