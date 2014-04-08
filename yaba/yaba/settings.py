@@ -28,8 +28,10 @@ DATABASES = {
     }
 }
 
-LOGIN_URL='yaba0/api'
-LOGIN_REDIRECT_URL = '/yaba0/api'
+#LOGIN_URL='yaba0/api'
+#LOGIN_REDIRECT_URL = '/yaba0/api'
+LOGIN_URL='/'
+LOGIN_REDIRECT_URL = '/'
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_EMAIL_REQUIRED = True
 #SOCIALACCOUNT_EMAIL_VERIFICATION = 'mandatory'
@@ -65,7 +67,7 @@ TIME_ZONE = 'Asia/Singapore'
 LANGUAGE_CODE = 'en-us'
 
 #SITE_ID = u'53352117990ef01cb2c0af08' 
-SITE_ID = 3
+SITE_ID = 4
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.

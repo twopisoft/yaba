@@ -10,7 +10,8 @@ var errorMessages= {
     FORBIDDEN: "No enough permission"
 }
 
-var base_url='/yaba0/api/'
+//var base_url='/yaba0/api/'
+var base_url='/'
 
 function setup () {
     setupDate();
@@ -141,7 +142,8 @@ function searchBookmark(query) {
     var url = base_url
 
     if (query != undefined && query != null && query != '') {
-        url += 'search/?q='+encodeURIComponent(query)
+        //url += 'search/?q='+encodeURIComponent(query)
+        url += '?q='+encodeURIComponent(query)
     }
 
     console.log('url='+url)

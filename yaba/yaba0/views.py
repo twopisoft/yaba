@@ -17,7 +17,14 @@ class BookmarksList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return BookMark.objects.filter(owner=user)
+        query_param="q"
+
+        query_string = self.request.GET.get(query_param,"").strip()
+
+        if not query_string:
+            return BookMark.objects.filter(owner=user)
+
+        return utils.search(self.request, BookMark, ['tags','name'])
         #return BookMark.objects.all()
 
     def pre_save(self, obj):

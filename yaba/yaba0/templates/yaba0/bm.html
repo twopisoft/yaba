@@ -39,7 +39,7 @@
         <div class="navbar-inner">
             <div class="container-fluid">
                 <span href="/">
-                    {% block branding %}<a class='navbar-brand' rel="nofollow" href='/yaba0/api'>YABA - Yet Another Bookmarking App <span class="version">{{ version }}</span></a>{% endblock %}
+                    {% block branding %}<a class='navbar-brand' rel="nofollow" href='/'>YABA - Yet Another Bookmarking App <span class="version">{{ version }}</span></a>{% endblock %}
                 </span>
                 
                 <ul class="nav pull-right">
@@ -59,8 +59,8 @@
                                         {% endif %}
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#">Settings</a></li>
-                                        <li><a href="#">Privacy</a></li>
+                                        <!--<li><a href="#">Settings</a></li>
+                                        <li><a href="#">Privacy</a></li>-->
                                         <li><a href="mailto:twopisoft@gmail.com" target="_top">Contact</a></li>
                                         <li>{% optional_logout request %}</li>
                                     </ul>
@@ -268,10 +268,10 @@
                         <div class="col-md-5 col-md-offset-5">
                             <span id="bm_fine_print">
                                 <span>
-                                <a href="#">Privacy</a>
-                                <a href="mailto:twopisoft@gmail.com" target="_top">Contact</a>
+                                    <!--<a href="#">Privacy</a>-->
+                                    <a href="mailto:twopisoft@gmail.com" target="_top">&copy; 2014 Arshad Khan</a>
                                 </span>
-                                <span>&copy; 2014 TwoPi Soft</span>
+                                <!--<span>&copy; 2014 Arshad Khan</span>-->
                             </span>
                         </div>
                     </div>
@@ -343,14 +343,14 @@
             {% if user.is_authenticated %}
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group" style="margin-top: 10px;">
-                    <input type="text" class="form-control center-block" placeholder="Search" size="50" id="bm_search">
+                    <input type="text" class="form-control center-block" placeholder="Search Bookmarks on name or tags" size="50" id="bm_search">
                 </div>
             </form>
 
             {% if paged %}
             <ul class="nav navbar-nav pull-right pager">
                 <li {% if prev_page %} class="active" {% else %} class="disabled" {% endif %}>
-                    <a  {% if prev_page %}href="/yaba0/api/?page=1" title="First Page" {% else %} href="#"  {% endif %}>&laquo;</a>
+                    <a  {% if prev_page %}href="/?page=1" title="First Page" {% else %} href="#"  {% endif %}>&laquo;</a>
                 </li>
                 <li {% if prev_page %} class="active" {% else %} class="disabled" {% endif %}>
                     <a id = "bm_page_prev" {% if prev_page %}href="{{ prev_page }}" title="Previous Page" {% else %} href="#" {% endif %}>&lt;</a>
@@ -359,7 +359,7 @@
                     <a id = "bm_page_next" {% if next_page %}href="{{ next_page }}" title="Next Page" {% else %} href="#" {% endif %}>&gt;</a>
                 </li>
                 <li {% if next_page %} class="active" {% else %} class="disabled" {% endif %}>
-                    <a {% if next_page %}href="/yaba0/api/?page=last" title="Last Page" {% else %} href="#"  {% endif %}>&raquo;</a>
+                    <a {% if next_page %}href="/?page=last" title="Last Page" {% else %} href="#"  {% endif %}>&raquo;</a>
                 </li>
             </ul>
             {% endif %}
