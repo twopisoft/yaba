@@ -12,7 +12,7 @@ var titles = {
     saving: "Saving Bookmark.."
 }
 
-var yaba_url = 'http://localhost:8000/yaba0/api/'
+var yaba_url = 'http://localhost:8000/'
 
 chrome.browserAction.onClicked.addListener(function(tab) {
     saveBookmark(tab);
