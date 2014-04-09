@@ -39,7 +39,7 @@ def search(request,model,fields,query_param="q" ):
     query_string = request.GET.get(query_param,"").strip()
 
     if not query_string:
-        return model.objects.all()
+        return model.objects.filter(owner=request.user)
 
     entry_query = build_query(query_string, fields)
 
