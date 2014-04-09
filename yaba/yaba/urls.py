@@ -25,4 +25,4 @@ urlpatterns = patterns('',
     #url(r'^favicon\.ico$', RedirectView.as_view(url=MEDIA_URL + 'favicon.ico'))
 )
 
-#urlpatterns += staticfiles_urlpatterns()
+urlpatterns += staticfiles_urlpatterns()
