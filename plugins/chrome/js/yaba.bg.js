@@ -35,7 +35,16 @@ function saveBookmark(tab) {
     chrome.cookies.get({url: yaba_url,
                         name: 'csrftoken'}, function(cookie) {
                             if (cookie) {
-                                sendData(tab,cookie)
+                               chrome.tabs.sendMessage(tab.id, {type: "yaba_getVideoTime", url: tab.url, title: tab.title}, function(qparams) {
+                                //console.log(qparams)
+                                if (qparams) {
+                                    tab.title = qparams.title
+                                    tab.url = qparams.url
+                                }
+
+                                sendData(tab, cookie)
+
+                               })
                             } else {
                                 setError()
                                 revertToNormal(5000)
@@ -53,7 +62,7 @@ function setTitle(msg) {
     chrome.browserAction.setTitle({title: msg})
 }
 
-function sendData(tab, cookie) {
+function sendData(tab, cookie, qparams) {
     var xhr = new XMLHttpRequest()
     var params = {
         added: new Date(),
