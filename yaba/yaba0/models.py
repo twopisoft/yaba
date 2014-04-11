@@ -44,7 +44,7 @@ class UserProfile(models.Model):
 
     def profile_image_url(self):
         profile = SocialAccount.objects.filter(user_id=self.user.id)
-        print("profile=%s"%profile[0].extra_data)
+        #print("profile=%s"%profile[0].extra_data)
         if len(profile):
             provider = profile[0].provider
             if (provider == 'facebook'):

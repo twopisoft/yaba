@@ -76,7 +76,7 @@ TIME_ZONE = 'Asia/Singapore'
 LANGUAGE_CODE = 'en-us'
 
 #SITE_ID = u'53352117990ef01cb2c0af08' 
-SITE_ID = 1
+SITE_ID = 4
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.

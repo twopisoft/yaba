@@ -146,8 +146,11 @@ function searchBookmark(query) {
         url += '?q='+encodeURIComponent(query)
     }
 
-    console.log('url='+url)
-    $("#content").load(url+' #content')
+    //console.log('url='+url)
+    $("#bm_ajax_loader").show()
+    $("#content").load(url+' #content', function() {
+        $("#bm_ajax_loader").hide()
+    })
 }
 
 function restoreBookmark(id) {
