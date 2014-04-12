@@ -23,6 +23,10 @@ chrome.contextMenus.create({type: 'normal', title: 'Goto to YABA', id: 'go_to_ya
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     if (info.menuItemId == 'save_to_yaba') {
+        if (info.linkUrl) {
+            tab.url = info.linkUrl
+            if (info.selectionText) tab.title = info.selectionText
+        }
         saveBookmark(tab)
     } else if (info.menuItemId == 'go_to_yaba') {
         openHomePage()
@@ -62,7 +66,7 @@ function setTitle(msg) {
     chrome.browserAction.setTitle({title: msg})
 }
 
-function sendData(tab, cookie, qparams) {
+function sendData(tab, cookie) {
     var xhr = new XMLHttpRequest()
     var params = {
         added: new Date(),
