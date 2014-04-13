@@ -26,7 +26,7 @@ function setup () {
 
 function setupDate() {
 
-    $('[id^=bm_details_]').on('show.bs.collapse', function() {
+    $('[id^=bm_details_]').unbind('show.bs.collapse').on('show.bs.collapse', function() {
         var id = getId(this.id)
         $('#bm_date_added_'+id).text(utcToLocal($('#bm_date_added_'+id).text()))
         $('#bm_date_updated_'+id).text(utcToLocal($('#bm_date_updated_'+id).text()))
@@ -150,6 +150,8 @@ function searchBookmark(query) {
     $("#bm_ajax_loader").show()
     $("#content").load(url+' #content', function() {
         $("#bm_ajax_loader").hide()
+        $('#bm_search').val(query)
+        setup()
     })
 }
 
@@ -277,8 +279,7 @@ function nextPage() {
            var href = $(page_buttons[i]).attr('href')
            if (href == '#') {
                 if (i==0) {
-                    $("#bm_top_row").remove()
-                    $("#bm_info_no_bm").show()
+                    showNoBmMsg()
                 } else {
                     continue
                 }
@@ -288,10 +289,19 @@ function nextPage() {
            }
         }
     } else {
-      $("#bm_top_row").remove()
-      $("#bm_info_no_bm").show()
+      showNoBmMsg()
     }  
 }
+
+function showNoBmMsg() {
+    $("#bm_top_row").remove()
+    if ($('#bm_search').val().trim() != '') {
+        $("#bm_info_no_bm2").show()
+    } else {
+        $("#bm_info_no_bm").show()
+    }
+}
+
 
 function saveBookmark(id) {
     assert (id != null, "saveBookmark: Id is null");

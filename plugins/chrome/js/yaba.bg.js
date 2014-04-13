@@ -13,6 +13,7 @@ var titles = {
 }
 
 var yaba_url = 'http://getyaba-staging.herokuapp.com/'
+//var yaba_url = 'http://localhost:8000/'
 
 chrome.browserAction.onClicked.addListener(function(tab) {
     saveBookmark(tab);

@@ -13,6 +13,7 @@ class YabaBrowsableAPIRenderer(BrowsableAPIRenderer):
 
         # Check if output is paged
         if ('count' in content_json):
+            #print('content_json: %s'%content_json)
             context['content_native']=content_json['results']
             context['bm_count']=content_json['count']
             context['paged']=True

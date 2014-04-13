@@ -120,6 +120,16 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row" style="display:none;" id="bm_info_no_bm2">
+                    <div class="col-md-5 col-md-offset-3" style="margin-top:130px;">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <p class="info1">No more Bookmarks found based on the search string</p> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 
                 {% for item in content_native %}
                     <div class="row" id="bm_row_{{ forloop.counter0 }}">
@@ -280,6 +290,36 @@
             
         </div>
 
+        <nav class="navbar navbar-default navbar-fixed-bottom"  style="background: grey;" role="navigation">
+        <div class="container-fluid">
+            {% if user.is_authenticated %}
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group" style="margin-top: 10px;">
+                    <input type="text" class="form-control center-block" placeholder="Search Bookmarks on title or tags" size="50" id="bm_search">
+                    <img id="bm_ajax_loader" src="{% static "yaba0/img/ajax-loader.gif" %}" style="display:none;"/>
+                </div>
+            </form>
+
+            {% if paged %}
+            <ul class="nav navbar-nav pull-right pager">
+                <li {% if prev_page %} class="active" {% else %} class="disabled" {% endif %}>
+                    <a  {% if prev_page %}href="/" title="First Page" {% else %} href="#"  {% endif %}>&laquo;</a>
+                </li>
+                <li {% if prev_page %} class="active" {% else %} class="disabled" {% endif %}>
+                    <a id = "bm_page_prev" {% if prev_page %}href="{{ prev_page }}" title="Previous Page" {% else %} href="#" {% endif %}>&lt;</a>
+                </li>
+                <li {% if next_page %} class="active" {% else %} class="disabled" {% endif %}>
+                    <a id = "bm_page_next" {% if next_page %}href="{{ next_page }}" title="Next Page" {% else %} href="#" {% endif %}>&gt;</a>
+                </li>
+                <li {% if next_page %} class="active" {% else %} class="disabled" {% endif %}>
+                    <a {% if next_page %}href="/?page=last" title="Last Page" {% else %} href="#"  {% endif %}>&raquo;</a>
+                </li>
+            </ul>
+            {% endif %}
+            {% endif %}
+        </div>
+    </nav>
+
     </div>
     <!-- END Content -->
 
@@ -338,35 +378,7 @@
         </div>
     </div>
 
-    <nav class="navbar navbar-default navbar-fixed-bottom"  style="background: grey;" role="navigation">
-        <div class="container-fluid">
-            {% if user.is_authenticated %}
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group" style="margin-top: 10px;">
-                    <input type="text" class="form-control center-block" placeholder="Search Bookmarks on title or tags" size="50" id="bm_search">
-                    <img id="bm_ajax_loader" src="{% static "yaba0/img/ajax-loader.gif" %}" style="display:none;"/>
-                </div>
-            </form>
-
-            {% if paged %}
-            <ul class="nav navbar-nav pull-right pager">
-                <li {% if prev_page %} class="active" {% else %} class="disabled" {% endif %}>
-                    <a  {% if prev_page %}href="/" title="First Page" {% else %} href="#"  {% endif %}>&laquo;</a>
-                </li>
-                <li {% if prev_page %} class="active" {% else %} class="disabled" {% endif %}>
-                    <a id = "bm_page_prev" {% if prev_page %}href="{{ prev_page }}" title="Previous Page" {% else %} href="#" {% endif %}>&lt;</a>
-                </li>
-                <li {% if next_page %} class="active" {% else %} class="disabled" {% endif %}>
-                    <a id = "bm_page_next" {% if next_page %}href="{{ next_page }}" title="Next Page" {% else %} href="#" {% endif %}>&gt;</a>
-                </li>
-                <li {% if next_page %} class="active" {% else %} class="disabled" {% endif %}>
-                    <a {% if next_page %}href="/?page=last" title="Last Page" {% else %} href="#"  {% endif %}>&raquo;</a>
-                </li>
-            </ul>
-            {% endif %}
-            {% endif %}
-        </div>
-    </nav>
+    
 
     {% block footer %}
     {% endblock %}
