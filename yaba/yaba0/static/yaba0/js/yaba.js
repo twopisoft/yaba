@@ -236,7 +236,9 @@ function executeDelete(ids) {
                     if ($('[id^=bm_row_]').length == 0) {
                         nextPage()
                     } else if (success.length > 0) {
-                        location.reload()
+                        if ($('#bm_search').val().trim() == '') {
+                            location.reload()
+                        }
                     }
 
 
