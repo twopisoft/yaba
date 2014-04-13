@@ -351,7 +351,7 @@
             {% if paged %}
             <ul class="nav navbar-nav pull-right pager">
                 <li {% if prev_page %} class="active" {% else %} class="disabled" {% endif %}>
-                    <a  {% if prev_page %}href="/?page=1" title="First Page" {% else %} href="#"  {% endif %}>&laquo;</a>
+                    <a  {% if prev_page %}href="/" title="First Page" {% else %} href="#"  {% endif %}>&laquo;</a>
                 </li>
                 <li {% if prev_page %} class="active" {% else %} class="disabled" {% endif %}>
                     <a id = "bm_page_prev" {% if prev_page %}href="{{ prev_page }}" title="Previous Page" {% else %} href="#" {% endif %}>&lt;</a>
