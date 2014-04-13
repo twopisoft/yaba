@@ -1,4 +1,4 @@
-from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from django.core.paginator import Paginator
 
 class BmPaginator(Paginator):
     def validate_number(self, number):
@@ -6,10 +6,12 @@ class BmPaginator(Paginator):
             if (number=='last'):
                 number = self.num_pages
             else:
-                number = super(BmPaginator, self).validate_number(number)
-        except InvalidPage:
-            number = 1
-        except EmptyPage:
+                number = int(number)
+                if (number < 1):
+                    number = 1
+                elif (number > self.num_pages):
+                    number = self.num_pages
+        except (TypeError, ValueError):
             number = 1
 
         return number
