@@ -27,12 +27,12 @@
 
     "content_scripts": [
         {
-            "matches": ["http://www.youtube.com/*"],
+            "matches": ["*://www.youtube.com/*"],
             "js": ["js/jquery.min.js","js/youtube.js"],
             "run_at": "document_end"
         },
         {
-            "matches": ["http://www.vimeo.com/*","http://vimeo.com/*","https://vimeo.com/*"],
+            "matches": ["*://vimeo.com/*","*://www.vimeo.com/*"],
             "js": ["js/jquery.min.js","js/vimeo.js"],
             "run_at": "document_end"
         }

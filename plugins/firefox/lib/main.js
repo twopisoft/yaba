@@ -83,7 +83,7 @@ pageMod.PageMod({
     }
 })
 
-cm.Menu({
+var menuItem = cm.Menu({
     label: "YABA",
     image: data.url("yaba19.png"),
     items: [
@@ -105,6 +105,8 @@ cm.Menu({
         }),
     ]
 })
+
+menuItem.context.add()
 
 function saveBookmark() {
     setTitle(titles.saving)
@@ -129,6 +131,7 @@ function saveBookmark() {
 }
 
 function sendData(tab, cookie) {
+    console.error('cookie='+cookie)
     var params = {
         added: new Date(),
         updated: new Date(),
@@ -154,6 +157,7 @@ function sendData(tab, cookie) {
         onComplete: function(response) {
             if (response.status == 201) {
                 setOk()
+                updateTab()
                 revertToNormal(5000)
             } else if (response.status == 403) {
                 setNormal()
@@ -171,6 +175,15 @@ function openHomePage() {
     tabs.open({
         url: yaba_url,
     });
+}
+
+function updateTab() {
+    for each(var tab in tabs) {
+        if (tab.url == yaba_url) {
+            tab.reload()
+            break
+        }
+    }
 }
 
 function setTitle(label) {
@@ -218,7 +231,7 @@ function getCookie(name) {
     
     for (i=0; i<cookie_pairs.length; i++) {
         var pair = cookie_pairs[i].split('=')
-        c[pair[0]] = pair[1]
+        c[pair[0]] = pair[1].split(';')[0]
     }
 
     return c[name]

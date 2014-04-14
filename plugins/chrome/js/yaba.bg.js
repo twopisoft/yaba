@@ -89,6 +89,7 @@ function sendData(tab, cookie) {
         if (xhr.readyState == 4) {
             if (xhr.status == 201) {
                 setOk()
+                updateTab()
                 revertToNormal(5000)
             } else if (xhr.status == 403) {
                 setNormal()
@@ -106,6 +107,14 @@ function sendData(tab, cookie) {
 
 function openHomePage() {
     chrome.tabs.create({url: yaba_url})
+}
+
+function updateTab() {
+    chrome.tabs.query({url:yaba_url}, function(tabs) {
+        if (tabs && tabs.length > 0) {
+            chrome.tabs.reload(tabs[0].id)
+        }
+    })
 }
 
 function revertToNormal(millis) {
