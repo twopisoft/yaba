@@ -106,8 +106,6 @@ var menuItem = cm.Menu({
     ]
 })
 
-menuItem.context.add()
-
 function saveBookmark() {
     setTitle(titles.saving)
     setIcon(icons.saving)
