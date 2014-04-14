@@ -8,7 +8,7 @@ class BmSerializer(serializers.Serializer):
     added = serializers.DateTimeField()
     updated = serializers.DateTimeField()
     name = serializers.CharField(max_length=200)
-    url = serializers.CharField(max_length=400)
+    url = serializers.CharField(max_length=1024)
     description = serializers.CharField(max_length=10000, required=False)
     has_notify = serializers.BooleanField()
     notify_on = serializers.DateTimeField(required=False)
