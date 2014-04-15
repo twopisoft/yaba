@@ -137,7 +137,9 @@
                             <div class="panel panel-success" >
                                 <div class="panel-heading" style="background: #BDFF9C">
                                     <h3 class="panel-title">
-                                        <a href="{{ item.url }}" id="bm_title_{{ forloop.counter0 }}" target="_blank">{{ item.name }}</a> 
+                                        <a href="{{ item.url }}" id="bm_title_{{ forloop.counter0 }}" target="_blank">
+                                        <img class="img-rounded" src="http://i.dawn.com/medium/2014/04/534b4bcfb3b2a.jpg?r=1422078428" width="60" height="50"/>
+                                        {{ item.name }}</a> 
                                         <div class="pull-right">
                                             <span class="glyphicon glyphicon-ok-sign label label-success" id="bm_save_success_{{ forloop.counter0 }}"
                                                   style="margin-right: 5px; font-size: 14px; display:none;">Saved</span>
@@ -152,6 +154,7 @@
                                         <form class="form-horizontal" role="form">
                                             <input type="hidden" id="bm_id_{{ forloop.counter0 }}" value={{ item.id }}>
                                             <div class="form-group bm-form-required">
+
                                                 <label for="bm_name_{{ forloop.counter0 }}" class="col-sm-1 control-label text-primary">Name:</label>
                                                 <div class="col-sm-10">
                                                     <input type="text" class="form-control " id="bm_name_{{ forloop.counter0 }}" value="{{ item.name }}">
