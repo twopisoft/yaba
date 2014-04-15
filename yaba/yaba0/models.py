@@ -13,6 +13,7 @@ class BookMark(models.Model):
     updated = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=200, blank=True, default='')
     url = models.CharField(max_length=1024, blank=True)
+    image_url = models.CharField(max_length=400, blank=True)
     description = models.TextField(blank=True, default='')
     has_notify = models.BooleanField(default=False)
     notify_on = models.DateTimeField(blank=True, null=True)

@@ -201,6 +201,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     #'djangotoolbox',
     'rest_framework',
+    'south',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
