@@ -47,7 +47,7 @@
                         {% if user.is_authenticated %}
                             <li class="dropdown">
                                 
-                                <img src="{{ user.profile.profile_image_url }}" height="40" width="40"/>
+                                <img class="img-rounded" src="{{ user.profile.profile_image_url }}" height="40" width="40"/>
                                 <span>
                                     <a href="#" id="bm_user_id" class="dropdown-toggle" data-toggle="dropdown">
                                         {% if user.profile.profile_fullname %}
