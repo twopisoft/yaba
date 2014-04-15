@@ -45,7 +45,7 @@ class BookmarksList(generics.ListCreateAPIView):
             metas = utils.get_metas(obj.url)
             print("metas=%s"%metas)
             obj.image_url = metas.get(u'og:image','')
-            obj.tags = metas.get(u'og:type','')
+            obj.tags = ', '.join([metas.get(u'og:type',''),metas.get(u'og:site_name')])
 
 class BookmarksSearch(generics.ListAPIView):
     renderer_classes = (YabaBrowsableAPIRenderer,JSONRenderer)
