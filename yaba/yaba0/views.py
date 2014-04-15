@@ -37,11 +37,15 @@ class BookmarksList(generics.ListCreateAPIView):
             obj.id = other.id
             obj.added = other.added
             obj.description = other.description
+            obj.image_url = other.image_url
             obj.tags = other.tags
             obj.has_notify = other.has_notify
             obj.notify_on = other.notify_on
         except BookMark.DoesNotExist:
-            pass
+            metas = utils.get_metas(obj.url)
+            print("metas=%s"%metas)
+            obj.image_url = metas.get(u'og:image','')
+            obj.tags = metas.get(u'og:type','')
 
 class BookmarksSearch(generics.ListAPIView):
     renderer_classes = (YabaBrowsableAPIRenderer,JSONRenderer)
