@@ -22,12 +22,9 @@ class BookmarksList(generics.ListCreateAPIView):
         query_string = self.request.GET.get(query_param,"").strip()
 
         if not query_string:
-            #return BookMark.objects.filter(owner=user).order_by('-added')
             return BookMark.objects.filter(owner=user)
 
-        #return utils.search(self.request, BookMark, ['tags','name']).order_by('-added')
         return utils.search(self.request, BookMark, ['tags','name'])
-        #return BookMark.objects.all()
 
     def pre_save(self, obj):
         obj.owner = self.request.user
@@ -43,9 +40,8 @@ class BookmarksList(generics.ListCreateAPIView):
             obj.notify_on = other.notify_on
         except BookMark.DoesNotExist:
             metas = utils.get_metas(obj.url)
-            print("metas=%s"%metas)
             obj.image_url = metas.get(u'og:image','')
-            obj.tags = ', '.join([metas.get(u'og:type',''),metas.get(u'og:site_name')])
+            obj.tags = ', '.join([metas.get(u'og:type',''),metas.get(u'og:site_name','')])
 
 class BookmarksSearch(generics.ListAPIView):
     renderer_classes = (YabaBrowsableAPIRenderer,JSONRenderer)
