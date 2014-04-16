@@ -74,6 +74,7 @@ function sendData(tab, cookie) {
         updated: new Date(),
         name:  tab.title,
         url:   tab.url,
+        image_url: '',
         description: '',
         tags: '',
         has_notify: false,

@@ -15,6 +15,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+#SECRET_KEY='6bz%#sk#+3@3787-oyx_v_aes3arsedk!&ntk8!$%ep_w#k0&^yaba'
+
 '''
 DATABASES = {
     'default': {
@@ -31,9 +33,23 @@ DATABASES = {
 }
 '''
 
-DATABASES = {
-    'default': dj_database_url.config(default='sqlite:///db.sqlite3')
+DEFAULT_DB_NAME='getyaba-staging'
+DBS = {
+    'getyaba-staging': dj_database_url.config(),
+    'local': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'yaba0',                      
+        'USER': 'admin',
+        'PASSWORD': 'abc123456',
+        'HOST': ''
+    }
 }
+
+DATABASES = {
+    'default': DBS[DEFAULT_DB_NAME]
+}
+
+#AUTH_USER_MODEL=auth.User
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 

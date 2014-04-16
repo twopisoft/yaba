@@ -5,6 +5,7 @@
     "version": "0.0.2",
 
     "permissions": [
+        //"http://localhost:8000/",
         "http://getyaba-staging.herokuapp.com/",
         "tabs",
         "background",
