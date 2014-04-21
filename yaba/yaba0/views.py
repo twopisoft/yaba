@@ -7,9 +7,7 @@ from rest_framework.renderers import JSONRenderer
 from yaba0.permissions import IsOwner
 from yaba0.renderers import YabaBrowsableAPIRenderer
 from yaba0.paginators import BmPaginator
-from yaba0 import utils
-from yaba0.summarize import summarize_page
-from requests import get, exceptions
+from yaba0.document import Document
 
 class BookmarksList(generics.ListCreateAPIView):
     renderer_classes = (YabaBrowsableAPIRenderer,JSONRenderer)
@@ -41,23 +39,22 @@ class BookmarksList(generics.ListCreateAPIView):
             obj.has_notify = other.has_notify
             obj.notify_on = other.notify_on
         except BookMark.DoesNotExist:
-            try:
-                req = get(obj.url)
-                req.encoding = 'utf-8'
-                html = req.text
-                metas = utils.get_metas(html)
-                obj.image_url = metas.get(u'og:image','')
-                obj.tags = ', '.join([metas.get(u'og:type',''),metas.get(u'og:site_name','')])
+            self.set_obj_attrs(obj)
 
-                import re
-                r = re.compile('article', re.IGNORECASE)
-                if (r.match(metas.get(u'og:type',''))):
-                    summary = str(summarize_page(html)).strip()
-                    obj.description = summary if (summary and len(summary) > 10) else metas.get(u'og:description','')
-                else:
-                    obj.description = metas.get(u'og:description','')
-            except exceptions.RequestException:
-                pass 
+    def set_obj_attrs(self, obj):
+        doc = Document(obj.url).load()
+        if (doc.loaded):
+            obj.image_url = doc.image_url()
+            tags = ', '.join([doc.doctype(),doc.site()])
+            if (tags.strip() != ','):
+                obj.tags = tags
+
+            if (doc.doctype() == 'article' and doc.lang() == 'en'):
+                summary = doc.summary()
+                obj.description = summary if (summary and len(summary) > 10) else doc.description()
+            else:
+                obj.description = doc.description()
+
 
 class BookmarksSearch(generics.ListAPIView):
     renderer_classes = (YabaBrowsableAPIRenderer,JSONRenderer)
