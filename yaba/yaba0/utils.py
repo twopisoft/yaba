@@ -1,6 +1,6 @@
 import re
-import urllib2
 from bs4 import BeautifulSoup
+import requests
 
 from django.db.models import Q
 
@@ -50,17 +50,16 @@ def search(request,model,fields,query_param="q" ):
 
     return found_entries
 
-def get_metas(url):
-    try:
-        field=u'property'
-        soup = BeautifulSoup(urllib2.urlopen(url).read())
-        metas = soup('meta',property=re.compile('og:'))
-        if (len(metas)==0):
-            field=u'name'
-            metas=soup('meta',attrs={'name': re.compile('og:')})
-        ret={}
-        for x in [m.attrs for m in metas]:
-            ret[x[field]]=x[u'content']
-        return ret
-    except urllib2.URLError, urllib2.HTTPError:
-        return {}
+def get_metas(html):
+    field=u'property'
+    soup = BeautifulSoup(html)
+    metas = soup('meta',property=re.compile('og:'))
+    if (len(metas)==0):
+        field=u'name'
+        metas=soup('meta',attrs={'name': re.compile('og:')})
+    ret={}
+    for x in [m.attrs for m in metas]:
+        ret[x[field]]=x[u'content']
+    #print('metas=%s'%ret)
+    return ret
+

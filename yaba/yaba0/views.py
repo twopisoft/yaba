@@ -8,6 +8,8 @@ from yaba0.permissions import IsOwner
 from yaba0.renderers import YabaBrowsableAPIRenderer
 from yaba0.paginators import BmPaginator
 from yaba0 import utils
+from yaba0.summarize import summarize_page
+from requests import get, exceptions
 
 class BookmarksList(generics.ListCreateAPIView):
     renderer_classes = (YabaBrowsableAPIRenderer,JSONRenderer)
@@ -39,9 +41,21 @@ class BookmarksList(generics.ListCreateAPIView):
             obj.has_notify = other.has_notify
             obj.notify_on = other.notify_on
         except BookMark.DoesNotExist:
-            metas = utils.get_metas(obj.url)
-            obj.image_url = metas.get(u'og:image','')
-            obj.tags = ', '.join([metas.get(u'og:type',''),metas.get(u'og:site_name','')])
+            try:
+                html = get(obj.url).text
+                metas = utils.get_metas(html)
+                obj.image_url = metas.get(u'og:image','')
+                obj.tags = ', '.join([metas.get(u'og:type',''),metas.get(u'og:site_name','')])
+
+                import re
+                r = re.compile('article', re.IGNORECASE)
+                if (r.match(metas.get(u'og:type',''))):
+                    summary = summarize_page(html)
+                    obj.description = summary if summary else metas.get(u'og:description','')
+                else:
+                    obj.description = metas.get(u'og:description','')
+            except exceptions.RequestException:
+                pass 
 
 class BookmarksSearch(generics.ListAPIView):
     renderer_classes = (YabaBrowsableAPIRenderer,JSONRenderer)
