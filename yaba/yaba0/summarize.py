@@ -11,6 +11,8 @@ import sys
 
 _IS_PYTHON_3 = sys.version_info.major == 3
 
+nltk.data.path.append('./nltk_data/')
+
 stop_words = stopwords.words('english')
 
 # The low end of shared words to consider
