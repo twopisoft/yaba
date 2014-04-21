@@ -8,6 +8,7 @@ from yaba0.permissions import IsOwner
 from yaba0.renderers import YabaBrowsableAPIRenderer
 from yaba0.paginators import BmPaginator
 from yaba0.document import Document
+import utils
 
 class BookmarksList(generics.ListCreateAPIView):
     renderer_classes = (YabaBrowsableAPIRenderer,JSONRenderer)
