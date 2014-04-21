@@ -127,6 +127,7 @@ def summarize_page(rawHtml):
 
     html = bs4.BeautifulSoup(rawHtml)
     b = find_likely_body(html)
+    print('body=%s'%b)
     summaries = summarize_blocks(map(lambda p: p.text, b.find_all('p')))
     return Summary(None, b, html.title.text if html.title else None, summaries)
 

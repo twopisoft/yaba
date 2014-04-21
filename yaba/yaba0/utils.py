@@ -59,7 +59,7 @@ def get_metas(html):
         metas=soup('meta',attrs={'name': re.compile('og:')})
     ret={}
     for x in [m.attrs for m in metas]:
-        ret[x[field]]=x[u'content']
+        ret[x[field]]=unicode(x[u'content'])
     #print('metas=%s'%ret)
     return ret
 

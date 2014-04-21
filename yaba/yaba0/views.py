@@ -42,7 +42,9 @@ class BookmarksList(generics.ListCreateAPIView):
             obj.notify_on = other.notify_on
         except BookMark.DoesNotExist:
             try:
-                html = get(obj.url).text
+                req = get(obj.url)
+                req.encoding = 'utf-8'
+                html = req.text
                 metas = utils.get_metas(html)
                 obj.image_url = metas.get(u'og:image','')
                 obj.tags = ', '.join([metas.get(u'og:type',''),metas.get(u'og:site_name','')])
@@ -50,8 +52,8 @@ class BookmarksList(generics.ListCreateAPIView):
                 import re
                 r = re.compile('article', re.IGNORECASE)
                 if (r.match(metas.get(u'og:type',''))):
-                    summary = summarize_page(html)
-                    obj.description = summary if summary else metas.get(u'og:description','')
+                    summary = str(summarize_page(html)).strip()
+                    obj.description = summary if (summary and len(summary) > 10) else metas.get(u'og:description','')
                 else:
                     obj.description = metas.get(u'og:description','')
             except exceptions.RequestException:
