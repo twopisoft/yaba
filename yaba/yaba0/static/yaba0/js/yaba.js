@@ -10,7 +10,6 @@ var errorMessages= {
     FORBIDDEN: "No enough permission"
 }
 
-//var base_url='/yaba0/api/'
 var base_url='/'
 
 function setup () {
@@ -22,6 +21,7 @@ function setup () {
     setupNotify()
     setupLogin()
     setupSearch()
+    //setupSettings()
 }
 
 function setupDate() {
@@ -135,6 +135,16 @@ function setupSearch() {
             e.preventDefault()
             searchBookmark($(this).val().trim())
         }
+    })
+}
+
+function setupSettings() {
+    $('#bm_btn_settings').unbind('click').click(function(e) {
+        e.preventDefault()
+        $('#settings_modal').modal('show')
+    })
+
+    $('#saveOkButton').unbind('click').click(function(){
     })
 }
 

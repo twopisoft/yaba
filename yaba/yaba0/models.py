@@ -29,6 +29,12 @@ from django.db import models
  
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
+    paginate_by = models.PositiveSmallIntegerField(default=10)
+    email_notify = models.BooleanField(default=False)
+    push_notify = models.BooleanField(default=False)
+    notify_max = models.SmallIntegerField(default=-1)
+    notify_current = models.SmallIntegerField(default=0)
+    auto_summarize = models.BooleanField(default=True)
  
     def __unicode__(self):
         return "{}'s profile".format(self.user.username)
@@ -60,6 +66,16 @@ class UserProfile(models.Model):
 
         if len(profile):
             return profile[0].extra_data['name']
+
+        return ''
+
+    def socialaccount_provider(self):
+        profile = SocialAccount.objects.filter(user_id=self.user.id)
+
+        if len(profile):
+            return profile[0].provider
+
+        return ''
 
  
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])

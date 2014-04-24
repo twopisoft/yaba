@@ -33,7 +33,7 @@ DATABASES = {
 }
 '''
 
-DEFAULT_DB_NAME='getyaba-staging'
+DEFAULT_DB_NAME='local'
 DBS = {
     'getyaba-staging': dj_database_url.config(),
     'local': {
@@ -191,8 +191,8 @@ AUTHENTICATION_BACKENDS = (
 )
 
 REST_FRAMEWORK = {
-    'PAGINATE_BY': 10,                 # Default to 10
-    'MAX_PAGINATE_BY': 100             # Maximum limit allowed when using `?page_size=xxx`.
+    #'PAGINATE_BY': 10,                 # Default to 10
+    #'MAX_PAGINATE_BY': 100             # Maximum limit allowed when using `?page_size=xxx`.
 }
 
 INSTALLED_APPS = (

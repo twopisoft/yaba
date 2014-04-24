@@ -1,0 +1,139 @@
+{% extends "yaba0/yaba_base.html" %}
+
+{% load url from future %}
+{% load rest_framework %}
+{% load staticfiles %}
+{% load socialaccount %}
+{% load i18n %}
+{% load account %}
+
+                    {% block list_content %}
+                    {% if content_native|length > 0 %}
+                    <div class="row-fluid">
+                        <div class="col-sm-8 col-sm-offset-2">
+                            <div class="panel panel-success" >
+                                <div class="panel-heading" style="background: #BDFF9C">
+                                    <h3 class="panel-title">User Settings for {{ user.username }}</h3>
+                                </div>
+
+                                <div class="panel-body">
+                                    <form class="form-horizontal" role="form">
+                                        {% if user.profile.account_verified %}
+                                        <div class="form-group">
+                                            <label for="bm_settings_email" class="col-sm-3 control-label text-primary">Email:</label>
+                                            <div class="col-sm-7">
+                                                <div class="input-group" id="bm_email_input_group">
+                                                    <input type="text" class="form-control" id="bm_settings_email" value="{{ user.email }}">
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-ok" title="Verified" id="bm_email_verified_span"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% else %}
+                                        <div class="form-group">
+                                            <label for="bm_settings_email" class="col-sm-3 control-label text-primary">Email:</label>
+                                            <div class="col-sm-7">
+                                                <div class="input-group" id="bm_email_input_group">
+                                                    <input type="text" class="form-control" id="bm_settings_email" value="{{ user.email }}">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary" id="bm_settings_btn_verify">Verify</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+
+                                        {% if user.profile.socialaccount_provider|length > 0 %}
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label text-primary">Social Account:</label>
+                                            {% if user.profile.socialaccount_provider|lower == 'facebook' %}
+                                            <image class="col-sm-1" src="{% static "yaba0/img/fb20.png" %}" title="Facebook"/>
+                                            {% elif user.profile.socialaccount_provider|lower == 'google' %}
+                                            <image src="{% static "yaba0/img/google_plus.png" %}" title="Google"/>
+                                            {% else %}
+                                            <label class="control-label text-primary">{{user.profile.socialaccount_provider}}</label>
+                                            {% endif %}
+                                            <div style="margin-top:5px">
+                                                <button type="button" class="btn btn-xs btn-primary" title="Permissions" >
+                                                    <span class="glyphicon glyphicon-flag"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-xs btn-danger" title="Disconnect">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                        <div class="form-group">
+                                            <label for="bm_settings_notify" class="col-sm-3 control-label text-primary">Reminders:</label>
+                                            <div class="col-sm-6">
+                                                <input type="checkbox" id="bm_settings_notify" {% if content_native.email_notify %}checked{% endif %}>
+                                                <label class="col-sm-offset-1 control-label">Current:</label>
+                                                <label class="col-sm-offset-1 text-success">{{ user.profile.notify_current }}</label>
+                                                <label class="col-sm-offset-1 control-label">Limit:</label>
+                                                {% if user.profile.notify_max == -1 %}
+                                                <label class="col-sm-offset-1 text-danger">No Limit</label>
+                                                {% else %}
+                                                <label class="col-sm-offset-1 text-danger">{{ user.profile.notify_max }}</label>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="bm_settings_summarize" class="col-sm-3 control-label text-primary">Auto Summarize:</label>
+                                            <div class="col-sm-6" style="margin-top: 5px">
+                                                <input type="checkbox" id="bm_settings_summarize" {% if content_native.auto_summarize %} checked {% endif %} >
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="bm_settings_paginate" class="col-sm-3 control-label text-primary">Bookmarks/Page:</label>
+                                            <div class="col-sm-6" style="margin-top: 5px">
+                                                <select id="bm_settings_paginate">
+                                                    <option {% if content_native.paginate_by == 10 %}selected="selected"{% endif %}>10</option>
+                                                    <option {% if content_native.paginate_by == 50 %}selected="selected"{% endif %}>50</option>
+                                                    <option {% if content_native.paginate_by == 100 %}selected="selected"{% endif %}>100</option>
+                                                    <option value="nopage" 
+                                                            {% if content_native.paginate_by == 0 %}selected="selected"{% endif %}>No Paging</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="panel-footer" style="background: #BDFF9C">
+                                    <div>
+                                        <a type="button" href="/" class="btn btn-default">Cancel</a>
+                                        <a type="button" href="/userprofile/{{ user.profile.id }}" class="btn btn-danger" id="bm_settings_save">Save</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endblock %}
+
+        {% block extras %}
+        <div class="modal fade" id="result" tabindex="-1" role="dialog" aria-labelledby="resultTitle" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content"> 
+                    <div class="modal-header" style="background: #FFB2B2">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title text-danger" id="resultTitle"></h4>
+                    </div>
+                    <div class="modal-body" id="resultBody">
+                        <div class="text-primary" id="resultTextLine1"></div>
+                        <br/>
+                        <div class="text-primary" id="resultTextLine2"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+
+    {% block script %}
+    <script src="{% static "yaba0/js/settings.js" %}"></script>
+    {% endblock %}
+        

@@ -26,3 +26,21 @@ class YabaBrowsableAPIRenderer(BrowsableAPIRenderer):
             context['content_native']=content_json
 
         return context
+
+class UserProfileRenderer(BrowsableAPIRenderer):
+    template = 'yaba0/settings.html'
+
+    def get_context(self, data, accepted_media_type, renderer_context):
+        context = super(UserProfileRenderer, self).get_context(data,accepted_media_type,renderer_context)
+        context['version'] = VERSION
+        content = context['content']
+        content_json = loads(content)
+        #print('context=%s'%context['content'])
+
+        if ('detail' in content_json):
+            if (content_json['detail']=='Not found'):
+                context['content_native']=[]
+        else:
+            context['content_native']=content_json
+
+        return context

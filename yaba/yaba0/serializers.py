@@ -1,7 +1,7 @@
 from django.forms import widgets
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import BookMark
+from .models import BookMark, UserProfile
 
 class BmSerializer(serializers.Serializer):
     id = serializers.Field()
@@ -27,6 +27,11 @@ class BmSerializer(serializers.Serializer):
     def save_object(self, obj, **kwargs):
         obj.save()
 
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ('paginate_by','email_notify','push_notify','auto_summarize')
+        
 class UserSerializer(serializers.ModelSerializer):
     bm = serializers.PrimaryKeyRelatedField(many=True)
 
