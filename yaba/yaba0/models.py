@@ -18,7 +18,7 @@ class BookMark(models.Model):
     has_notify = models.BooleanField(default=False)
     notify_on = models.DateTimeField(blank=True, null=True)
     tags = models.TextField(blank=True, default='')
-    owner = models.ForeignKey('auth.User', related_name='bm')
+    user = models.ForeignKey('auth.User', related_name='bm')
 
     class Meta:
         ordering = ('-added',)
@@ -32,7 +32,7 @@ class UserProfile(models.Model):
     paginate_by = models.PositiveSmallIntegerField(default=10)
     email_notify = models.BooleanField(default=False)
     push_notify = models.BooleanField(default=False)
-    notify_max = models.SmallIntegerField(default=-1)
+    notify_max = models.SmallIntegerField(default=5)
     notify_current = models.SmallIntegerField(default=0)
     auto_summarize = models.BooleanField(default=True)
  
@@ -72,11 +72,9 @@ class UserProfile(models.Model):
     def socialaccount_provider(self):
         profile = SocialAccount.objects.filter(user_id=self.user.id)
 
-        if len(profile):
-            return profile[0].provider
-
-        return ''
-
+        ret = [{'name': p.provider.lower(), 'id': p.id} for p in profile]
+        return sorted(ret, key=lambda x: x['name'])
  
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
+
 

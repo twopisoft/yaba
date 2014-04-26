@@ -14,7 +14,7 @@ class BmSerializer(serializers.Serializer):
     has_notify = serializers.BooleanField()
     notify_on = serializers.DateTimeField(required=False)
     tags = serializers.CharField(max_length=10000, required=False)
-    owner = serializers.Field(source='owner.username')
+    user = serializers.Field(source='user.username')
 
     def restore_object(self, attrs, instance=None):
         if instance is not None:

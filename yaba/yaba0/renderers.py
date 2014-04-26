@@ -1,4 +1,5 @@
-from rest_framework.renderers import BrowsableAPIRenderer
+from rest_framework.renderers import BrowsableAPIRenderer, JSONRenderer
+from django.conf import settings
 from yaba0 import VERSION
 from json import loads
 
@@ -43,4 +44,14 @@ class UserProfileRenderer(BrowsableAPIRenderer):
         else:
             context['content_native']=content_json
 
+        return context
+
+class SocialAccountRenderer(JSONRenderer):
+
+    def render(self, data, accepted_media_type=None, renderer_context=None):
+        renderer_context = renderer_context or {}
+        data = data or []
+        if (len(data) > 0):
+            data[0]['permissions'] = settings.SOCIALACCOUNT_PROVIDERS[data[0]['provider']]['SCOPE']
+        context = super(SocialAccountRenderer, self).render(data, accepted_media_type, renderer_context)
         return context

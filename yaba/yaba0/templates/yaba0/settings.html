@@ -37,23 +37,30 @@
                                                 <div class="input-group" id="bm_email_input_group">
                                                     <input type="text" class="form-control" id="bm_settings_email" value="{{ user.email }}">
                                                     <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-primary" id="bm_settings_btn_verify">Verify</button>
+                                                        <button type="button" class="btn btn-primary" id="bm_settings_btn_verify" title="Verification pending">Verify</button>
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
                                         {% endif %}
 
-                                        {% if user.profile.socialaccount_provider|length > 0 %}
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label text-primary">Social Account:</label>
-                                            {% if user.profile.socialaccount_provider|lower == 'facebook' %}
-                                            <image class="col-sm-1" src="{% static "yaba0/img/fb20.png" %}" title="Facebook"/>
-                                            {% elif user.profile.socialaccount_provider|lower == 'google' %}
-                                            <image src="{% static "yaba0/img/google_plus.png" %}" title="Google"/>
-                                            {% else %}
-                                            <label class="control-label text-primary">{{user.profile.socialaccount_provider}}</label>
+                                            <label class="col-sm-3 control-label text-primary">Social Account(s):</label>
+                                            {% if ser.profile.socialaccount_provider|length > 0 %}
+                                            <div class="col-sm-5">
+                                                {% for provider in user.profile.socialaccount_provider %}
+                                                {% if provider.name == 'facebook' %}
+                                                <image  class="img-custom" src="{% static "yaba0/img/fb20.png" %}" name="Facebook" title="Facebook" id="bm_prov_{{provider.id}}"></image>
+                                                {% elif provider.name == 'google' %}
+                                                <image class="img-custom" src="{% static "yaba0/img/gl20.png" %}" name="Google+" title="Google+" id="bm_prov_{{provider.id}}"></image>
+                                                {% endif %}
+                                                {% endfor %}
+                                                <button type="button" class="btn-custom" title="Add a social account" id="bm_add_prov">
+                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                </button>
+                                            </div>
                                             {% endif %}
+                                            <!--
                                             <div style="margin-top:5px">
                                                 <button type="button" class="btn btn-xs btn-primary" title="Permissions" >
                                                     <span class="glyphicon glyphicon-flag"></span>
@@ -62,19 +69,18 @@
                                                     <span class="glyphicon glyphicon-remove"></span>
                                                 </button>
                                             </div>
+                                            -->
                                         </div>
-                                        {% endif %}
                                         <div class="form-group">
                                             <label for="bm_settings_notify" class="col-sm-3 control-label text-primary">Reminders:</label>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-6" style="margin-top:5px" >
                                                 <input type="checkbox" id="bm_settings_notify" {% if content_native.email_notify %}checked{% endif %}>
-                                                <label class="col-sm-offset-1 control-label">Current:</label>
-                                                <label class="col-sm-offset-1 text-success">{{ user.profile.notify_current }}</label>
-                                                <label class="col-sm-offset-1 control-label">Limit:</label>
+                                                {% if content_native.email_notify %}
                                                 {% if user.profile.notify_max == -1 %}
-                                                <label class="col-sm-offset-1 text-danger">No Limit</label>
+                                                <label class="col-sm-offset-1 text-success">({{ user.profile.notify_current }} reminders set)</label>
                                                 {% else %}
-                                                <label class="col-sm-offset-1 text-danger">{{ user.profile.notify_max }}</label>
+                                                <label class="col-sm-offset-1 text-success">({{ user.profile.notify_current }}/{{ user.profile.notify_max }} reminders set)</label>
+                                                {% endif %}
                                                 {% endif %}
                                             </div>
                                         </div>
@@ -104,6 +110,35 @@
                                     <div>
                                         <a type="button" href="/" class="btn btn-default">Cancel</a>
                                         <a type="button" href="/userprofile/{{ user.profile.id }}" class="btn btn-danger" id="bm_settings_save">Save</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row-fluid" style="margin-top:20px; display:none" id="bm_social_info">
+                        <div class="col-sm-8 col-sm-offset-2">
+                            <div class="panel panel-success" >
+                                <div class="panel-heading" style="background: #BDFF9C">
+                                    <h3 class="panel-title" id="bm_social_info_title"></h3>
+                                    <img id="bm_ajax_loader" src="{% static "yaba0/img/ajax-loader.gif" %}"/>
+                                </div>
+
+                                <div class="panel-body" id="bm_social_info_body">
+                                    <p>YABA has access to following information:</p>
+                                    <div id="bm_social_info_body_text" style="display:none;">
+                                        <ul>
+                                            <li>Basic Info: Id, Name, Username, Link, Gender, Locale, Age Range</li>
+                                            <li id="bm_social_info_basic_extra">Other Basic Info: </li>
+                                            <li id="bm_social_info_email">Email: </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="panel-footer" style="background: #BDFF9C">
+                                    <div>
+                                        <a type="button" class="btn btn-default" id="bm_social_info_cancel">Cancel</a>
+                                        <a type="button" href="#" class="btn btn-danger" id="bm_social_info_disconnect">Disconnect</a>
                                     </div>
                                 </div>
                             </div>

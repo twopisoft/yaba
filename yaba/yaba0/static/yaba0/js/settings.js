@@ -11,6 +11,7 @@ var base_url='/'
 function setup () {
     setupVerify()
     setupSave()
+    setupSocial()
 }
 
 function setupVerify() {
@@ -57,7 +58,7 @@ function setupSave() {
 
         var email = $('#bm_settings_email').val().trim()
         if (email == '') {
-            displayEmailError()
+            displayEmailError('Email address is missing')
         } else {
             var data = {
                 paginate_by: (function() {
@@ -87,14 +88,16 @@ function setupSave() {
                     }, true)
                 },
                 error: function(xhr, stat, err) {
-                    showDialog({
+                    /*showDialog({
                         title: 'Settings Update Failed',
                         line1: 'An error occured while updating the settings:',
                         line2: (function() {
                             var err = JSON.parse(xhr.responseText)
                             return err.err_msg.join("")
                         })()
-                    }, true)
+                    }, true)*/
+                    var err = JSON.parse(xhr.responseText)
+                    displayEmailError(err.err_msg.join(""))
                     
                 },
                 beforeSend: function(xhr, settings) {
@@ -105,14 +108,59 @@ function setupSave() {
     })
 }
 
-function displayEmailError() {
+function setupSocial() {
+    $('[id^=bm_prov_').unbind('click').click(function() {
+        var id = getId(this.id)
+        var name = $(this).attr('name')
+        showSocialInfo(id, name)
+    })
+}
+
+function showSocialInfo(id, name) {
+    $('#bm_social_info_title').text('Social Account: '+name)
+    $('#bm_social_info').show()
+    $('#bm_ajax_loader').hide()
+    $('#bm_social_info_body_text').hide()
+    $('#bm_social_info_cancel').unbind('click').click(function() {
+        $('#bm_social_info').hide()
+    })
+    $('#bm_social_info_disconnect').unbind('click').click(function() {
+        $('#bm_social_info').hide()
+    })
+
+    var extra = $('#bm_social_info_basic_extra').text()
+    if (name == 'Facebook') {
+        $('#bm_social_info_basic_extra').text(extra+'Friends List, Information you choose to share')
+    } else if (name == 'Google+') {
+        $('#bm_social_info_basic_extra').text(extra+'None')
+    }
+
+    $('#bm_ajax_loader').show()
+    $.ajax({
+        url: base_url+'social/'+id+"/.json",
+        type: "get",
+        success: function(d, stat, xhr) {
+            var email = $('#bm_social_info_email').text()
+            console.log('extra_data'+d[0].extra_data)
+            var json = JSON.parse(d[0].extra_data)
+            $('#bm_social_info_email').html(email+'<b>'+json.email+'</b>')
+            $('#bm_social_info_body_text').show()
+            $('#bm_ajax_loader').hide()
+        },
+        error: function(xhr, stat, err) {
+            $('#bm_ajax_loader').hide()
+        }
+    })
+}
+
+function displayEmailError(msg) {
     var email_input_group = $('#bm_email_input_group')
     var email_verified_span = $('#bm_email_verified_span')
     $(email_input_group).addClass('has-error')
     if (email_verified_span) {
         $(email_verified_span).addClass('glyphicon-remove')
     }
-    $(email_input_group).tooltip({title: 'Email address is missing'}).tooltip('show')    
+    $(email_input_group).tooltip({title: msg}).tooltip('show')    
 }
 
 function showDialog(msg, reload) {
@@ -123,6 +171,19 @@ function showDialog(msg, reload) {
     $('#result').unbind('hidden.bs.modal').on('hidden.bs.modal', function() {
         if (reload) location.reload()
     })
+}
+
+function assert(condition, message) {
+    if (!condition) throw message || "Assertion Failure"
+}
+
+function getId(targetId) {
+    assert (targetId != null, "getId: Id is null");
+    var id = /^.*?_(\d+)$/.exec(targetId);
+    if (id != null) {
+        return id[1]
+    }
+    return null
 }
 
 // From Django help pages
