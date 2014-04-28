@@ -46,30 +46,36 @@
 
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label text-primary">Social Account(s):</label>
-                                            {% if ser.profile.socialaccount_provider|length > 0 %}
+                                            {% if user.profile.socialaccount_provider|length > 0 %}
                                             <div class="col-sm-5">
                                                 {% for provider in user.profile.socialaccount_provider %}
                                                 {% if provider.name == 'facebook' %}
-                                                <image  class="img-custom" src="{% static "yaba0/img/fb20.png" %}" name="Facebook" title="Facebook" id="bm_prov_{{provider.id}}"></image>
+                                                <image class="img-custom" src="{% static "yaba0/img/fb20.png" %}" name="Facebook" title="Google+" id="bm_prov_{{provider.id}}"></image>
                                                 {% elif provider.name == 'google' %}
                                                 <image class="img-custom" src="{% static "yaba0/img/gl20.png" %}" name="Google+" title="Google+" id="bm_prov_{{provider.id}}"></image>
                                                 {% endif %}
                                                 {% endfor %}
-                                                <button type="button" class="btn-custom" title="Add a social account" id="bm_add_prov">
-                                                    <span class="glyphicon glyphicon-plus"></span>
-                                                </button>
+                                                {% if not user.profile.del_pending %}
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn-custom dropdown-toggle" data-toggle="dropdown" title="Add a social account" id="bm_add_prov">
+                                                        <span class="glyphicon glyphicon-plus"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu" style="background-color: #B2B2CC;">
+                                                        <li role="presentation">
+                                                            <a href="/accounts/facebook/login/?process=connect&next=/userprofile/{{user.profile.id}}/"  >
+                                                                <span class="glyphicon icon-fb-share"></span>Facebook
+                                                            </a>
+                                                        </li>
+                                                        <li role="presentation">
+                                                            <a href="/accounts/google/login/?process=connect&next=/userprofile/{{user.profile.id}}/">
+                                                                <span class="glyphicon icon-gl-share"></span>Google+
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                {% endif %}
                                             </div>
                                             {% endif %}
-                                            <!--
-                                            <div style="margin-top:5px">
-                                                <button type="button" class="btn btn-xs btn-primary" title="Permissions" >
-                                                    <span class="glyphicon glyphicon-flag"></span>
-                                                </button>
-                                                <button type="button" class="btn btn-xs btn-danger" title="Disconnect">
-                                                    <span class="glyphicon glyphicon-remove"></span>
-                                                </button>
-                                            </div>
-                                            -->
                                         </div>
                                         <div class="form-group">
                                             <label for="bm_settings_notify" class="col-sm-3 control-label text-primary">Reminders:</label>
@@ -109,7 +115,13 @@
                                 <div class="panel-footer" style="background: #BDFF9C">
                                     <div>
                                         <a type="button" href="/" class="btn btn-default">Cancel</a>
+                                        {% if user.profile.del_pending %}
+                                        <span class="text-danger">This account has been marked for Removal</span>
+                                        <a type="button" href="/userprofile/{{ user.profile.id }}" class="btn btn-success pull-right" id="bm_settings_cancel_remove">Cancel Account Remove</a>
+                                        {% else %}
                                         <a type="button" href="/userprofile/{{ user.profile.id }}" class="btn btn-danger" id="bm_settings_save">Save</a>
+                                        <a type="button" href="/userprofile/{{ user.profile.id }}" class="btn btn-warning pull-right" id="bm_settings_remove">Remove Account</a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -129,17 +141,23 @@
                                     <div id="bm_social_info_body_text" style="display:none;">
                                         <ul>
                                             <li>Basic Info: Id, Name, Username, Link, Gender, Locale, Age Range</li>
-                                            <li id="bm_social_info_basic_extra">Other Basic Info: </li>
-                                            <li id="bm_social_info_email">Email: </li>
+                                            <li id="bm_social_info_basic_extra"></li>
+                                            <li id="bm_social_info_email"></li>
                                         </ul>
                                     </div>
                                 </div>
 
                                 <div class="panel-footer" style="background: #BDFF9C">
+                                    {% if user.profile.socialaccount_provider|length > 1 %}
                                     <div>
                                         <a type="button" class="btn btn-default" id="bm_social_info_cancel">Cancel</a>
                                         <a type="button" href="#" class="btn btn-danger" id="bm_social_info_disconnect">Disconnect</a>
                                     </div>
+                                    {% else %}
+                                    <div>
+                                        <a type="button" class="btn btn-default" id="bm_social_info_cancel">OK</a>
+                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -162,6 +180,26 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-warning" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="confirmTitle" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content"> 
+                    <div class="modal-header" style="background: #FFB2B2">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title text-danger" id="confirmTitle"></h4>
+                    </div>
+                    <div class="modal-body" id="confirmBody">
+                        <div class="text-primary" id="confirmTextLine1"></div>
+                        <br/>
+                        <div class="text-primary" id="confirmTextLine2"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" id="confirmOk">OK</button>
                     </div>
                 </div>
             </div>

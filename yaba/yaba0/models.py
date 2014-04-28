@@ -35,6 +35,9 @@ class UserProfile(models.Model):
     notify_max = models.SmallIntegerField(default=5)
     notify_current = models.SmallIntegerField(default=0)
     auto_summarize = models.BooleanField(default=True)
+    del_pending = models.BooleanField(default=False)
+    del_on = models.DateTimeField()
+    updated = models.DateTimeField(auto_now_add=True)
  
     def __unicode__(self):
         return "{}'s profile".format(self.user.username)

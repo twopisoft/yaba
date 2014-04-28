@@ -238,6 +238,7 @@
             </div>
         </div>
 
+        {% if not user.is_authenticated %}
         <div class="modal fade" id="login_modal" tabindex="-1" role="dialog" aria-labelledby="resultTitle" aria-hidden="true">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content"> 
@@ -253,6 +254,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
         {% endblock %}
 
     {% block script %}

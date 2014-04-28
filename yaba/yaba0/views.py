@@ -103,6 +103,7 @@ class UserProfileList(generics.RetrieveUpdateAPIView):
     def pre_save(self, obj):
         obj.user = self.request.user
 
+        print('obj.del_pending={}, obj.del_on={}'.format(obj.del_pending,obj.del_on))
         user_obj = User.objects.filter(username=self.request.user)[0]
         user_email = user_obj.email
         req_email = self.request.DATA.get('email', None)

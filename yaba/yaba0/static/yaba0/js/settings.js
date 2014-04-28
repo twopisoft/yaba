@@ -12,6 +12,7 @@ function setup () {
     setupVerify()
     setupSave()
     setupSocial()
+    setupRemove()
 }
 
 function setupVerify() {
@@ -88,14 +89,6 @@ function setupSave() {
                     }, true)
                 },
                 error: function(xhr, stat, err) {
-                    /*showDialog({
-                        title: 'Settings Update Failed',
-                        line1: 'An error occured while updating the settings:',
-                        line2: (function() {
-                            var err = JSON.parse(xhr.responseText)
-                            return err.err_msg.join("")
-                        })()
-                    }, true)*/
                     var err = JSON.parse(xhr.responseText)
                     displayEmailError(err.err_msg.join(""))
                     
@@ -116,6 +109,89 @@ function setupSocial() {
     })
 }
 
+function setupRemove() {
+    var rem = $('#bm_settings_remove')
+    if ($(rem).length > 0) {
+        $(rem).unbind('click').click(function(e) {
+            e.preventDefault()
+            showConfirmModal({
+                title: 'Account Removal',
+                line1: 'This action will queue your account for deletion.<br/>Actual removal will take place after 48 hours.',
+                line2: 'All your Bookmarks, Reminders, and Summaries will be deleted.<br/>'+
+                       'If you change your mind, you can come back to Settings page and Cancel Deletion.<br/>'+
+                       '<b>Do you want to proceed?</b>',
+                callback: function() {
+                    var del_on = localToUtc(addHours(new Date(),48).toString())
+                    $.ajax({
+                        url: $(rem).attr('href')+'/.json',
+                        type: "put",
+                        data: { del_pending: true,
+                                del_on:  del_on },
+                        success: function(d, stat, xhr) {
+                            showDialog(
+                            {
+                                title: 'Account Removal',
+                                line1: 'Account Removal request submitted.',
+                                line2: 'This account will be removed after 48 hours.'
+                            }, true)
+                        },
+                        error: function(xhr, stat, err) {
+                            showDialog(
+                            {
+                                title: 'Account Removal',
+                                line1: 'Account Removal request could not be submitted. Please try again or contact support.',
+                                line2: '('+err+') '+stat
+                            }, true)
+                            
+                        },
+                        beforeSend: function(xhr, settings) {
+                            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'))
+                        },
+                    });
+                }
+
+            })
+        })
+    } else {
+        rem = $('#bm_settings_cancel_remove')
+        $(rem).unbind('click').click(function(e) {
+            e.preventDefault()
+            showConfirmModal({
+                title: 'Cancel Remove Account',
+                line1: 'Proceed to Cancel Account Delete?',
+                callback: function() {
+                    $.ajax({
+                        url: $(rem).attr('href')+'/.json',
+                        type: "put",
+                        data: { del_pending: false,
+                                del_on:  '1970-01-01 00:00:00'},
+                        success: function(d, stat, xhr) {
+                            showDialog(
+                            {
+                                title: 'Cancel Account Removal',
+                                line1: 'Account Removal Cancelled.',
+                                line2: ''
+                            }, true)
+                        },
+                        error: function(xhr, stat, err) {
+                            showDialog(
+                            {
+                                title: 'Cancel Account Removal',
+                                line1: 'Account Removal could not be Cancelled. Please try again or contact support.',
+                                line2: '('+err+') '+stat
+                            }, true)
+                        },
+                        beforeSend: function(xhr, settings) {
+                            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'))
+                        },
+                    });
+                }
+
+            })
+        })
+    }
+}
+
 function showSocialInfo(id, name) {
     $('#bm_social_info_title').text('Social Account: '+name)
     $('#bm_social_info').show()
@@ -128,7 +204,7 @@ function showSocialInfo(id, name) {
         $('#bm_social_info').hide()
     })
 
-    var extra = $('#bm_social_info_basic_extra').text()
+    var extra = 'Other Basic Info: '
     if (name == 'Facebook') {
         $('#bm_social_info_basic_extra').text(extra+'Friends List, Information you choose to share')
     } else if (name == 'Google+') {
@@ -140,8 +216,7 @@ function showSocialInfo(id, name) {
         url: base_url+'social/'+id+"/.json",
         type: "get",
         success: function(d, stat, xhr) {
-            var email = $('#bm_social_info_email').text()
-            console.log('extra_data'+d[0].extra_data)
+            var email = 'Email: '
             var json = JSON.parse(d[0].extra_data)
             $('#bm_social_info_email').html(email+'<b>'+json.email+'</b>')
             $('#bm_social_info_body_text').show()
@@ -151,6 +226,40 @@ function showSocialInfo(id, name) {
             $('#bm_ajax_loader').hide()
         }
     })
+
+    var unlink = $('#bm_social_info_disconnect')
+    if (unlink) {
+        $(unlink).unbind('click').click(function() {
+                showConfirmModal({
+                title: 'Disconnect '+name+' Account',
+                line1: 'This will unlink your YABA and '+ name +' Account. Proceed?',
+                line2: "<b>Note: This action will NOT revoke YABA's permissions in your "+name+" account</b>",
+                callback : function() {
+                    $.ajax({
+                        url: base_url+'accounts/social/connections/',
+                        type: 'post',
+                        data: {account: id},
+                        success: function(d, stat, xhr) {
+                            showDialog({
+                                title: 'Social Account Disconnected',
+                                line1: name+' Account disconnected successfully'
+                            },true)
+                        },
+                        error: function(xhr, stat, err) {
+                            showDialog({
+                                title: 'Social Account Disconnection failed',
+                                line1: name+' Account could not be disconnected',
+                                line2: '('+err+') '+stat
+                            })
+                        },
+                        beforeSend: function(xhr, settings) {
+                            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'))
+                        },
+                    })
+                }
+            })
+        })
+    }
 }
 
 function displayEmailError(msg) {
@@ -186,6 +295,20 @@ function getId(targetId) {
     return null
 }
 
+function showConfirmModal(config, reload) {
+    $('#confirmTitle').text(config.title)
+    $('#confirmTextLine1').html(config.line1)
+    $('#confirmTextLine2').html(config.line2)
+    $('#confirmOk').unbind('click').click(function() {
+        config.callback()
+        //$('#confirm').modal('hide')
+        if (reload) {
+            location.reload()
+        }
+    })
+    $('#confirm').modal('show')
+}
+
 // From Django help pages
 function getCookie(name) {
     var cookieValue = null;
@@ -201,4 +324,29 @@ function getCookie(name) {
         }
     }
     return cookieValue;
+}
+
+function utcToLocal(utcDate) {
+    assert (utcDate != null, "utcDate is null")
+
+    var localDate=(new Date(utcDate)).toString()
+    if (localDate == "Invalid Date") {
+        localDate = utcDate
+    }
+    return localDate
+}
+
+function localToUtc(localDate) {
+    assert (localDate != null, "localDate is null")
+    var utcDate = new Date(localDate)
+    return utcDate.getUTCFullYear()+"-"+
+           (utcDate.getUTCMonth()+1)+"-"+
+           utcDate.getUTCDate()+"T"+
+           utcDate.getUTCHours()+":"+
+           utcDate.getUTCMinutes()+":"+
+           utcDate.getUTCSeconds()+"Z"
+}
+
+function addHours(date, hours) {
+    return new Date(date.getFullYear(),date.getMonth(),date.getDate(),date.getHours()+hours,date.getMinutes(),date.getSeconds())
 }
