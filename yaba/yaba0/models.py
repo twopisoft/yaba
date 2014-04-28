@@ -37,7 +37,7 @@ class UserProfile(models.Model):
     auto_summarize = models.BooleanField(default=True)
     del_pending = models.BooleanField(default=False)
     del_on = models.DateTimeField()
-    updated = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField()
  
     def __unicode__(self):
         return "{}'s profile".format(self.user.username)

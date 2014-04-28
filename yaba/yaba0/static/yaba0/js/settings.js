@@ -61,6 +61,8 @@ function setupSave() {
         if (email == '') {
             displayEmailError('Email address is missing')
         } else {
+            var curDate = localToUtc(new Date().toString())
+            console.log('curDate='+curDate)
             var data = {
                 paginate_by: (function() {
                     var v = $('#bm_settings_paginate').val()
@@ -75,6 +77,9 @@ function setupSave() {
                 notify_current: "0",
                 auto_summarize: $('#bm_settings_summarize').prop('checked'),
                 email: encodeURI(email),
+                del_pending: false,
+                del_on:  '1970-01-01T00:00:00Z',
+                updated: curDate
             }
             $.ajax({
                 url: $('#bm_settings_save').attr('href')+'/.json',
@@ -126,7 +131,8 @@ function setupRemove() {
                         url: $(rem).attr('href')+'/.json',
                         type: "put",
                         data: { del_pending: true,
-                                del_on:  del_on },
+                                del_on:  del_on,
+                                updated: localToUtc(new Date().toString()) },
                         success: function(d, stat, xhr) {
                             showDialog(
                             {
@@ -164,7 +170,8 @@ function setupRemove() {
                         url: $(rem).attr('href')+'/.json',
                         type: "put",
                         data: { del_pending: false,
-                                del_on:  '1970-01-01 00:00:00'},
+                                del_on:  '1970-01-01T00:00:00Z',
+                                updated: localToUtc(new Date().toString())},
                         success: function(d, stat, xhr) {
                             showDialog(
                             {
@@ -301,7 +308,6 @@ function showConfirmModal(config, reload) {
     $('#confirmTextLine2').html(config.line2)
     $('#confirmOk').unbind('click').click(function() {
         config.callback()
-        //$('#confirm').modal('hide')
         if (reload) {
             location.reload()
         }

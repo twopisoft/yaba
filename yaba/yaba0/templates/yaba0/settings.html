@@ -111,6 +111,10 @@
                                             </div>
                                         </div>
                                     </form>
+                                    <dl class="dl-horizontal text-primary pull-right" style="font-style:italic; font-size: x-small;">
+                                        <dt>Last Updated:</dt>
+                                        <dd>{{ user.profile.updated }}</dd>
+                                    </dl>
                                 </div>
                                 <div class="panel-footer" style="background: #BDFF9C">
                                     <div>
@@ -148,7 +152,7 @@
                                 </div>
 
                                 <div class="panel-footer" style="background: #BDFF9C">
-                                    {% if user.profile.socialaccount_provider|length > 1 %}
+                                    {% if user.profile.socialaccount_provider|length > 1 and not user.profile.del_pending %}
                                     <div>
                                         <a type="button" class="btn btn-default" id="bm_social_info_cancel">Cancel</a>
                                         <a type="button" href="#" class="btn btn-danger" id="bm_social_info_disconnect">Disconnect</a>

@@ -30,7 +30,7 @@ class BmSerializer(serializers.Serializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ('paginate_by','email_notify','push_notify','auto_summarize','del_pending','del_on')
+        fields = ('paginate_by','email_notify','push_notify','auto_summarize','del_pending','del_on','updated')
         
 class UserSerializer(serializers.ModelSerializer):
     bm = serializers.PrimaryKeyRelatedField(many=True)
