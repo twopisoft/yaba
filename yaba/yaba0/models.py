@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount
 import hashlib
+from datetime import datetime
 
 # Create your models here.
 
@@ -36,8 +37,8 @@ class UserProfile(models.Model):
     notify_current = models.SmallIntegerField(default=0)
     auto_summarize = models.BooleanField(default=True)
     del_pending = models.BooleanField(default=False)
-    del_on = models.DateTimeField()
-    updated = models.DateTimeField()
+    del_on = models.DateTimeField(default='1970-01-01T0:0:0Z')
+    updated = models.DateTimeField(default='1970-01-01T0:0:0Z')
  
     def __unicode__(self):
         return "{}'s profile".format(self.user.username)
