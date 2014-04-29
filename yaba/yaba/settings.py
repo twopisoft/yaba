@@ -61,6 +61,7 @@ SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_ENABLED = True
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = False
+ACCOUNT_EMAIL_SUBJECT_PREFIX = '[YABA] - '
 #SOCIALACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 #ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 #ACCOUNT_UNIQUE_EMAIL=False
@@ -76,13 +77,15 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.mandrillapp.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'app23916433@heroku.com'
-EMAIL_HOST_PASSWORD = 'hiYYCSEAtFDqwr-xttZ9Pg'
-DEFAULT_FROM_EMAIL = 'admin@getyaba.com'
+if (DEFAULT_DB_NAME=='getyaba-staging'):
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.mandrillapp.com'
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = 'app23916433@heroku.com'
+    EMAIL_HOST_PASSWORD = 'hiYYCSEAtFDqwr-xttZ9Pg'
+    DEFAULT_FROM_EMAIL = 'admin@getyaba.com'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
