@@ -54,6 +54,13 @@ function setupVerify() {
 }
 
 function setupSave() {
+    var last_updated_str = $('#bm_settings_updated').text()
+    var last_updated = new Date(last_updated_str)
+    if (last_updated.getUTCFullYear() == '1970') {
+        $('#bm_settings_updated').text('')
+    } else {
+        $('#bm_settings_updated').text(utcToLocal(last_updated_str))
+    }
     $('#bm_settings_save').unbind('click').click(function(e) {
         e.preventDefault()
 
