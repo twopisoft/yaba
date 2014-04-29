@@ -33,7 +33,7 @@ DATABASES = {
 }
 '''
 
-DEFAULT_DB_NAME='getyaba-staging'
+DEFAULT_DB_NAME='local'
 DBS = {
     'getyaba-staging': dj_database_url.config(),
     'local': {
