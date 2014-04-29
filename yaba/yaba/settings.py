@@ -33,7 +33,7 @@ DATABASES = {
 }
 '''
 
-DEFAULT_DB_NAME='local'
+DEFAULT_DB_NAME='getyaba-staging'
 DBS = {
     'getyaba-staging': dj_database_url.config(),
     'local': {
@@ -60,6 +60,7 @@ LOGIN_REDIRECT_URL = '/'
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_ENABLED = True
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = False
 #SOCIALACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 #ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 #ACCOUNT_UNIQUE_EMAIL=False
