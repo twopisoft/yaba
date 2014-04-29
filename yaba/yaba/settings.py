@@ -82,6 +82,7 @@ EMAIL_HOST = 'smtp.mandrillapp.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'app23916433@heroku.com'
 EMAIL_HOST_PASSWORD = 'hiYYCSEAtFDqwr-xttZ9Pg'
+DEFAULT_FROM_EMAIL = 'admin@getyaba.com'
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
