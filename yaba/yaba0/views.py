@@ -11,6 +11,8 @@ from yaba0.paginators import BmPaginator
 from yaba0.document import Document
 import utils
 from allauth.socialaccount.models import SocialAccount
+from django.views.generic import TemplateView
+from yaba0 import VERSION
 
 class BookmarksList(generics.ListCreateAPIView):
     renderer_classes = (YabaBrowsableAPIRenderer,JSONRenderer)
@@ -122,4 +124,11 @@ class SocialAccountDetail(generics.ListAPIView):
     def get_queryset(self):
         return self.model.objects.filter(user=self.request.user, id=self.kwargs['pk'])
 
+class AboutView(TemplateView):
+    template_name = "yaba0/about.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(AboutView, self).get_context_data(**kwargs)
+        context['version'] = VERSION
+        return context
 
