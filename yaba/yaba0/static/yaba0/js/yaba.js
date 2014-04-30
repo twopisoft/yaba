@@ -328,7 +328,7 @@ function saveBookmark(id) {
         has_notify  : $('#bm_has_notify_'+id).prop('checked'),
         notify_on   : (function() {
                         var flag = $('#bm_has_notify_'+id).prop('checked')
-                        if (flag) return localToUtc($('#bm_notify_date_'+id).val())
+                        if (flag) return localToUtc($('#bm_notify_date_'+id).val()+' '+currentTime())
                         else return null
                       })(),
     };
@@ -412,6 +412,11 @@ function localToUtc(localDate) {
            utcDate.getUTCHours()+":"+
            utcDate.getUTCMinutes()+":"+
            utcDate.getUTCSeconds()+"Z"
+}
+
+function currentTime() {
+    var d = new Date()
+    return d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()
 }
 
 function addDays(date, days) {
