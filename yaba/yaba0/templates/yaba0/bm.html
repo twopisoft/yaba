@@ -92,7 +92,7 @@
                                                     </div>
                                                 </div>
 
-                                                
+                                                {% if user.profile.email_notify %}
                                                 <div class="form-group">
                                                     <label class="col-sm-1 control-label text-primary">Remind On:</label>
                                                     <div class="col-sm-4" style="margin-top: 8px;">
@@ -106,6 +106,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                {% endif %}
                                                 
                                                 
                                                 <dl class="dl-horizontal text-primary pull-right" style="font-style:italic; font-size: x-small;">

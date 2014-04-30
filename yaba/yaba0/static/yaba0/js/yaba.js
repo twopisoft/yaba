@@ -347,7 +347,7 @@ function saveBookmark(id) {
             $('#bm_save_success_'+id).fadeOut(5000)
         },
         error: function(xhr, stat, err) {
-            reloadDataAndShowError(id)
+            reloadDataAndShowError(id, xhr.responseText)
         },
         beforeSend: function(xhr, settings) {
             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'))
@@ -356,7 +356,7 @@ function saveBookmark(id) {
     
 }
 
-function reloadDataAndShowError(id) {
+function reloadDataAndShowError(id, errMsg) {
     $.ajax({
         url: base_url+$('#bm_id_'+id).val()+"/.json",
         type: "get",
@@ -376,7 +376,7 @@ function reloadDataAndShowError(id) {
             }
 
             $('#resultMsg').text("Error while updating following Bookmark:")
-            $('#resultText').text("'"+d.name+"'")
+            $('#resultText').html("'"+d.name+"'<br/>"+errMsg)
             $('#resultTitle').text('Bookmark Update Failed')
             $('#result').modal('show')
             $('#bm_save_'+id).prop('disabled', true)

@@ -92,6 +92,23 @@ class BookmarkDetail(generics.RetrieveUpdateDestroyAPIView):
     def pre_save(self, obj):
         obj.user = self.request.user
 
+        bm = BookMark.objects.filter(id=obj.id)
+        if len(bm) > 0:
+            old_has_notify = bm[0].has_notify
+            if (obj.has_notify and not old_has_notify):
+                profile = UserProfile.objects.filter(user=obj.user)[0]
+                if (profile.notify_current < profile.notify_max):
+                    profile.notify_current = profile.notify_current + 1
+                    profile.save(update_fields=['notify_current'])
+                else:
+                    raise ValidationError({'err_msg' : 'Reminder Limit has reached'})
+            elif (not obj.has_notify and old_has_notify):
+                profile = UserProfile.objects.filter(user=obj.user)[0]
+                if (profile.notify_current > 0):
+                    profile.notify_current = profile.notify_current - 1
+                    profile.save(update_fields=['notify_current'])
+
+
 class UserProfileList(generics.RetrieveUpdateAPIView):
     #queryset = UserProfile.objects.all()
     model = UserProfile
@@ -105,7 +122,7 @@ class UserProfileList(generics.RetrieveUpdateAPIView):
     def pre_save(self, obj):
         obj.user = self.request.user
 
-        print('obj.del_pending={}, obj.del_on={}, obj.updated={}'.format(obj.del_pending,obj.del_on,obj.updated))
+        #print('obj.del_pending={}, obj.del_on={}, obj.updated={}'.format(obj.del_pending,obj.del_on,obj.updated))
         user_obj = User.objects.filter(username=self.request.user)[0]
         user_email = user_obj.email
         req_email = self.request.DATA.get('email', None)

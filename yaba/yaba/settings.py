@@ -87,6 +87,9 @@ if (DEFAULT_DB_NAME=='getyaba-staging'):
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+REMINDER_FROM_EMAIL = 'yaba-reminders@getyaba.com'
+REMINDER_SUBJECT_EMAIL = '[YABA] - Reminder from YABA'
+
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ['*']
@@ -245,6 +248,11 @@ LOGGING = {
             '()': 'django.utils.log.RequireDebugFalse'
         }
     },
+    'formatters':{
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(name)s.%(funcName)s: %(message)s'
+        },
+    },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
@@ -254,6 +262,11 @@ LOGGING = {
         'console': {
             'level': 'ERROR',
             'class': 'logging.StreamHandler'
+        },
+        'yaba_console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
         }
     },
     'loggers': {
@@ -265,6 +278,11 @@ LOGGING = {
         'django': {
             'handlers' : ['console'],
             'level': 'ERROR'
+        },
+        'yaba': {
+            'handlers' : ['yaba_console'],
+            'level' : 'ERROR',
+            'propagate' : True
         }
     }
 }
