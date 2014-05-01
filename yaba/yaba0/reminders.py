@@ -23,16 +23,19 @@ def find_reminders():
         if (not profile.email_notify):
             continue
 
-        user_entry = reminders.get(uid,[])
-        user_entry.append(bm)
-        reminders[uid] = user_entry
+
+        user_entry = reminders.get(uid,(None,[]))
+        (prof,bmlist) = user_entry
+        bmlist.append(bm)
+        prof = profile if (prof == None) else prof
+        reminders[uid] = (prof,bmlist)
 
     return reminders
 
 def send_reminders(reminders):
     messages = ()
     for user in reminders.keys():
-        bookmarks = reminders[user]
+        (_,bookmarks) = reminders[user]
         messages = messages + ((REMINDER_SUBJECT_EMAIL, get_message_text(user.username,bookmarks), REMINDER_FROM_EMAIL, [user.email]),)
 
     if (len(messages) > 0):
@@ -58,11 +61,15 @@ def get_message_text(username,bookmarks):
     return msg
 
 def reset_reminders(reminders):
-    for bmlist in reminders.values():
+    for (profile,bmlist) in reminders.values():
         for bm in bmlist:
             bm.has_notify=False
             bm.notify_on = '1970-01-01T00:00:00Z'
             bm.save()
+            if (profile.notify_current > 0):
+                profile.notify_current -= 1
+        profile.save()
+
 
 if __name__ == '__main__':
     send_reminders(find_reminders())
