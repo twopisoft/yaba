@@ -78,6 +78,8 @@ def run_task():
     send_reminders(find_reminders())
     threading.Timer(REMINDER_SCHEDULER_TIME, run_task).start()
 
+def run_task_once():
+    send_reminders(find_reminders())
 
 
 
