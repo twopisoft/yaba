@@ -2,6 +2,10 @@ from requests import get,exceptions
 from summarize import summarize_page_soup
 from bs4 import BeautifulSoup
 import re
+import logging
+from yaba.settings import URL_CONNECT_TIMEOUT
+
+logger = logging.getLogger('yaba.yaba0.document')
 
 class Document(object):
 
@@ -25,13 +29,17 @@ class Document(object):
 
     def __load_document(self):
         try:
-            req = get(self.url)
+            req = get(self.url, timeout=URL_CONNECT_TIMEOUT)
             req.encoding = 'utf-8'
             self.__html = req.text
             self.__soup = BeautifulSoup(self.__html)
             self.loaded = True
             self.__get_meta_info()
+        except exceptions.Timeout:
+            logger.error('Connection Timeout with url: {}'.format(self.url))
+            pass
         except exceptions.RequestException:
+            logger.error('RequestException with url: {}'.format(self.url))
             pass
 
     def __get_meta_info(self):
