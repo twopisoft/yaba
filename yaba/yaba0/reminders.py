@@ -1,15 +1,19 @@
 from yaba0.models import BookMark, UserProfile
 from django.contrib.auth.models import User
 from threading import Timer
-from yaba.settings import REMINDER_FROM_EMAIL, REMINDER_SUBJECT_EMAIL
+from yaba.settings import REMINDER_FROM_EMAIL, REMINDER_SUBJECT_EMAIL, REMINDER_SCHEDULER_TIME
 from datetime import datetime
 from django.core.mail import send_mass_mail, BadHeaderError
 import logging
+import threading
+from django.utils.timezone import utc
 
 logger = logging.getLogger('yaba.yaba0.reminders')
 
 def find_reminders():
-    bookmarks = BookMark.objects.filter(has_notify=True, notify_on__lte=datetime.utcnow()).order_by('user')
+    bookmarks = BookMark.objects.filter(has_notify=True, notify_on__lte=datetime.utcnow().replace(tzinfo=utc)).order_by('user')
+
+    logger.info('Found {} Bookmarks to notify'.format(len(bookmarks)))
     uid = None
     reminders = {}
     user = None
@@ -70,9 +74,10 @@ def reset_reminders(reminders):
                 profile.notify_current -= 1
         profile.save()
 
-
-if __name__ == '__main__':
+def run_task():
     send_reminders(find_reminders())
+    threading.Timer(REMINDER_SCHEDULER_TIME, run_task).start()
+
 
 
 

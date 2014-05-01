@@ -89,6 +89,9 @@ else:
 
 REMINDER_FROM_EMAIL = 'yaba-reminders@getyaba.com'
 REMINDER_SUBJECT_EMAIL = '[YABA] - Reminder from YABA'
+REMINDER_SCHEDULER_TIME = 60*60
+
+URL_CONNECT_TIMEOUT = 4
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -281,7 +284,7 @@ LOGGING = {
         },
         'yaba': {
             'handlers' : ['yaba_console'],
-            'level' : 'ERROR',
+            'level' : 'INFO',
             'propagate' : True
         }
     }
