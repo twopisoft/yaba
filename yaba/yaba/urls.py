@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.views.generic import RedirectView
 from .settings import MEDIA_URL
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.http import HttpResponse
 
 
 # Uncomment the next two lines to enable the admin:
@@ -18,6 +19,7 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     url(r'^', include('yaba0.urls', namespace='yaba0')),
+    url(r'^robots\.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /",mimetype="text/plain")),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api-auth/', include('rest_framework.urls',namespace='rest_framework')),
     url(r'^accounts/', include('allauth.urls')),
