@@ -12,13 +12,13 @@ from datetime import datetime
 class BookMark(models.Model):
     added = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=200, blank=True, default='')
+    name = models.CharField(max_length=200, blank=True, default='', db_index=True)
     url = models.CharField(max_length=1024, blank=True)
     image_url = models.CharField(max_length=400, blank=True)
     description = models.TextField(blank=True, default='')
     has_notify = models.BooleanField(default=False)
     notify_on = models.DateTimeField(blank=True, null=True)
-    tags = models.TextField(blank=True, default='')
+    tags = models.TextField(blank=True, default='', db_index=True)
     user = models.ForeignKey('auth.User', related_name='bm')
 
     class Meta:
