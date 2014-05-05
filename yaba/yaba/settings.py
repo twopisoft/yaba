@@ -35,7 +35,8 @@ DATABASES = {
 '''
 
 #BASE_URL = 'http://localhost:8000/'
-BASE_URL = 'http://getyaba-staging.herokuapp.com'
+#BASE_URL = 'http://getyaba-staging.herokuapp.com'
+#BASE_URL = 'http://192.168.1.67:8000/'
 DEFAULT_DB_NAME='getyaba-staging'
 DBS = {
     'getyaba-staging': dj_database_url.config(),
@@ -177,12 +178,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'mobi.middleware.MobileDetectionMiddleware'
+    'mobi.middleware.MobileDetectionMiddleware',
 )
 
 ROOT_URLCONF = 'yaba.urls'
 
-MOBI_REDIRECT_URL = BASE_URL+'mobile/'
+#MOBI_REDIRECT_URL = BASE_URL+'mobile/'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'yaba.wsgi.application'

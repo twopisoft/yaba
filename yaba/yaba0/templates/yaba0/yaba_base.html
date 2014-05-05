@@ -34,7 +34,31 @@
 
     {% autoescape on %}
     <body class="{% block bodyclass %}{% endblock %} container" style="background: #cacadc">
+        {% if request.mobile %}
+        <div id="content">
 
+            <div class="container-fluid">
+
+                    <div class="jumbotron">
+                        <h1>
+                            Welcome to YABA!
+                            <img src="{% static "yaba0/img/yaba48.png" %}"/>
+                        </h1>
+                        <p class="info1">(or Yet Another Bookmarking App) <span style="color:red">(Under Development)</span></p>
+                        <p> With YABA, you can:</p>
+                        <ul>
+                        
+                        </ul>
+
+                        <button type="button" id="bm_btn_login2" class="btn btn-primary" style="margin-top: 9px;">
+                                        Get YABA App on AppStore
+                        </button>
+                    </div>
+                    
+            </div>
+
+        </div>
+        {% else %}
         {% block navbar %}
         <div class="navbar {% block bootstrap_navbar_variant %}navbar-inverse{% endblock %} navbar-fixed-top" role="navigation">
             <style>.body{padding-top: 70px}</style>
@@ -135,6 +159,7 @@
     {% block script %}
     
     {% endblock %}
+    {% endif %}
   </body>
   {% endautoescape %}
 </html>
