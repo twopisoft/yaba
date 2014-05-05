@@ -1,0 +1,67 @@
+{% load url from future %}
+{% load staticfiles %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+    {% block head %}
+
+        {% block meta %}
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="robots" content="NONE,NOARCHIVE" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% endblock %}
+
+        <title>{% block title %}YABA{% endblock %}</title>
+
+        {% block style %}
+        {% block bootstrap_theme %}
+            <link rel="stylesheet" type="text/css" href="{% static "yaba0/css/bootstrap.min.css" %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static "yaba0/css/bootstrap-glyphicons.css" %}"/>
+            <link rel="shortcut icon" href="{% static "yaba0/img/favicon.ico" %}" />
+        {% endblock %}
+        {% endblock %}
+
+    {% endblock %}
+    </head>
+
+    {% autoescape on %}
+    <body class="{% block bodyclass %}{% endblock %} container" style="background: #cacadc">
+
+        <div id="content">
+
+            <div class="container-fluid">
+
+                    <div class="jumbotron">
+                        <h1>
+                            Welcome to YABA!
+                            <img src="{% static "yaba0/img/yaba128.png" %}"/>
+                        </h1>
+                        <p class="info1">(or Yet Another Bookmarking App) <span style="color:red">(Under Development)</span></p>
+                        <p> With YABA, you can:</p>
+                        <ul>
+                        
+                        </ul>
+
+                        <button type="button" id="bm_btn_login2" class="btn btn-primary" style="margin-top: 9px;">
+                                        Get YABA App on AppStore
+                        </button>
+                    </div>
+                    
+            </div>
+
+        </div>
+
+        {% block extras %}
+        
+        {% endblock %}
+
+    <script src="{% static "yaba0/js/jquery.min.js" %}"></script>
+    <script src="{% static "yaba0/js/bootstrap.min.js" %}"></script>
+    {% block script %}
+    
+    {% endblock %}
+  </body>
+  {% endautoescape %}
+</html>

@@ -5,6 +5,7 @@ from yaba0 import views
 urlpatterns = patterns('',
     url(r'^$', views.BookmarksList.as_view()),
     url(r'^about/$', views.AboutView.as_view()),
+    url(r'^mobile/$', views.MobileView.as_view()),
     url(r'^(?P<pk>[0-9]+)/$', views.BookmarkDetail.as_view()),
     url(r'^userprofile/(?P<pk>[0-9]+)/$', views.UserProfileList.as_view()),
     url(r'^social/(?P<pk>[0-9]+)/$', views.SocialAccountDetail.as_view()),

@@ -149,3 +149,6 @@ class AboutView(TemplateView):
         context['version'] = VERSION
         return context
 
+class MobileView(TemplateView):
+    template_name = "yaba0/mobile.html"
+
