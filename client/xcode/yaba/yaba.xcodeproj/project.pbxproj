@@ -1,0 +1,501 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EEE7678219179B6D00D73361 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEE7678119179B6D00D73361 /* Foundation.framework */; };
+		EEE7678419179B6D00D73361 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEE7678319179B6D00D73361 /* CoreGraphics.framework */; };
+		EEE7678619179B6D00D73361 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEE7678519179B6D00D73361 /* UIKit.framework */; };
+		EEE7678C19179B6D00D73361 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EEE7678A19179B6D00D73361 /* InfoPlist.strings */; };
+		EEE7678E19179B6D00D73361 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE7678D19179B6D00D73361 /* main.m */; };
+		EEE7679219179B6D00D73361 /* com_twopiAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE7679119179B6D00D73361 /* com_twopiAppDelegate.m */; };
+		EEE7679519179B6D00D73361 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEE7679319179B6D00D73361 /* Main_iPhone.storyboard */; };
+		EEE7679819179B6D00D73361 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEE7679619179B6D00D73361 /* Main_iPad.storyboard */; };
+		EEE7679B19179B6D00D73361 /* com_twopiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE7679A19179B6D00D73361 /* com_twopiViewController.m */; };
+		EEE7679D19179B6D00D73361 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEE7679C19179B6D00D73361 /* Images.xcassets */; };
+		EEE767A419179B6D00D73361 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEE767A319179B6D00D73361 /* XCTest.framework */; };
+		EEE767A519179B6D00D73361 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEE7678119179B6D00D73361 /* Foundation.framework */; };
+		EEE767A619179B6D00D73361 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEE7678519179B6D00D73361 /* UIKit.framework */; };
+		EEE767AE19179B6D00D73361 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EEE767AC19179B6D00D73361 /* InfoPlist.strings */; };
+		EEE767B019179B6D00D73361 /* yabaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE767AF19179B6D00D73361 /* yabaTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EEE767A719179B6D00D73361 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EEE7677619179B6C00D73361 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EEE7677D19179B6C00D73361;
+			remoteInfo = yaba;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EEE7677E19179B6D00D73361 /* yaba.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yaba.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EEE7678119179B6D00D73361 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		EEE7678319179B6D00D73361 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		EEE7678519179B6D00D73361 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		EEE7678919179B6D00D73361 /* yaba-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "yaba-Info.plist"; sourceTree = "<group>"; };
+		EEE7678B19179B6D00D73361 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		EEE7678D19179B6D00D73361 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		EEE7678F19179B6D00D73361 /* yaba-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "yaba-Prefix.pch"; sourceTree = "<group>"; };
+		EEE7679019179B6D00D73361 /* com_twopiAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = com_twopiAppDelegate.h; sourceTree = "<group>"; };
+		EEE7679119179B6D00D73361 /* com_twopiAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = com_twopiAppDelegate.m; sourceTree = "<group>"; };
+		EEE7679419179B6D00D73361 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		EEE7679719179B6D00D73361 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		EEE7679919179B6D00D73361 /* com_twopiViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = com_twopiViewController.h; sourceTree = "<group>"; };
+		EEE7679A19179B6D00D73361 /* com_twopiViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = com_twopiViewController.m; sourceTree = "<group>"; };
+		EEE7679C19179B6D00D73361 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		EEE767A219179B6D00D73361 /* yabaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = yabaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EEE767A319179B6D00D73361 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		EEE767AB19179B6D00D73361 /* yabaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "yabaTests-Info.plist"; sourceTree = "<group>"; };
+		EEE767AD19179B6D00D73361 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		EEE767AF19179B6D00D73361 /* yabaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = yabaTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EEE7677B19179B6C00D73361 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEE7678419179B6D00D73361 /* CoreGraphics.framework in Frameworks */,
+				EEE7678619179B6D00D73361 /* UIKit.framework in Frameworks */,
+				EEE7678219179B6D00D73361 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EEE7679F19179B6D00D73361 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEE767A419179B6D00D73361 /* XCTest.framework in Frameworks */,
+				EEE767A619179B6D00D73361 /* UIKit.framework in Frameworks */,
+				EEE767A519179B6D00D73361 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EEE7677519179B6C00D73361 = {
+			isa = PBXGroup;
+			children = (
+				EEE7678719179B6D00D73361 /* yaba */,
+				EEE767A919179B6D00D73361 /* yabaTests */,
+				EEE7678019179B6D00D73361 /* Frameworks */,
+				EEE7677F19179B6D00D73361 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EEE7677F19179B6D00D73361 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EEE7677E19179B6D00D73361 /* yaba.app */,
+				EEE767A219179B6D00D73361 /* yabaTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EEE7678019179B6D00D73361 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EEE7678119179B6D00D73361 /* Foundation.framework */,
+				EEE7678319179B6D00D73361 /* CoreGraphics.framework */,
+				EEE7678519179B6D00D73361 /* UIKit.framework */,
+				EEE767A319179B6D00D73361 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EEE7678719179B6D00D73361 /* yaba */ = {
+			isa = PBXGroup;
+			children = (
+				EEE7679019179B6D00D73361 /* com_twopiAppDelegate.h */,
+				EEE7679119179B6D00D73361 /* com_twopiAppDelegate.m */,
+				EEE7679319179B6D00D73361 /* Main_iPhone.storyboard */,
+				EEE7679619179B6D00D73361 /* Main_iPad.storyboard */,
+				EEE7679919179B6D00D73361 /* com_twopiViewController.h */,
+				EEE7679A19179B6D00D73361 /* com_twopiViewController.m */,
+				EEE7679C19179B6D00D73361 /* Images.xcassets */,
+				EEE7678819179B6D00D73361 /* Supporting Files */,
+			);
+			path = yaba;
+			sourceTree = "<group>";
+		};
+		EEE7678819179B6D00D73361 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EEE7678919179B6D00D73361 /* yaba-Info.plist */,
+				EEE7678A19179B6D00D73361 /* InfoPlist.strings */,
+				EEE7678D19179B6D00D73361 /* main.m */,
+				EEE7678F19179B6D00D73361 /* yaba-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EEE767A919179B6D00D73361 /* yabaTests */ = {
+			isa = PBXGroup;
+			children = (
+				EEE767AF19179B6D00D73361 /* yabaTests.m */,
+				EEE767AA19179B6D00D73361 /* Supporting Files */,
+			);
+			path = yabaTests;
+			sourceTree = "<group>";
+		};
+		EEE767AA19179B6D00D73361 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EEE767AB19179B6D00D73361 /* yabaTests-Info.plist */,
+				EEE767AC19179B6D00D73361 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EEE7677D19179B6C00D73361 /* yaba */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EEE767B319179B6D00D73361 /* Build configuration list for PBXNativeTarget "yaba" */;
+			buildPhases = (
+				EEE7677A19179B6C00D73361 /* Sources */,
+				EEE7677B19179B6C00D73361 /* Frameworks */,
+				EEE7677C19179B6C00D73361 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = yaba;
+			productName = yaba;
+			productReference = EEE7677E19179B6D00D73361 /* yaba.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EEE767A119179B6D00D73361 /* yabaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EEE767B619179B6D00D73361 /* Build configuration list for PBXNativeTarget "yabaTests" */;
+			buildPhases = (
+				EEE7679E19179B6D00D73361 /* Sources */,
+				EEE7679F19179B6D00D73361 /* Frameworks */,
+				EEE767A019179B6D00D73361 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EEE767A819179B6D00D73361 /* PBXTargetDependency */,
+			);
+			name = yabaTests;
+			productName = yabaTests;
+			productReference = EEE767A219179B6D00D73361 /* yabaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EEE7677619179B6C00D73361 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = com.twopi;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = TwoPi;
+				TargetAttributes = {
+					EEE7677D19179B6C00D73361 = {
+						DevelopmentTeam = WBDBMBMJVX;
+					};
+					EEE767A119179B6D00D73361 = {
+						TestTargetID = EEE7677D19179B6C00D73361;
+					};
+				};
+			};
+			buildConfigurationList = EEE7677919179B6C00D73361 /* Build configuration list for PBXProject "yaba" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EEE7677519179B6C00D73361;
+			productRefGroup = EEE7677F19179B6D00D73361 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EEE7677D19179B6C00D73361 /* yaba */,
+				EEE767A119179B6D00D73361 /* yabaTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EEE7677C19179B6C00D73361 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEE7679819179B6D00D73361 /* Main_iPad.storyboard in Resources */,
+				EEE7679D19179B6D00D73361 /* Images.xcassets in Resources */,
+				EEE7679519179B6D00D73361 /* Main_iPhone.storyboard in Resources */,
+				EEE7678C19179B6D00D73361 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EEE767A019179B6D00D73361 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEE767AE19179B6D00D73361 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EEE7677A19179B6C00D73361 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEE7679219179B6D00D73361 /* com_twopiAppDelegate.m in Sources */,
+				EEE7678E19179B6D00D73361 /* main.m in Sources */,
+				EEE7679B19179B6D00D73361 /* com_twopiViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EEE7679E19179B6D00D73361 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEE767B019179B6D00D73361 /* yabaTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EEE767A819179B6D00D73361 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EEE7677D19179B6C00D73361 /* yaba */;
+			targetProxy = EEE767A719179B6D00D73361 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		EEE7678A19179B6D00D73361 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EEE7678B19179B6D00D73361 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		EEE7679319179B6D00D73361 /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EEE7679419179B6D00D73361 /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		EEE7679619179B6D00D73361 /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EEE7679719179B6D00D73361 /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		EEE767AC19179B6D00D73361 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EEE767AD19179B6D00D73361 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EEE767B119179B6D00D73361 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EEE767B219179B6D00D73361 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EEE767B419179B6D00D73361 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "yaba/yaba-Prefix.pch";
+				INFOPLIST_FILE = "yaba/yaba-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		EEE767B519179B6D00D73361 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "yaba/yaba-Prefix.pch";
+				INFOPLIST_FILE = "yaba/yaba-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		EEE767B719179B6D00D73361 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/yaba.app/yaba";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "yaba/yaba-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "yabaTests/yabaTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		EEE767B819179B6D00D73361 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/yaba.app/yaba";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "yaba/yaba-Prefix.pch";
+				INFOPLIST_FILE = "yabaTests/yabaTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EEE7677919179B6C00D73361 /* Build configuration list for PBXProject "yaba" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EEE767B119179B6D00D73361 /* Debug */,
+				EEE767B219179B6D00D73361 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EEE767B319179B6D00D73361 /* Build configuration list for PBXNativeTarget "yaba" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EEE767B419179B6D00D73361 /* Debug */,
+				EEE767B519179B6D00D73361 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EEE767B619179B6D00D73361 /* Build configuration list for PBXNativeTarget "yabaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EEE767B719179B6D00D73361 /* Debug */,
+				EEE767B819179B6D00D73361 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EEE7677619179B6C00D73361 /* Project object */;
+}
