@@ -7,12 +7,19 @@
 //
 
 #import "YabaAppDelegate.h"
+#import "YabaBookmarkListViewController.h"
 
 @implementation YabaAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    YabaBookmarkListViewController *yabaBmListViewController =
+                                                        [[YabaBookmarkListViewController alloc] init];
+    
+    self.window.rootViewController = yabaBmListViewController;
+    
     return YES;
 }
 							

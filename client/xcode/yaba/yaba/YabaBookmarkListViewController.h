@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YabaBookmarkListViewController : UIViewController
+@interface YabaBookmarkListViewController : UITableViewController
 
 @end

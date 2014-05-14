@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EED213BA1922F9AB00EE762C /* YabaBookmarkStore.m in Sources */ = {isa = PBXBuildFile; fileRef = EED213B91922F9AB00EE762C /* YabaBookmarkStore.m */; };
+		EED213BD1922FE9400EE762C /* YabaBookmark.m in Sources */ = {isa = PBXBuildFile; fileRef = EED213BC1922FE9400EE762C /* YabaBookmark.m */; };
+		EED213C0192344D400EE762C /* YabaBookmarkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EED213BF192344D400EE762C /* YabaBookmarkCell.m */; };
+		EED213C21923460900EE762C /* YabaBookmarkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EED213C11923460900EE762C /* YabaBookmarkCell.xib */; };
 		EEE7678219179B6D00D73361 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEE7678119179B6D00D73361 /* Foundation.framework */; };
 		EEE7678419179B6D00D73361 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEE7678319179B6D00D73361 /* CoreGraphics.framework */; };
 		EEE7678619179B6D00D73361 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEE7678519179B6D00D73361 /* UIKit.framework */; };
@@ -35,6 +39,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EED213B81922F9AB00EE762C /* YabaBookmarkStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YabaBookmarkStore.h; sourceTree = "<group>"; };
+		EED213B91922F9AB00EE762C /* YabaBookmarkStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YabaBookmarkStore.m; sourceTree = "<group>"; };
+		EED213BB1922FE9400EE762C /* YabaBookmark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YabaBookmark.h; sourceTree = "<group>"; };
+		EED213BC1922FE9400EE762C /* YabaBookmark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YabaBookmark.m; sourceTree = "<group>"; };
+		EED213BE192344D400EE762C /* YabaBookmarkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YabaBookmarkCell.h; sourceTree = "<group>"; };
+		EED213BF192344D400EE762C /* YabaBookmarkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YabaBookmarkCell.m; sourceTree = "<group>"; };
+		EED213C11923460900EE762C /* YabaBookmarkCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YabaBookmarkCell.xib; sourceTree = "<group>"; };
 		EEE7677E19179B6D00D73361 /* yaba.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yaba.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEE7678119179B6D00D73361 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EEE7678319179B6D00D73361 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -124,8 +135,15 @@
 				EE17175B191A33CC00B441A1 /* iPad */,
 				EEE7679019179B6D00D73361 /* YabaAppDelegate.h */,
 				EEE7679119179B6D00D73361 /* YabaAppDelegate.m */,
+				EED213B81922F9AB00EE762C /* YabaBookmarkStore.h */,
+				EED213B91922F9AB00EE762C /* YabaBookmarkStore.m */,
+				EED213BB1922FE9400EE762C /* YabaBookmark.h */,
+				EED213BC1922FE9400EE762C /* YabaBookmark.m */,
 				EEE7679319179B6D00D73361 /* Main_iPhone.storyboard */,
 				EEE7679619179B6D00D73361 /* Main_iPad.storyboard */,
+				EED213BE192344D400EE762C /* YabaBookmarkCell.h */,
+				EED213C11923460900EE762C /* YabaBookmarkCell.xib */,
+				EED213BF192344D400EE762C /* YabaBookmarkCell.m */,
 				EEE7679919179B6D00D73361 /* YabaBookmarkListViewController.h */,
 				EEE7679A19179B6D00D73361 /* YabaBookmarkListViewController.m */,
 				EEE7679C19179B6D00D73361 /* Images.xcassets */,
@@ -244,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EEE7679819179B6D00D73361 /* Main_iPad.storyboard in Resources */,
+				EED213C21923460900EE762C /* YabaBookmarkCell.xib in Resources */,
 				EEE7679D19179B6D00D73361 /* Images.xcassets in Resources */,
 				EEE7679519179B6D00D73361 /* Main_iPhone.storyboard in Resources */,
 				EEE7678C19179B6D00D73361 /* InfoPlist.strings in Resources */,
@@ -267,6 +286,9 @@
 			files = (
 				EEE7679219179B6D00D73361 /* YabaAppDelegate.m in Sources */,
 				EEE7678E19179B6D00D73361 /* main.m in Sources */,
+				EED213C0192344D400EE762C /* YabaBookmarkCell.m in Sources */,
+				EED213BD1922FE9400EE762C /* YabaBookmark.m in Sources */,
+				EED213BA1922F9AB00EE762C /* YabaBookmarkStore.m in Sources */,
 				EEE7679B19179B6D00D73361 /* YabaBookmarkListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -426,6 +448,7 @@
 				GCC_PREFIX_HEADER = "yaba/yaba-Prefix.pch";
 				INFOPLIST_FILE = "yaba/yaba-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

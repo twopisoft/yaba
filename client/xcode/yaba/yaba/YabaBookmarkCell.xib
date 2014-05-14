@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="64" id="Rpr-89-uOU" customClass="YabaBookmarkCell">
+            <rect key="frame" x="0.0" y="0.0" width="387" height="64"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Rpr-89-uOU" id="DIl-CH-pJ3">
+                <rect key="frame" x="0.0" y="0.0" width="387" height="63"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iUu-zY-9TM">
+                        <rect key="frame" x="0.0" y="0.0" width="80" height="63"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="80" id="8aB-wm-tMb"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FCP-xU-viF">
+                        <rect key="frame" x="85" y="0.0" width="297" height="58"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="11"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="FCP-xU-viF" firstAttribute="leading" secondItem="iUu-zY-9TM" secondAttribute="trailing" constant="5" id="CMB-Td-7sB"/>
+                    <constraint firstAttribute="bottom" secondItem="FCP-xU-viF" secondAttribute="bottom" constant="5" id="QZA-GW-X6J"/>
+                    <constraint firstItem="iUu-zY-9TM" firstAttribute="top" secondItem="DIl-CH-pJ3" secondAttribute="top" id="XOf-HR-A01"/>
+                    <constraint firstItem="FCP-xU-viF" firstAttribute="leading" secondItem="iUu-zY-9TM" secondAttribute="trailing" constant="5" id="akA-Ab-YDs"/>
+                    <constraint firstAttribute="bottom" secondItem="iUu-zY-9TM" secondAttribute="bottom" id="glv-Lz-R03"/>
+                    <constraint firstItem="iUu-zY-9TM" firstAttribute="leading" secondItem="DIl-CH-pJ3" secondAttribute="leading" id="m1X-uo-MK1"/>
+                    <constraint firstAttribute="trailing" secondItem="FCP-xU-viF" secondAttribute="trailing" constant="5" id="onz-Ra-tvH"/>
+                    <constraint firstItem="FCP-xU-viF" firstAttribute="top" secondItem="DIl-CH-pJ3" secondAttribute="top" id="xtR-VN-n0h"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="bmImage" destination="iUu-zY-9TM" id="2x7-ge-N34"/>
+                <outlet property="bmNameLabel" destination="FCP-xU-viF" id="2Au-Id-XPY"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>
