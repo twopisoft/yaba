@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 TwoPi. All rights reserved.
 //
 
-#import "com_twopiViewController.h"
+#import "YabaBookmarkListViewController.h"
 
-@interface com_twopiViewController ()
+@interface YabaBookmarkListViewController ()
 
 @end
 
-@implementation com_twopiViewController
+@implementation YabaBookmarkListViewController
 
 - (void)viewDidLoad
 {

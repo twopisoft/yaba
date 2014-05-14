@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface com_twopiAppDelegate : UIResponder <UIApplicationDelegate>
+@interface YabaAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 TwoPi. All rights reserved.
 //
 
-#import "com_twopiAppDelegate.h"
+#import "YabaAppDelegate.h"
 
-@implementation com_twopiAppDelegate
+@implementation YabaAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

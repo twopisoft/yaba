@@ -12,10 +12,10 @@
 		EEE7678619179B6D00D73361 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEE7678519179B6D00D73361 /* UIKit.framework */; };
 		EEE7678C19179B6D00D73361 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EEE7678A19179B6D00D73361 /* InfoPlist.strings */; };
 		EEE7678E19179B6D00D73361 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE7678D19179B6D00D73361 /* main.m */; };
-		EEE7679219179B6D00D73361 /* com_twopiAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE7679119179B6D00D73361 /* com_twopiAppDelegate.m */; };
+		EEE7679219179B6D00D73361 /* YabaAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE7679119179B6D00D73361 /* YabaAppDelegate.m */; };
 		EEE7679519179B6D00D73361 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEE7679319179B6D00D73361 /* Main_iPhone.storyboard */; };
 		EEE7679819179B6D00D73361 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEE7679619179B6D00D73361 /* Main_iPad.storyboard */; };
-		EEE7679B19179B6D00D73361 /* com_twopiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE7679A19179B6D00D73361 /* com_twopiViewController.m */; };
+		EEE7679B19179B6D00D73361 /* YabaBookmarkListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE7679A19179B6D00D73361 /* YabaBookmarkListViewController.m */; };
 		EEE7679D19179B6D00D73361 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEE7679C19179B6D00D73361 /* Images.xcassets */; };
 		EEE767A419179B6D00D73361 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEE767A319179B6D00D73361 /* XCTest.framework */; };
 		EEE767A519179B6D00D73361 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEE7678119179B6D00D73361 /* Foundation.framework */; };
@@ -43,12 +43,12 @@
 		EEE7678B19179B6D00D73361 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EEE7678D19179B6D00D73361 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EEE7678F19179B6D00D73361 /* yaba-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "yaba-Prefix.pch"; sourceTree = "<group>"; };
-		EEE7679019179B6D00D73361 /* com_twopiAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = com_twopiAppDelegate.h; sourceTree = "<group>"; };
-		EEE7679119179B6D00D73361 /* com_twopiAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = com_twopiAppDelegate.m; sourceTree = "<group>"; };
+		EEE7679019179B6D00D73361 /* YabaAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YabaAppDelegate.h; sourceTree = "<group>"; };
+		EEE7679119179B6D00D73361 /* YabaAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YabaAppDelegate.m; sourceTree = "<group>"; };
 		EEE7679419179B6D00D73361 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		EEE7679719179B6D00D73361 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		EEE7679919179B6D00D73361 /* com_twopiViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = com_twopiViewController.h; sourceTree = "<group>"; };
-		EEE7679A19179B6D00D73361 /* com_twopiViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = com_twopiViewController.m; sourceTree = "<group>"; };
+		EEE7679919179B6D00D73361 /* YabaBookmarkListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YabaBookmarkListViewController.h; sourceTree = "<group>"; };
+		EEE7679A19179B6D00D73361 /* YabaBookmarkListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YabaBookmarkListViewController.m; sourceTree = "<group>"; };
 		EEE7679C19179B6D00D73361 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		EEE767A219179B6D00D73361 /* yabaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = yabaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEE767A319179B6D00D73361 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -81,6 +81,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EE17175B191A33CC00B441A1 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = iPad;
+			sourceTree = "<group>";
+		};
 		EEE7677519179B6C00D73361 = {
 			isa = PBXGroup;
 			children = (
@@ -114,12 +121,13 @@
 		EEE7678719179B6D00D73361 /* yaba */ = {
 			isa = PBXGroup;
 			children = (
-				EEE7679019179B6D00D73361 /* com_twopiAppDelegate.h */,
-				EEE7679119179B6D00D73361 /* com_twopiAppDelegate.m */,
+				EE17175B191A33CC00B441A1 /* iPad */,
+				EEE7679019179B6D00D73361 /* YabaAppDelegate.h */,
+				EEE7679119179B6D00D73361 /* YabaAppDelegate.m */,
 				EEE7679319179B6D00D73361 /* Main_iPhone.storyboard */,
 				EEE7679619179B6D00D73361 /* Main_iPad.storyboard */,
-				EEE7679919179B6D00D73361 /* com_twopiViewController.h */,
-				EEE7679A19179B6D00D73361 /* com_twopiViewController.m */,
+				EEE7679919179B6D00D73361 /* YabaBookmarkListViewController.h */,
+				EEE7679A19179B6D00D73361 /* YabaBookmarkListViewController.m */,
 				EEE7679C19179B6D00D73361 /* Images.xcassets */,
 				EEE7678819179B6D00D73361 /* Supporting Files */,
 			);
@@ -257,9 +265,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEE7679219179B6D00D73361 /* com_twopiAppDelegate.m in Sources */,
+				EEE7679219179B6D00D73361 /* YabaAppDelegate.m in Sources */,
 				EEE7678E19179B6D00D73361 /* main.m in Sources */,
-				EEE7679B19179B6D00D73361 /* com_twopiViewController.m in Sources */,
+				EEE7679B19179B6D00D73361 /* YabaBookmarkListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
