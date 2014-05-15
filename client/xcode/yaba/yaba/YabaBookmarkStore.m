@@ -59,5 +59,21 @@
     return bm;
 }
 
+- (void)removeBm:(YabaBookmark *)bm
+{
+    [self.internalBmList removeObjectIdenticalTo:bm];
+}
+
+- (void)moveBmAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex
+{
+    if (fromIndex == toIndex) {
+        return;
+    }
+    
+    YabaBookmark * bm = [self.internalBmList objectAtIndex:fromIndex];
+    [self.internalBmList removeObjectAtIndex:fromIndex];
+    [self.internalBmList insertObject:bm atIndex:toIndex];
+}
+
 
 @end

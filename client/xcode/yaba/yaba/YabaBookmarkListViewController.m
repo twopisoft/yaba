@@ -7,6 +7,7 @@
 //
 
 #import "YabaBookmarkListViewController.h"
+#import "YabaBookmarkDetailsViewController.h"
 #import "YabaBookmark.h"
 #import "YabaBookmarkStore.h"
 #import "YabaBookmarkCell.h"
@@ -24,6 +25,17 @@
         for (int i=0; i<5; i++) {
             [[YabaBookmarkStore bmStore] createBm];
         }
+        
+        UINavigationItem *navItem = self.navigationItem;
+        navItem.title = @"YABA";
+        
+        UIBarButtonItem *bbi = [[UIBarButtonItem alloc]
+                                initWithTitle:@"Settings" style:UIBarButtonItemStylePlain
+                                target:self action:@selector(configure:)];
+        
+        navItem.rightBarButtonItem = bbi;
+        
+        navItem.leftBarButtonItem = self.editButtonItem;
     }
     return self;
 }
@@ -33,6 +45,10 @@
     return [self init];
 }
 
+-(IBAction)configure:(id)sender
+{
+    
+}
 
 - (void)viewDidLoad
 {
@@ -70,11 +86,49 @@
     
     cell.bmNameLabel.text = [bm name];
     [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[bm imageUrl]]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        [bm setThumbnailFromImage:[UIImage imageWithData:data] withRect:[cell.bmImage bounds]];
+        [bm setThumbnailFromImage:[UIImage imageWithData:data] withRect:CGRectMake(0, 0, 134, 75)];
         cell.bmImage.image = bm.thumbnail;
     }];
     
     return cell;
 }
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSArray * bms = [[YabaBookmarkStore bmStore] allBms];
+        YabaBookmark * bm = [bms objectAtIndex:indexPath.row];
+        [[YabaBookmarkStore bmStore] removeBm:bm];
+        
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.tableView reloadData];
+}
+
+/*- (void)tableView:(UITableView *)tableView
+                    moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
+{
+    [[YabaBookmarkStore bmStore] moveBmAtIndex:sourceIndexPath.row toIndex:destinationIndexPath.row];
+}*/
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    //NSLog(@"Accessory button tapped for row=%d",indexPath.row);
+    
+    YabaBookmarkDetailsViewController *detailViewController = [[YabaBookmarkDetailsViewController alloc] init];
+    
+    NSArray * bms = [[YabaBookmarkStore bmStore] allBms];
+    YabaBookmark * selectedBm = [bms objectAtIndex:indexPath.row];
+    
+    detailViewController.bm = selectedBm;
+    
+    [self.navigationController pushViewController:detailViewController animated:YES];
+    
+}
+
 
 @end

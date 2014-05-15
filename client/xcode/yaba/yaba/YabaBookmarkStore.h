@@ -16,5 +16,7 @@
 
 + (instancetype)bmStore;
 - (YabaBookmark *) createBm;
+- (void) removeBm:(YabaBookmark*)bm;
+- (void) moveBmAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex;
 
 @end

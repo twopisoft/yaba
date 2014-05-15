@@ -14,7 +14,6 @@
 
 @property (nonatomic) NSMutableSet *tagSet;
 
--(void)loadImageFromUrl:(NSString *)url;
 
 @end
 

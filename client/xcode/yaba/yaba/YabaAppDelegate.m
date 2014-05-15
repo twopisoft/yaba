@@ -18,7 +18,12 @@
     YabaBookmarkListViewController *yabaBmListViewController =
                                                         [[YabaBookmarkListViewController alloc] init];
     
-    self.window.rootViewController = yabaBmListViewController;
+    UINavigationController *nav = [[UINavigationController alloc]
+                                   initWithRootViewController:yabaBmListViewController];
+    
+    self.window.rootViewController = nav;
+    
+    [self.window makeKeyAndVisible];
     
     return YES;
 }

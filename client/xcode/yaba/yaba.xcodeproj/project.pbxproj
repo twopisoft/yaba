@@ -26,6 +26,11 @@
 		EEE767A619179B6D00D73361 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEE7678519179B6D00D73361 /* UIKit.framework */; };
 		EEE767AE19179B6D00D73361 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EEE767AC19179B6D00D73361 /* InfoPlist.strings */; };
 		EEE767B019179B6D00D73361 /* yabaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE767AF19179B6D00D73361 /* yabaTests.m */; };
+		EEFD3AE2192458AD00071195 /* YabaBookmarkDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFD3AE0192458AD00071195 /* YabaBookmarkDetailsViewController.m */; };
+		EEFD3AE3192458AD00071195 /* YabaBookmarkDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEFD3AE1192458AD00071195 /* YabaBookmarkDetailsViewController.xib */; };
+		EEFD3AE619250EF400071195 /* YabaUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFD3AE519250EF400071195 /* YabaUtil.m */; };
+		EEFD3AEA19251C2C00071195 /* YabaDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFD3AE819251C2C00071195 /* YabaDatePickerViewController.m */; };
+		EEFD3AEB19251C2C00071195 /* YabaDatePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEFD3AE919251C2C00071195 /* YabaDatePickerViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +71,14 @@
 		EEE767AB19179B6D00D73361 /* yabaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "yabaTests-Info.plist"; sourceTree = "<group>"; };
 		EEE767AD19179B6D00D73361 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EEE767AF19179B6D00D73361 /* yabaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = yabaTests.m; sourceTree = "<group>"; };
+		EEFD3ADF192458AD00071195 /* YabaBookmarkDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YabaBookmarkDetailsViewController.h; sourceTree = "<group>"; };
+		EEFD3AE0192458AD00071195 /* YabaBookmarkDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YabaBookmarkDetailsViewController.m; sourceTree = "<group>"; };
+		EEFD3AE1192458AD00071195 /* YabaBookmarkDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YabaBookmarkDetailsViewController.xib; sourceTree = "<group>"; };
+		EEFD3AE419250EF400071195 /* YabaUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YabaUtil.h; sourceTree = "<group>"; };
+		EEFD3AE519250EF400071195 /* YabaUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YabaUtil.m; sourceTree = "<group>"; };
+		EEFD3AE719251C2C00071195 /* YabaDatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YabaDatePickerViewController.h; sourceTree = "<group>"; };
+		EEFD3AE819251C2C00071195 /* YabaDatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YabaDatePickerViewController.m; sourceTree = "<group>"; };
+		EEFD3AE919251C2C00071195 /* YabaDatePickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YabaDatePickerViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +159,14 @@
 				EED213BF192344D400EE762C /* YabaBookmarkCell.m */,
 				EEE7679919179B6D00D73361 /* YabaBookmarkListViewController.h */,
 				EEE7679A19179B6D00D73361 /* YabaBookmarkListViewController.m */,
+				EEFD3ADF192458AD00071195 /* YabaBookmarkDetailsViewController.h */,
+				EEFD3AE0192458AD00071195 /* YabaBookmarkDetailsViewController.m */,
+				EEFD3AE719251C2C00071195 /* YabaDatePickerViewController.h */,
+				EEFD3AE819251C2C00071195 /* YabaDatePickerViewController.m */,
+				EEFD3AE919251C2C00071195 /* YabaDatePickerViewController.xib */,
+				EEFD3AE419250EF400071195 /* YabaUtil.h */,
+				EEFD3AE519250EF400071195 /* YabaUtil.m */,
+				EEFD3AE1192458AD00071195 /* YabaBookmarkDetailsViewController.xib */,
 				EEE7679C19179B6D00D73361 /* Images.xcassets */,
 				EEE7678819179B6D00D73361 /* Supporting Files */,
 			);
@@ -263,8 +284,10 @@
 			files = (
 				EEE7679819179B6D00D73361 /* Main_iPad.storyboard in Resources */,
 				EED213C21923460900EE762C /* YabaBookmarkCell.xib in Resources */,
+				EEFD3AE3192458AD00071195 /* YabaBookmarkDetailsViewController.xib in Resources */,
 				EEE7679D19179B6D00D73361 /* Images.xcassets in Resources */,
 				EEE7679519179B6D00D73361 /* Main_iPhone.storyboard in Resources */,
+				EEFD3AEB19251C2C00071195 /* YabaDatePickerViewController.xib in Resources */,
 				EEE7678C19179B6D00D73361 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -284,10 +307,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEFD3AE619250EF400071195 /* YabaUtil.m in Sources */,
 				EEE7679219179B6D00D73361 /* YabaAppDelegate.m in Sources */,
+				EEFD3AE2192458AD00071195 /* YabaBookmarkDetailsViewController.m in Sources */,
 				EEE7678E19179B6D00D73361 /* main.m in Sources */,
 				EED213C0192344D400EE762C /* YabaBookmarkCell.m in Sources */,
 				EED213BD1922FE9400EE762C /* YabaBookmark.m in Sources */,
+				EEFD3AEA19251C2C00071195 /* YabaDatePickerViewController.m in Sources */,
 				EED213BA1922F9AB00EE762C /* YabaBookmarkStore.m in Sources */,
 				EEE7679B19179B6D00D73361 /* YabaBookmarkListViewController.m in Sources */,
 			);
