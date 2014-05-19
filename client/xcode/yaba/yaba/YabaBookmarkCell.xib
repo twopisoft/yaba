@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
@@ -39,6 +40,7 @@
                     <constraint firstItem="FCP-xU-viF" firstAttribute="top" secondItem="DIl-CH-pJ3" secondAttribute="top" id="xtR-VN-n0h"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" red="0.85808938639999999" green="0.87843919839999995" blue="0.87235304160000005" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="bmImage" destination="iUu-zY-9TM" id="2x7-ge-N34"/>
                 <outlet property="bmNameLabel" destination="FCP-xU-viF" id="2Au-Id-XPY"/>

@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import <GooglePlus/GooglePlus.h>
+
 @class YabaBookmark;
 
-@interface YabaBookmarkDetailsViewController : UIViewController
+@interface YabaBookmarkDetailsViewController : UIViewController <GPPSignInDelegate>
 
 @property (nonatomic, strong) YabaBookmark* bm;
 

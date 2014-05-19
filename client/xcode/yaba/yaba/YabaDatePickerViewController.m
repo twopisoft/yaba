@@ -22,26 +22,42 @@
     [super viewWillAppear:animated];
     
     UINavigationItem *navItem = self.navigationItem;
-    navItem.title = @"Set Notify Date";
+    //navItem.title = @"Set Notify Date";
     
-    UIBarButtonItem *bbi = [[UIBarButtonItem alloc]
+    UIBarButtonItem *setButton = [[UIBarButtonItem alloc]
                             initWithTitle:@"Set" style:UIBarButtonItemStylePlain
                             target:self action:@selector(setNotifyDate:)];
     
-    navItem.rightBarButtonItem = bbi;
+    UIBarButtonItem *unSetButton = [[UIBarButtonItem alloc]
+                                  initWithTitle:@"UnSet" style:UIBarButtonItemStylePlain
+                                  target:self action:@selector(unSetNotifyDate:)];
+    
+    navItem.rightBarButtonItems = @[unSetButton,setButton];
     
     YabaBookmark * bm = self.bm;
     if (bm.hasNotify) {
         [self.bmDatePicker setDate:bm.notifyOn];
     }
-    [self.bmDatePicker setMinimumDate:[NSDate date]];
+    [self.bmDatePicker setMinimumDate:[YabaUtil addDays:nil withDays:1]];
     [self.bmDatePicker setMaximumDate:[YabaUtil addDays:nil withDays:30]];
     
 }
 
 -(IBAction)setNotifyDate:(id)sender
 {
+    self.bm.hasNotify = YES;
     self.bm.notifyOn = [self.bmDatePicker date];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(IBAction)unSetNotifyDate:(id)sender
+{
+    self.bm.hasNotify = NO;
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss zzz"];
+    self.bm.notifyOn = [dateFormatter dateFromString: @"1970-01-01 00:00:00 UTC"];
     
     [self.navigationController popViewControllerAnimated:YES];
 }

@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE4B88131929A26800C03E12 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEFD3AF21926322500071195 /* CoreMotion.framework */; };
+		EE4B88181929A3C100C03E12 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEFD3AFA1926576C00071195 /* AddressBook.framework */; };
+		EE4B88191929A3CE00C03E12 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEFD3AFC1926577500071195 /* AssetsLibrary.framework */; };
+		EE4B881A1929A3DF00C03E12 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEFD3AF8192640D200071195 /* SystemConfiguration.framework */; };
+		EE4B881B1929A3F200C03E12 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEFD3B001926579800071195 /* CoreText.framework */; };
+		EE4B881C1929A3FB00C03E12 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEFD3AFE1926578700071195 /* CoreLocation.framework */; };
+		EE4B881D1929A49D00C03E12 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEFD3B02192657A600071195 /* MediaPlayer.framework */; };
+		EE4B881F1929A4CE00C03E12 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE4B881E1929A4CE00C03E12 /* Social.framework */; };
 		EED213BA1922F9AB00EE762C /* YabaBookmarkStore.m in Sources */ = {isa = PBXBuildFile; fileRef = EED213B91922F9AB00EE762C /* YabaBookmarkStore.m */; };
 		EED213BD1922FE9400EE762C /* YabaBookmark.m in Sources */ = {isa = PBXBuildFile; fileRef = EED213BC1922FE9400EE762C /* YabaBookmark.m */; };
 		EED213C0192344D400EE762C /* YabaBookmarkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EED213BF192344D400EE762C /* YabaBookmarkCell.m */; };
@@ -31,6 +39,11 @@
 		EEFD3AE619250EF400071195 /* YabaUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFD3AE519250EF400071195 /* YabaUtil.m */; };
 		EEFD3AEA19251C2C00071195 /* YabaDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFD3AE819251C2C00071195 /* YabaDatePickerViewController.m */; };
 		EEFD3AEB19251C2C00071195 /* YabaDatePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEFD3AE919251C2C00071195 /* YabaDatePickerViewController.xib */; };
+		EEFD3AEF19262DFF00071195 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEFD3AEE19262DFE00071195 /* GooglePlus.framework */; };
+		EEFD3AF119262E1300071195 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEFD3AF019262E1300071195 /* GoogleOpenSource.framework */; };
+		EEFD3AF7192640B600071195 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEFD3AF6192640B600071195 /* Security.framework */; };
+		EEFD3B0719265BCB00071195 /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EEFD3B0619265BCB00071195 /* GooglePlus.bundle */; };
+		EEFD3B0A19265F0300071195 /* YabaAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFD3B0919265F0300071195 /* YabaAlertView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +57,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EE4B881E1929A4CE00C03E12 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		EED213B81922F9AB00EE762C /* YabaBookmarkStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YabaBookmarkStore.h; sourceTree = "<group>"; };
 		EED213B91922F9AB00EE762C /* YabaBookmarkStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YabaBookmarkStore.m; sourceTree = "<group>"; };
 		EED213BB1922FE9400EE762C /* YabaBookmark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YabaBookmark.h; sourceTree = "<group>"; };
@@ -79,6 +93,19 @@
 		EEFD3AE719251C2C00071195 /* YabaDatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YabaDatePickerViewController.h; sourceTree = "<group>"; };
 		EEFD3AE819251C2C00071195 /* YabaDatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YabaDatePickerViewController.m; sourceTree = "<group>"; };
 		EEFD3AE919251C2C00071195 /* YabaDatePickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YabaDatePickerViewController.xib; sourceTree = "<group>"; };
+		EEFD3AEE19262DFE00071195 /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GooglePlus.framework; sourceTree = "<group>"; };
+		EEFD3AF019262E1300071195 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleOpenSource.framework; sourceTree = "<group>"; };
+		EEFD3AF21926322500071195 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		EEFD3AF6192640B600071195 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		EEFD3AF8192640D200071195 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		EEFD3AFA1926576C00071195 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		EEFD3AFC1926577500071195 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		EEFD3AFE1926578700071195 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		EEFD3B001926579800071195 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		EEFD3B02192657A600071195 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		EEFD3B0619265BCB00071195 /* GooglePlus.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GooglePlus.bundle; sourceTree = "<group>"; };
+		EEFD3B0819265F0200071195 /* YabaAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YabaAlertView.h; sourceTree = "<group>"; };
+		EEFD3B0919265F0300071195 /* YabaAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YabaAlertView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,8 +113,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE4B881F1929A4CE00C03E12 /* Social.framework in Frameworks */,
+				EE4B881D1929A49D00C03E12 /* MediaPlayer.framework in Frameworks */,
+				EE4B881C1929A3FB00C03E12 /* CoreLocation.framework in Frameworks */,
+				EE4B881B1929A3F200C03E12 /* CoreText.framework in Frameworks */,
+				EE4B881A1929A3DF00C03E12 /* SystemConfiguration.framework in Frameworks */,
+				EE4B88191929A3CE00C03E12 /* AssetsLibrary.framework in Frameworks */,
+				EE4B88181929A3C100C03E12 /* AddressBook.framework in Frameworks */,
+				EE4B88131929A26800C03E12 /* CoreMotion.framework in Frameworks */,
+				EEFD3AF7192640B600071195 /* Security.framework in Frameworks */,
+				EEFD3AEF19262DFF00071195 /* GooglePlus.framework in Frameworks */,
 				EEE7678419179B6D00D73361 /* CoreGraphics.framework in Frameworks */,
 				EEE7678619179B6D00D73361 /* UIKit.framework in Frameworks */,
+				EEFD3AF119262E1300071195 /* GoogleOpenSource.framework in Frameworks */,
 				EEE7678219179B6D00D73361 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -134,6 +172,17 @@
 		EEE7678019179B6D00D73361 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EE4B881E1929A4CE00C03E12 /* Social.framework */,
+				EEFD3B02192657A600071195 /* MediaPlayer.framework */,
+				EEFD3B001926579800071195 /* CoreText.framework */,
+				EEFD3AFE1926578700071195 /* CoreLocation.framework */,
+				EEFD3AFC1926577500071195 /* AssetsLibrary.framework */,
+				EEFD3AFA1926576C00071195 /* AddressBook.framework */,
+				EEFD3AF8192640D200071195 /* SystemConfiguration.framework */,
+				EEFD3AF6192640B600071195 /* Security.framework */,
+				EEFD3AF21926322500071195 /* CoreMotion.framework */,
+				EEFD3AF019262E1300071195 /* GoogleOpenSource.framework */,
+				EEFD3AEE19262DFE00071195 /* GooglePlus.framework */,
 				EEE7678119179B6D00D73361 /* Foundation.framework */,
 				EEE7678319179B6D00D73361 /* CoreGraphics.framework */,
 				EEE7678519179B6D00D73361 /* UIKit.framework */,
@@ -145,6 +194,7 @@
 		EEE7678719179B6D00D73361 /* yaba */ = {
 			isa = PBXGroup;
 			children = (
+				EEFD3B0619265BCB00071195 /* GooglePlus.bundle */,
 				EE17175B191A33CC00B441A1 /* iPad */,
 				EEE7679019179B6D00D73361 /* YabaAppDelegate.h */,
 				EEE7679119179B6D00D73361 /* YabaAppDelegate.m */,
@@ -161,6 +211,8 @@
 				EEE7679A19179B6D00D73361 /* YabaBookmarkListViewController.m */,
 				EEFD3ADF192458AD00071195 /* YabaBookmarkDetailsViewController.h */,
 				EEFD3AE0192458AD00071195 /* YabaBookmarkDetailsViewController.m */,
+				EEFD3B0819265F0200071195 /* YabaAlertView.h */,
+				EEFD3B0919265F0300071195 /* YabaAlertView.m */,
 				EEFD3AE719251C2C00071195 /* YabaDatePickerViewController.h */,
 				EEFD3AE819251C2C00071195 /* YabaDatePickerViewController.m */,
 				EEFD3AE919251C2C00071195 /* YabaDatePickerViewController.xib */,
@@ -284,6 +336,7 @@
 			files = (
 				EEE7679819179B6D00D73361 /* Main_iPad.storyboard in Resources */,
 				EED213C21923460900EE762C /* YabaBookmarkCell.xib in Resources */,
+				EEFD3B0719265BCB00071195 /* GooglePlus.bundle in Resources */,
 				EEFD3AE3192458AD00071195 /* YabaBookmarkDetailsViewController.xib in Resources */,
 				EEE7679D19179B6D00D73361 /* Images.xcassets in Resources */,
 				EEE7679519179B6D00D73361 /* Main_iPhone.storyboard in Resources */,
@@ -307,6 +360,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEFD3B0A19265F0300071195 /* YabaAlertView.m in Sources */,
 				EEFD3AE619250EF400071195 /* YabaUtil.m in Sources */,
 				EEE7679219179B6D00D73361 /* YabaAppDelegate.m in Sources */,
 				EEFD3AE2192458AD00071195 /* YabaBookmarkDetailsViewController.m in Sources */,
@@ -452,10 +506,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "yaba/yaba-Prefix.pch";
 				INFOPLIST_FILE = "yaba/yaba-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -470,11 +529,16 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "yaba/yaba-Prefix.pch";
 				INFOPLIST_FILE = "yaba/yaba-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

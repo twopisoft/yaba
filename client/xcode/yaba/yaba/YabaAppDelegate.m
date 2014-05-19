@@ -9,6 +9,9 @@
 #import "YabaAppDelegate.h"
 #import "YabaBookmarkListViewController.h"
 
+//#import <FacebookSDK/FacebookSDK.h>
+#import <GooglePlus/GooglePlus.h>
+
 @implementation YabaAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -54,5 +57,27 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+/*- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    NSLog(@"Source Application=%@",sourceApplication);
+    
+    if ([sourceApplication isEqualToString:@"com.facebook.Facebook"]) {
+        return [FBAppCall handleOpenURL:url
+                               sourceApplication:sourceApplication
+                                 fallbackHandler:^(FBAppCall *call) {
+                                     NSLog(@"Unhandled deep link: %@", url);
+                                     // Here goes the code to handle the links
+                                     // Use the links to show a relevant view of your app to the user
+                                 }];
+    } else {
+        return [GPPURLHandler handleURL:url
+                      sourceApplication:sourceApplication
+                             annotation:annotation];
+    }
+    
+    
+    return NO;
+}*/
 
 @end

@@ -10,10 +10,21 @@
 #import "YabaBookmark.h"
 #import "YabaUtil.h"
 #import "YabaDatePickerViewController.h"
+#import "YabaAlertView.h"
+
+#import <GoogleOpenSource/GoogleOpenSource.h>
+#import <Social/Social.h>
 
 #define NOTIFY_DATE_FIELD_TAG 99
 
-@interface YabaBookmarkDetailsViewController () <UITextFieldDelegate, UITextViewDelegate>
+#define FACEBOOK_BUTTON_INDEX   0
+#define GOOGLE_BUTTON_INDEX     1
+#define TWITTER_BUTTON_INDEX    2
+
+static NSString * const kClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0k48.apps.googleusercontent.com";
+
+@interface YabaBookmarkDetailsViewController () <UITextFieldDelegate, UITextViewDelegate,
+                                                 UIActionSheetDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *bmImageView;
 @property (weak, nonatomic) IBOutlet UITextView *bmSynopsisView;
@@ -23,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *bmNotifyDateField;
 
 @end
+
 
 @implementation YabaBookmarkDetailsViewController
 
@@ -75,9 +87,139 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+#pragma mark - Share
+
 -(IBAction)shareBm:(id)sender
 {
+    UIBarButtonItem * bbi = (UIBarButtonItem *)sender;
     
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                            initWithTitle:@"Share On"
+                                            delegate:self
+                                            cancelButtonTitle:@"Cancel"
+                                            destructiveButtonTitle:nil
+                                            otherButtonTitles:@"Facebook",@"Google+",@"Twitter", nil];
+    
+    actionSheet.actionSheetStyle = UIBarStyleBlackTranslucent;
+    [actionSheet showFromBarButtonItem:bbi animated:YES];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    //NSLog(@"Button at index=%d clicked",buttonIndex);
+    if (buttonIndex == FACEBOOK_BUTTON_INDEX) {
+        [self shareOnFaceBook:self.bm];
+    } else if (buttonIndex == GOOGLE_BUTTON_INDEX) {
+        [self shareOnGoogle:self.bm];
+    } else if (buttonIndex == TWITTER_BUTTON_INDEX) {
+        [self shareOnTwitter:self.bm];
+    }
+}
+
+- (void)shareOnFaceBook:(YabaBookmark*)bm
+{
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
+    {
+        SLComposeViewController *fbPost =
+        [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        
+        [fbPost addURL:[NSURL URLWithString:bm.url]];
+        [self presentViewController:fbPost animated:YES completion:nil];
+        
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc]
+                                initWithTitle:@"Facebook App Not Installed"
+                                message:@"Please install Facebook App and setup Facebook account"
+                                delegate:self
+                                cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil, nil];
+        
+        [alert show];
+    }
+}
+
+- (void)shareOnGoogle:(YabaBookmark *)bm
+{
+    //NSLog(@"shareOnGoogle");
+    
+    if (![[GPPSignIn sharedInstance] authentication]) {
+        [self authenticateGoogle];
+    } else {
+    
+        id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
+    
+        [shareBuilder setURLToShare:[NSURL URLWithString:bm.url]];
+        [shareBuilder open];
+    }
+}
+
+- (void)shareOnTwitter:(YabaBookmark*)bm
+{
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+    {
+        SLComposeViewController *tweetSheet =
+            [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        
+        [tweetSheet setInitialText:bm.url];
+        [self presentViewController:tweetSheet animated:YES completion:nil];
+        
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"Twitter App Not Installed"
+                              message:@"Please install Twitter App and setup Twitter account"
+                              delegate:self
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil, nil];
+        
+        [alert show];
+    }
+}
+
+- (void)authenticateGoogle
+{
+    GPPSignIn *signIn = [GPPSignIn sharedInstance];
+    
+    signIn.shouldFetchGooglePlusUser = YES;
+    signIn.clientID = kClientId;
+    signIn.scopes = @[ kGTLAuthScopePlusLogin ];
+    signIn.delegate = self;
+    
+    UIAlertView *loginView = [[UIAlertView alloc] initWithTitle:nil message:@"Login to Google+" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
+    
+    [loginView show];
+}
+
+#pragma mark UIAlertViewDelegate for Google+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    //NSLog(@"buttonIndex=%ld",(long)buttonIndex);
+    if (buttonIndex==1) {
+        GPPSignInButton *signInButton = [[GPPSignInButton alloc] init];
+        [signInButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    }
+}
+
+
+#pragma mark GPPSignInDelegate
+
+- (void)finishedWithAuth: (GTMOAuth2Authentication *)auth
+                   error: (NSError *) error
+{
+    if (error) {
+         NSLog(@"Received error %@ and auth object %@",error, auth);
+    } else {
+        NSLog(@"Google+ successfully authenticated");
+        id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
+        
+        [shareBuilder setURLToShare:[NSURL URLWithString:self.bm.url]];
+        [shareBuilder open];
+    }
+}
+
+- (void)presentSignInViewController:(UIViewController *)viewController
+{
+    NSLog(@"presentSignInViewController");
+    [[self navigationController] pushViewController:viewController animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -87,6 +229,8 @@
     [self.view endEditing:YES];
     
 }
+
+#pragma mark - UITextFieldDelegate
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
