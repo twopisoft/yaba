@@ -123,6 +123,7 @@ static NSString * const kClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0
         SLComposeViewController *fbPost =
         [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
         
+        [fbPost setInitialText:@"Posted from YABA..."];
         [fbPost addURL:[NSURL URLWithString:bm.url]];
         [self presentViewController:fbPost animated:YES completion:nil];
         
@@ -184,21 +185,9 @@ static NSString * const kClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0
     signIn.scopes = @[ kGTLAuthScopePlusLogin ];
     signIn.delegate = self;
     
-    UIAlertView *loginView = [[UIAlertView alloc] initWithTitle:nil message:@"Login to Google+" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
-    
-    [loginView show];
+    GPPSignInButton *signInButton = [[GPPSignInButton alloc] init];
+    [signInButton sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
-
-#pragma mark UIAlertViewDelegate for Google+
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    //NSLog(@"buttonIndex=%ld",(long)buttonIndex);
-    if (buttonIndex==1) {
-        GPPSignInButton *signInButton = [[GPPSignInButton alloc] init];
-        [signInButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-    }
-}
-
 
 #pragma mark GPPSignInDelegate
 
@@ -206,7 +195,16 @@ static NSString * const kClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0
                    error: (NSError *) error
 {
     if (error) {
-         NSLog(@"Received error %@ and auth object %@",error, auth);
+        NSLog(@"Received error %@ and auth object %@",error, auth);
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"Unable to Login to Google+"
+                              message:@"Please check your Google+ setup and try again"
+                              delegate:self
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil, nil];
+        
+        [alert show];
+
     } else {
         NSLog(@"Google+ successfully authenticated");
         id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
