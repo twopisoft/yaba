@@ -32,7 +32,11 @@ static NSString * const kClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0
 @property (weak, nonatomic) IBOutlet UITextField *bmNameField;
 @property (weak, nonatomic) IBOutlet UITextField *bmUrlField;
 @property (weak, nonatomic) IBOutlet UITextField *bmNotifyDateField;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIControl *contentView;
 
+@property (weak, nonatomic) UIView *activeField;
+@property (weak, nonatomic) NSLayoutConstraint * heightConstraint;
 @end
 
 
@@ -41,6 +45,42 @@ static NSString * const kClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0
 - (IBAction)backgroundTapped:(id)sender
 {
     [self.view endEditing:YES];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    CGFloat multiplier = 1.3;
+    
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    if (orientation == UIInterfaceOrientationLandscapeLeft ||
+        orientation == UIInterfaceOrientationLandscapeRight) {
+        
+        multiplier = 2.5;
+    }
+    
+    NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:self.contentView
+                                                                        attribute:NSLayoutAttributeHeight
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:self.scrollView
+                                                                        attribute:NSLayoutAttributeHeight
+                                                                       multiplier:multiplier
+                                                                         constant:0];
+    self.heightConstraint = heightConstraint;
+    
+    [self.view addConstraint:self.heightConstraint];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShow:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -73,6 +113,32 @@ static NSString * const kClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0
     } else {
         self.bmNotifyDateField.text = @"Not Set";
     }
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    CGFloat multiplier = 1.3;
+    if (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+        toInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+        
+        multiplier = 2.5;
+    }
+    
+    [self.view removeConstraint:self.heightConstraint];
+    
+    NSLayoutConstraint * newHeightConstraint = [NSLayoutConstraint constraintWithItem:self.contentView
+                                                                            attribute:NSLayoutAttributeHeight
+                                                                            relatedBy:NSLayoutRelationEqual
+                                                                               toItem:self.scrollView
+                                                                            attribute:NSLayoutAttributeHeight
+                                                                           multiplier:multiplier
+                                                                             constant:0];
+    self.heightConstraint = newHeightConstraint;
+    
+    [self.view addConstraint:self.heightConstraint];
+    
+    [self.contentView setNeedsUpdateConstraints];
+        
 }
 
 -(IBAction)saveBm:(id)sender
@@ -228,20 +294,27 @@ static NSString * const kClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0
     
 }
 
-#pragma mark - UITextFieldDelegate
+#pragma mark - UITextFieldDelegate/UITextViewDelegate
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField
+- (IBAction)textFieldDidBeginEditing:(UITextField *)textField
 {
-    if (textField.frame.origin.y > 300) {
-        [self animateTextField:textField up:YES];
-    }
+    self.activeField = textField;
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
+- (IBAction)textFieldDidEndEditing:(UITextField *)textField
 {
-    if (textField.frame.origin.y > 300) {
-        [self animateTextField:textField up:NO];
-    }
+    self.activeField = nil;
+}
+
+- (IBAction)textViewDidBeginEditing:(UITextView *)textView
+{
+    //[self animateTextView:textView up:YES];
+    self.activeField = textView;
+}
+
+- (IBAction)textViewDidEndEditing:(UITextView *)textView
+{
+    self.activeField = nil;
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
@@ -258,38 +331,29 @@ static NSString * const kClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0
     return NO;
 }
 
-- (void)textViewDidBeginEditing:(UITextView *)textView
+- (void) keyboardDidShow:(NSNotification *)notification
 {
-    [self animateTextView:textView up:YES];
-}
-
-- (void)textViewDidEndEditing:(UITextView *)textView
-{
-    [self animateTextView:textView up:NO];
-}
-
-- (void)animateTextView:(UITextView*)textView up:(BOOL)up
-{
-    [self animateArea:up];
-}
-
-- (void)animateTextField:(UITextField*)textField up:(BOOL)up
-{
-    [self animateArea:up];
-}
-
-- (void)animateArea:(BOOL)up
-{
-    const int movementDistance = 160;
-    const float movementDuration = 0.3f;
+    NSDictionary* info = [notification userInfo];
+    CGRect kbRect = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    kbRect = [self.view convertRect:kbRect fromView:nil];
     
-    int movement = (up ? -movementDistance : movementDistance);
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbRect.size.height, 0.0);
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
     
-    [UIView beginAnimations:@"anim" context:nil];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationDuration:movementDuration];
-    self.view.frame = CGRectOffset(self.view.frame, 0, movement);
-    [UIView commitAnimations];
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= kbRect.size.height;
+    if (!CGRectContainsPoint(aRect, self.activeField.frame.origin) ) {
+        [self.scrollView scrollRectToVisible:self.activeField.frame animated:YES];
+    }
 }
+
+- (void) keyboardWillBeHidden:(NSNotification *)notification
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
+}
+
 
 @end
