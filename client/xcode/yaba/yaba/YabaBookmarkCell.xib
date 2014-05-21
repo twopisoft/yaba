@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1552" identifier="iOS"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
@@ -22,21 +22,20 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FCP-xU-viF">
-                        <rect key="frame" x="90" y="0.0" width="277" height="58"/>
+                        <rect key="frame" x="93" y="0.0" width="274" height="58"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="11"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="FCP-xU-viF" firstAttribute="leading" secondItem="iUu-zY-9TM" secondAttribute="trailing" constant="5" id="CMB-Td-7sB"/>
                     <constraint firstAttribute="bottom" secondItem="FCP-xU-viF" secondAttribute="bottom" constant="5" id="QZA-GW-X6J"/>
                     <constraint firstItem="iUu-zY-9TM" firstAttribute="top" secondItem="DIl-CH-pJ3" secondAttribute="top" id="XOf-HR-A01"/>
-                    <constraint firstItem="FCP-xU-viF" firstAttribute="leading" secondItem="iUu-zY-9TM" secondAttribute="trailing" constant="5" id="akA-Ab-YDs"/>
                     <constraint firstAttribute="bottom" secondItem="iUu-zY-9TM" secondAttribute="bottom" id="glv-Lz-R03"/>
                     <constraint firstItem="iUu-zY-9TM" firstAttribute="leading" secondItem="DIl-CH-pJ3" secondAttribute="leading" constant="5" id="m1X-uo-MK1"/>
                     <constraint firstAttribute="trailing" secondItem="FCP-xU-viF" secondAttribute="trailing" constant="20" id="onz-Ra-tvH"/>
+                    <constraint firstItem="FCP-xU-viF" firstAttribute="leading" secondItem="iUu-zY-9TM" secondAttribute="trailing" constant="8" id="qtR-g3-KUa"/>
                     <constraint firstItem="FCP-xU-viF" firstAttribute="top" secondItem="DIl-CH-pJ3" secondAttribute="top" id="xtR-VN-n0h"/>
                 </constraints>
             </tableViewCellContentView>
