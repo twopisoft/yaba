@@ -60,6 +60,10 @@
     UINib *nib = [UINib nibWithNibName:@"YabaBookmarkCell" bundle:nil];
     
     [self.tableView registerNib:nib forCellReuseIdentifier:@"YabaBookmarkCell"];
+    
+    UIRefreshControl *refresfControl = [[UIRefreshControl alloc] init];
+    [refresfControl addTarget:self action:@selector(refreshBms) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refresfControl;
 }
 
 - (void)didReceiveMemoryWarning
@@ -127,6 +131,11 @@
     detailViewController.bm = selectedBm;
     
     [self.navigationController pushViewController:detailViewController animated:YES];
+    
+}
+
+- (void)refreshBms
+{
     
 }
 

@@ -10,6 +10,8 @@
 
 @class YabaBookmark;
 
+
+
 @interface YabaBookmarkStore : NSObject
 
 @property (nonatomic, readonly) NSArray * allBms;

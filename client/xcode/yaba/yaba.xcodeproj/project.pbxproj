@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7FD851F126424D2F85401EC1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA937957F514F45A8EBEFF4 /* libPods.a */; };
 		EE4B88131929A26800C03E12 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEFD3AF21926322500071195 /* CoreMotion.framework */; };
 		EE4B88181929A3C100C03E12 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEFD3AFA1926576C00071195 /* AddressBook.framework */; };
 		EE4B88191929A3CE00C03E12 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEFD3AFC1926577500071195 /* AssetsLibrary.framework */; };
@@ -34,6 +35,7 @@
 		EEE767A619179B6D00D73361 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEE7678519179B6D00D73361 /* UIKit.framework */; };
 		EEE767AE19179B6D00D73361 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EEE767AC19179B6D00D73361 /* InfoPlist.strings */; };
 		EEE767B019179B6D00D73361 /* yabaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE767AF19179B6D00D73361 /* yabaTests.m */; };
+		EEFD0FF8193C055C00777886 /* YabaConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFD0FF7193C055C00777886 /* YabaConnection.m */; };
 		EEFD3AE2192458AD00071195 /* YabaBookmarkDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFD3AE0192458AD00071195 /* YabaBookmarkDetailsViewController.m */; };
 		EEFD3AE3192458AD00071195 /* YabaBookmarkDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEFD3AE1192458AD00071195 /* YabaBookmarkDetailsViewController.xib */; };
 		EEFD3AE619250EF400071195 /* YabaUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFD3AE519250EF400071195 /* YabaUtil.m */; };
@@ -43,7 +45,6 @@
 		EEFD3AF119262E1300071195 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEFD3AF019262E1300071195 /* GoogleOpenSource.framework */; };
 		EEFD3AF7192640B600071195 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEFD3AF6192640B600071195 /* Security.framework */; };
 		EEFD3B0719265BCB00071195 /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EEFD3B0619265BCB00071195 /* GooglePlus.bundle */; };
-		EEFD3B0A19265F0300071195 /* YabaAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFD3B0919265F0300071195 /* YabaAlertView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CAA937957F514F45A8EBEFF4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC2532AA0FA648DC95624F4F /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		EE4B881E1929A4CE00C03E12 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		EED213B81922F9AB00EE762C /* YabaBookmarkStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YabaBookmarkStore.h; sourceTree = "<group>"; };
 		EED213B91922F9AB00EE762C /* YabaBookmarkStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YabaBookmarkStore.m; sourceTree = "<group>"; };
@@ -85,6 +88,8 @@
 		EEE767AB19179B6D00D73361 /* yabaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "yabaTests-Info.plist"; sourceTree = "<group>"; };
 		EEE767AD19179B6D00D73361 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EEE767AF19179B6D00D73361 /* yabaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = yabaTests.m; sourceTree = "<group>"; };
+		EEFD0FF6193C055C00777886 /* YabaConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YabaConnection.h; sourceTree = "<group>"; };
+		EEFD0FF7193C055C00777886 /* YabaConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YabaConnection.m; sourceTree = "<group>"; };
 		EEFD3ADF192458AD00071195 /* YabaBookmarkDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YabaBookmarkDetailsViewController.h; sourceTree = "<group>"; };
 		EEFD3AE0192458AD00071195 /* YabaBookmarkDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YabaBookmarkDetailsViewController.m; sourceTree = "<group>"; };
 		EEFD3AE1192458AD00071195 /* YabaBookmarkDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YabaBookmarkDetailsViewController.xib; sourceTree = "<group>"; };
@@ -104,8 +109,6 @@
 		EEFD3B001926579800071195 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		EEFD3B02192657A600071195 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		EEFD3B0619265BCB00071195 /* GooglePlus.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GooglePlus.bundle; sourceTree = "<group>"; };
-		EEFD3B0819265F0200071195 /* YabaAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YabaAlertView.h; sourceTree = "<group>"; };
-		EEFD3B0919265F0300071195 /* YabaAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YabaAlertView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +130,7 @@
 				EEE7678619179B6D00D73361 /* UIKit.framework in Frameworks */,
 				EEFD3AF119262E1300071195 /* GoogleOpenSource.framework in Frameworks */,
 				EEE7678219179B6D00D73361 /* Foundation.framework in Frameworks */,
+				7FD851F126424D2F85401EC1 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +161,7 @@
 				EEE767A919179B6D00D73361 /* yabaTests */,
 				EEE7678019179B6D00D73361 /* Frameworks */,
 				EEE7677F19179B6D00D73361 /* Products */,
+				DC2532AA0FA648DC95624F4F /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -187,6 +192,7 @@
 				EEE7678319179B6D00D73361 /* CoreGraphics.framework */,
 				EEE7678519179B6D00D73361 /* UIKit.framework */,
 				EEE767A319179B6D00D73361 /* XCTest.framework */,
+				CAA937957F514F45A8EBEFF4 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -200,6 +206,8 @@
 				EEE7679119179B6D00D73361 /* YabaAppDelegate.m */,
 				EED213B81922F9AB00EE762C /* YabaBookmarkStore.h */,
 				EED213B91922F9AB00EE762C /* YabaBookmarkStore.m */,
+				EEFD0FF6193C055C00777886 /* YabaConnection.h */,
+				EEFD0FF7193C055C00777886 /* YabaConnection.m */,
 				EED213BB1922FE9400EE762C /* YabaBookmark.h */,
 				EED213BC1922FE9400EE762C /* YabaBookmark.m */,
 				EEE7679319179B6D00D73361 /* Main_iPhone.storyboard */,
@@ -211,8 +219,6 @@
 				EEE7679A19179B6D00D73361 /* YabaBookmarkListViewController.m */,
 				EEFD3ADF192458AD00071195 /* YabaBookmarkDetailsViewController.h */,
 				EEFD3AE0192458AD00071195 /* YabaBookmarkDetailsViewController.m */,
-				EEFD3B0819265F0200071195 /* YabaAlertView.h */,
-				EEFD3B0919265F0300071195 /* YabaAlertView.m */,
 				EEFD3AE719251C2C00071195 /* YabaDatePickerViewController.h */,
 				EEFD3AE819251C2C00071195 /* YabaDatePickerViewController.m */,
 				EEFD3AE919251C2C00071195 /* YabaDatePickerViewController.xib */,
@@ -261,9 +267,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EEE767B319179B6D00D73361 /* Build configuration list for PBXNativeTarget "yaba" */;
 			buildPhases = (
+				45CA429836954F6390CDF887 /* Check Pods Manifest.lock */,
 				EEE7677A19179B6C00D73361 /* Sources */,
 				EEE7677B19179B6C00D73361 /* Frameworks */,
 				EEE7677C19179B6C00D73361 /* Resources */,
+				3E1C20E9A024483AA09C2CF2 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -355,12 +363,45 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3E1C20E9A024483AA09C2CF2 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		45CA429836954F6390CDF887 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		EEE7677A19179B6C00D73361 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEFD3B0A19265F0300071195 /* YabaAlertView.m in Sources */,
+				EEFD0FF8193C055C00777886 /* YabaConnection.m in Sources */,
 				EEFD3AE619250EF400071195 /* YabaUtil.m in Sources */,
 				EEE7679219179B6D00D73361 /* YabaAppDelegate.m in Sources */,
 				EEFD3AE2192458AD00071195 /* YabaBookmarkDetailsViewController.m in Sources */,
@@ -501,6 +542,7 @@
 		};
 		EEE767B419179B6D00D73361 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DC2532AA0FA648DC95624F4F /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -524,6 +566,7 @@
 		};
 		EEE767B519179B6D00D73361 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DC2532AA0FA648DC95624F4F /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
