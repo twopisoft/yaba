@@ -14,7 +14,7 @@
 
 @interface YabaBookmarkStore : NSObject
 
-@property (nonatomic, readonly) NSArray * allBms;
+@property (nonatomic, readonly) NSArray * allBookmarks;
 
 + (instancetype)bmStore;
 - (YabaBookmark *) createBm;

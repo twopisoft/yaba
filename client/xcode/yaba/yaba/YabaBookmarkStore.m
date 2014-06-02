@@ -8,6 +8,7 @@
 
 #import "YabaBookmarkStore.h"
 #import "YabaBookmark.h"
+#import "YabaConnection.h"
 
 @interface YabaBookmarkStore ()
 
@@ -45,7 +46,7 @@
     return self;
 }
 
-- (NSArray*) allBms
+- (NSArray*) allBookmarks
 {
     return self.internalBmList;
 }

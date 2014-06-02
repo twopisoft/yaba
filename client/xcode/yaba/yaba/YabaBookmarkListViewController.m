@@ -74,7 +74,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[[YabaBookmarkStore bmStore] allBms] count];
+    return [[[YabaBookmarkStore bmStore] allBookmarks] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -85,7 +85,7 @@
     
     YabaBookmarkCell *cell = [tableView dequeueReusableCellWithIdentifier:@"YabaBookmarkCell" forIndexPath:indexPath];
     
-    NSArray *bms = [[YabaBookmarkStore bmStore] allBms];
+    NSArray *bms = [[YabaBookmarkStore bmStore] allBookmarks];
     YabaBookmark *bm = bms[indexPath.row];
     
     cell.bmNameLabel.text = [bm name];
@@ -100,7 +100,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSArray * bms = [[YabaBookmarkStore bmStore] allBms];
+        NSArray * bms = [[YabaBookmarkStore bmStore] allBookmarks];
         YabaBookmark * bm = [bms objectAtIndex:indexPath.row];
         [[YabaBookmarkStore bmStore] removeBm:bm];
         
@@ -125,7 +125,7 @@
     
     YabaBookmarkDetailsViewController *detailViewController = [[YabaBookmarkDetailsViewController alloc] init];
     
-    NSArray * bms = [[YabaBookmarkStore bmStore] allBms];
+    NSArray * bms = [[YabaBookmarkStore bmStore] allBookmarks];
     YabaBookmark * selectedBm = [bms objectAtIndex:indexPath.row];
     
     detailViewController.bm = selectedBm;
