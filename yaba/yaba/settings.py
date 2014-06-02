@@ -37,7 +37,7 @@ DATABASES = {
 #BASE_URL = 'http://localhost:8000/'
 #BASE_URL = 'http://getyaba-staging.herokuapp.com'
 #BASE_URL = 'http://192.168.1.67:8000/'
-DEFAULT_DB_NAME='getyaba-staging'
+DEFAULT_DB_NAME='local'
 DBS = {
     'getyaba-staging': dj_database_url.config(),
     'local': {
@@ -69,6 +69,9 @@ ACCOUNT_EMAIL_SUBJECT_PREFIX = '[YABA] - '
 #SOCIALACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 #ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 #ACCOUNT_UNIQUE_EMAIL=False
+ACCOUNT_AUTHENTICATION_METHOD='email'
+ACCOUNT_USERNAME_REQUIRED=False
+ACCOUNT_EMAIL_REQUIRED=True
 
 SOCIALACCOUNT_PROVIDERS = {
     'facebook': {

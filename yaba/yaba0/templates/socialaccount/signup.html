@@ -22,8 +22,7 @@
                 <h3 class="panel-title">Sign Up </h3>
             </div>
             <div class="panel-body">
-            {% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your <span class="text-danger" style="text-decoration: underline;">{{provider_name}}</span> account to login to
-{{site_name}}. As a final step, please complete the following form:{% endblocktrans %}
+            {% blocktrans with provider_name=account.get_provider.name site_name=site.name %}The email address provided by your <span class="text-danger" style="text-decoration: underline;">{{provider_name}}</span> account is already in use in YABA. Please specify a different email address.{% endblocktrans %}
                 <br/><br/>
                 <form class="form-horizontal" role="form" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
                   {% csrf_token %}
@@ -39,7 +38,7 @@
                   {% endif %}
                   <div class="pull-right">
                       <button type="submit" class="btn btn-primary">Submit</button>
-                      <a href="/yaba0/api" type="button" class="btn btn-default">Cancel</a>
+                      <a href="/" type="button" class="btn btn-default">Cancel</a>
                   </div>
                 </form>
             </div>

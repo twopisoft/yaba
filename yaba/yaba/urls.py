@@ -5,6 +5,9 @@ from .settings import MEDIA_URL
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.http import HttpResponse
 
+from django.views.decorators.csrf import csrf_exempt
+from allauth.socialaccount.providers.facebook.views import login_by_token
+
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -22,6 +25,7 @@ urlpatterns = patterns('',
     url(r'^robots\.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /",mimetype="text/plain")),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api-auth/', include('rest_framework.urls',namespace='rest_framework')),
+    url(r'^accounts/facebook/login/token/$', csrf_exempt(login_by_token)),
     url(r'^accounts/', include('allauth.urls')),
     #url(r'^favicon\.ico$', RedirectView.as_view(url=MEDIA_URL + 'favicon.ico'))
 )
