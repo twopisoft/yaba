@@ -7,7 +7,6 @@
 //
 
 #import "YabaConnection.h"
-//#import "YabaGoogleSignInDelegate.h"
 
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import <GooglePlus/GooglePlus.h>
@@ -49,6 +48,11 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
     return self;
 }
 
+- (instancetype)init
+{
+    return [self init:nil withHandler:nil];
+}
+
 - (void)finishedWithAuth:(GTMOAuth2Authentication *)auth error:(NSError *)error
 {
     if (self.delegate) {
@@ -67,17 +71,18 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
 @property (nonatomic) BOOL loggedIn;
 @property (nonatomic,assign) YabaSignInProviderType loginProvider;
 
-- (void)loginWithFacebook:(void (^)(NSHTTPURLResponse *, NSData *, NSError *))completionHandler;
-- (void)loginWithGoogle:(void (^)(NSHTTPURLResponse *, NSData *, NSError *))completionHandler;
+- (void)loginWithFacebook:(handlerBlock)completionHandler;
+- (void)loginWithGoogle:(handlerBlock)completionHandler;
 
 @end
 
 @implementation YabaConnection
 {
     GPPSignIn * _glSignIn;
+    NSURLSessionDataTask *_dataTask;
 }
 
-- (instancetype)init:(id<YabaConnectionDelegate>)delegate
+- (instancetype)initWithDelegate:(id<YabaConnectionDelegate>)delegate
 {
     self = [super init];
     if (self) {
@@ -88,6 +93,11 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
         _delegate = delegate;
     }
     return self;
+}
+
+- (instancetype)init
+{
+    return [self initWithDelegate:nil];
 }
 
 - (void)login:(YabaSignInProviderType)provider withHandler:(handlerBlock)completionHandler
@@ -118,17 +128,16 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
                 NSString * accessToken = [creds oauthToken];
                 
                 NSURLRequest * req;
-                
                 NSString * url = [NSString stringWithFormat:@"%@/accounts/facebook/login/token/",baseUrl];
                 NSString * postData = [NSString stringWithFormat:@"access_token=%@&next=/.json",accessToken];
-                req = [self makePostRequest:url withPostData:postData];
+                req = [self makePostRequestForLogin:url withPostData:postData];
                 [self fetchBms:req forProvider:YabaSignInProviderFacebook withHandler:completionHandler];
             } else {
                 NSLog(@"Access not granted");
                 self.loggedIn = NO;
                 
                 if (completionHandler) {
-                    completionHandler(nil, nil, error);
+                    completionHandler(nil, nil, error, NO);
                 } else if (self.delegate) {
                     if ([self.delegate respondsToSelector:@selector(loginError:withError:)]) {
                         [self.delegate loginError:YabaSignInProviderFacebook withError:error];
@@ -161,7 +170,7 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
         } else {
             NSString * url = [NSString stringWithFormat:@"%@/allauthext/accounts/google/login/token/",baseUrl];
             NSString * postData = [NSString stringWithFormat:@"access_token=%@&next=/.json",[auth accessToken]];
-            NSURLRequest * req = [self makePostRequest:url withPostData:postData];
+            NSURLRequest * req = [self makePostRequestForLogin:url withPostData:postData];
             [self fetchBms:req forProvider:YabaSignInProviderGoogle withHandler:completionHandler];
         }
     }
@@ -184,7 +193,7 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
         NSLog(@"Google+ successfully authenticated");
         NSString * url = [NSString stringWithFormat:@"%@/allauthext/accounts/google/login/token/",baseUrl];
         NSString * postData = [NSString stringWithFormat:@"access_token=%@&next=/.json",[auth accessToken]];
-        NSURLRequest * req = [self makePostRequest:url withPostData:postData];
+        NSURLRequest * req = [self makePostRequestForLogin:url withPostData:postData];
         [self fetchBms:req forProvider:YabaSignInProviderGoogle withHandler:completionHandler];
     }
 }
@@ -203,11 +212,11 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
               withData:(NSString *)data withHandler:(handlerBlock)completionHandler
 {
     NSString * postData=[NSString stringWithFormat:@"email=%@&next=/.json",[self urlencode:data]];
-    [self fetchBms:[self makePostRequest:url.absoluteString withPostData:postData]
+    [self fetchBms:[self makePostRequestForLogin:url.absoluteString withPostData:postData]
        forProvider:provider withHandler:completionHandler];
 }
 
-- (NSURLRequest *)makePostRequest:(NSString*)urlString withPostData:(NSString*)postDataString
+- (NSURLRequest *)makePostRequestForLogin:(NSString*)urlString withPostData:(NSString*)postDataString
 {
     NSURL *url = [NSURL URLWithString:urlString];
     
@@ -228,13 +237,22 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
 - (void)fetchBms:(NSURLRequest *)req forProvider:(YabaSignInProviderType)provider withHandler:(handlerBlock)completionHandler
 {
     NSURLSessionDataTask *dataTask =
+    //_dataTask =
         [self.session dataTaskWithRequest:req completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
             if (completionHandler) {
-                if (error || httpResponse.statusCode == HTTP_FORBIDDEN) {
+                BOOL dataAvailable = NO;
+                if (error ||
+                    httpResponse.statusCode == HTTP_FORBIDDEN ||
+                    [[httpResponse.URL path] rangeOfString:@"signup"].location != NSNotFound) {
                     self.loggedIn = NO;
+                } else {
+                    self.loggedIn = YES;
+                    self.loginProvider = provider;
+                    dataAvailable = YES;
+                    [self readCsrfToken:req];
                 }
-                completionHandler(httpResponse,data,error);
+                completionHandler(httpResponse,data,error,dataAvailable);
             } else if (self.delegate) {
                 if (error) {
                     self.loggedIn = NO;
@@ -250,15 +268,8 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
                             [self.delegate loginError:provider withError:err];
                         }
                     } else if (statusCode == HTTP_OK) {
-                        NSArray * cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:req.URL];
+                        [self readCsrfToken:req];
                         
-                        for (NSHTTPCookie *cookie in cookies) {
-                            if ([cookie.name isEqualToString:@"csrftoken"]) {
-                                self.csrfToken = [cookie value];
-                                break;
-                            }
-                        }
-                        NSLog(@"csrftoken=%@",self.csrfToken);
                         NSLog(@"response url=%@",httpResponse.URL.absoluteString);
                         
                         if ([[httpResponse.URL path] rangeOfString:@"signup"].location == NSNotFound) {
@@ -299,6 +310,19 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
     [dataTask resume];
 }
 
+- (void)readCsrfToken:(NSURLRequest *) req
+{
+    NSArray * cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:req.URL];
+    
+    for (NSHTTPCookie *cookie in cookies) {
+        if ([cookie.name isEqualToString:@"csrftoken"]) {
+            self.csrfToken = [cookie value];
+            break;
+        }
+    }
+    //NSLog(@"csrftoken=%@",self.csrfToken);
+}
+
 - (void) getData:(handlerBlock)completionHandler
 {
     NSString * url = [NSString stringWithFormat:@"%@/.json",baseUrl];
@@ -316,20 +340,72 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
                                                                                  kCFStringEncodingUTF8 ));
 }
 
+- (void) finishWithError:(handlerBlock)completionHandler
+{
+    NSError *err = [[NSError alloc] initWithDomain:NSOSStatusErrorDomain code:HTTP_FORBIDDEN userInfo:nil];
+    
+    if (completionHandler) {
+        completionHandler(nil,nil,err,NO);
+    } else if (self.delegate) {
+        if ([self.delegate respondsToSelector:@selector(loginError:withError:)]) {
+            [self.delegate loginError:YabaSignInProviderNone withError:err];
+        }
+    }
+}
+
 - (void)refreshData:(handlerBlock)completionHandler
 {
     if (!self.loggedIn) {
-        NSError *err = [[NSError alloc] initWithDomain:NSOSStatusErrorDomain code:HTTP_FORBIDDEN userInfo:nil];
-        
-        if (completionHandler) {
-            completionHandler(nil,nil,err);
-        } else if (self.delegate) {
-            if ([self.delegate respondsToSelector:@selector(loginError:withError:)]) {
-                [self.delegate loginError:YabaSignInProviderNone withError:err];
-            }
-        }
+        [self finishWithError:completionHandler];
     } else {
         [self getData:completionHandler];
+    }
+}
+
+- (void)updateData:(YabaBookmark *)bm isDelete:(BOOL)isDelete withHandler:(handlerBlock)completionHandler
+{
+    if (!self.loggedIn) {
+        [self finishWithError:completionHandler];
+    } else {
+        NSString * url = [NSString stringWithFormat:@"%@/%@/.json",baseUrl,bm.oid];
+        NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+        [req setValue:self.csrfToken forHTTPHeaderField:@"X-CSRFToken"];
+        
+        if (isDelete) {
+            [req setHTTPMethod:@"DELETE"];
+        } else {
+            [req setHTTPMethod:@"PUT"];
+            NSError *err = NULL;
+            NSData * jsonData = [NSJSONSerialization dataWithJSONObject:bm options:0 error:&err];
+            NSLog(@"jsonData=%@",jsonData);
+            [req setValue:[NSString stringWithFormat:@"%lu",(unsigned long)jsonData.length] forHTTPHeaderField:@"Content-Length"];
+            [req setValue:@"application/json charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+            [req setHTTPBody:jsonData];
+        }
+        
+        NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:req
+                        completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
+            if (httpResponse.statusCode == HTTP_FORBIDDEN) {
+                self.loggedIn = NO;
+                [self finishWithError:completionHandler];
+            } else if (error) {
+                self.loggedIn = NO;
+                if (completionHandler) {
+                    completionHandler(httpResponse,data,error,NO);
+                } else if (self.delegate) {
+                    if ([self.delegate respondsToSelector:@selector(loginError:withError:)]) {
+                        [self.delegate loginError:YabaSignInProviderNone withError:error];
+                    }
+                }
+            } else {
+                if (completionHandler) {
+                    completionHandler(httpResponse,data,error,NO);
+                }
+            }
+        }];
+        
+        [dataTask resume];
     }
 }
 

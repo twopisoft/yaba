@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import <GoogleOpenSource/GoogleOpenSource.h>
+#import "YabaBookmark.h"
 
 typedef enum
 {
@@ -17,7 +18,7 @@ typedef enum
     YabaSignInProviderGoogle
 } YabaSignInProviderType;
 
-typedef void(^handlerBlock)(NSHTTPURLResponse* response,NSData* data,NSError *error);
+typedef void(^handlerBlock)(NSHTTPURLResponse* response,NSData* data,NSError *error,BOOL dataAvailable);
 
 @class YabaConnection;
 
@@ -52,5 +53,9 @@ typedef void(^handlerBlock)(NSHTTPURLResponse* response,NSData* data,NSError *er
               withData:(NSString *)data withHandler:(handlerBlock)completionHandler;
 
 - (void)refreshData:(handlerBlock)completionHandler;
+
+- (instancetype)initWithDelegate:(id<YabaConnectionDelegate>)delegate;
+
+- (void)updateData:(YabaBookmark *)oid isDelete:(BOOL)isDelete withHandler:(handlerBlock)completionHandler;
 
 @end

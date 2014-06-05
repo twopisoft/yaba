@@ -10,15 +10,16 @@
 
 @interface YabaBookmark : NSObject
 
-@property (nonatomic) NSDate *added;
-@property (nonatomic) NSDate *updated;
-@property (nonatomic) NSString *name;
-@property (nonatomic) NSString *url;
-@property (nonatomic) NSString *imageUrl;
-@property (nonatomic) NSString *synopsis;
-@property (nonatomic) BOOL hasNotify;
+@property (nonatomic, copy) NSString *oid;
+@property (nonatomic, copy) NSString *added;
+@property (nonatomic, copy) NSString *updated;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *url;
+@property (nonatomic, copy) NSString *imageUrl;
+@property (nonatomic, copy) NSString *synopsis;
+@property (nonatomic, assign) BOOL hasNotify;
 @property (nonatomic) NSArray *tags;
-@property (nonatomic) NSDate *notifyOn;
+@property (nonatomic) NSString *notifyOn;
 @property (nonatomic) NSString *user;
 
 @property (nonatomic, strong) UIImage *thumbnail;

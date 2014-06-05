@@ -11,6 +11,7 @@
 @interface YabaUtil : NSObject
 
 + (NSString*) formatDate:(NSDate*)date;
++ (NSDate*) dateFromUTCString:(NSString *)dateStr;
 + (NSDate*) addDays:(NSDate*)date withDays:(NSInteger)days;
 
 @end

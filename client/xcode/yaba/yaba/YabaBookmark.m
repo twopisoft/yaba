@@ -28,7 +28,7 @@
         _url = url;
         _imageUrl = @"";
         _synopsis = @"";
-        _added = [[NSDate alloc] init];
+        _added = nil;
         _updated = nil;
         _hasNotify = NO;
         _notifyOn = nil;
@@ -59,9 +59,19 @@
     [self.tagSet removeObject:tag];
 }
 
+- (BOOL)isEqual:(id)object
+{
+    if (![object isKindOfClass:[YabaBookmark class]]) {
+        return NO;
+    }
+    
+    YabaBookmark *that = (YabaBookmark *)object;
+    return [self.url isEqualToString:that.url];
+}
+
 + (instancetype)randomBm
 {
-    NSArray * nameList = @[@"Violence against women in politics rising in Pakistan, India: study",
+    /*NSArray * nameList = @[@"Violence against women in politics rising in Pakistan, India: study",
                            @"Increased loadshedding worries prime minister",
                            @"PM arrives in Karachi to review operation",
                            @"Anand - Kahin Door Jab Din Dhal Jaaye Saanj"];
@@ -110,7 +120,8 @@
         [newBm addTag:[tagsList objectAtIndex:i]];
     }
     
-    return newBm;
+    return newBm;*/
+    return nil;
 }
 
 + (NSDate*)randomDate:(NSDate*)date addDays:(NSInteger) days

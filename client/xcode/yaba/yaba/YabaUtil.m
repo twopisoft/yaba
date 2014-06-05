@@ -20,6 +20,13 @@
     return [dateFormatter stringFromDate:date];
 }
 
++ (NSDate*) dateFromUTCString:(NSString *)dateStr
+{
+    NSDateFormatter* df = [[NSDateFormatter alloc]init];
+    [df setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
+    return [df dateFromString:dateStr];
+}
+
 + (NSDate*)addDays:(NSDate *)date withDays:(NSInteger)days
 {
     NSCalendar * cal = [NSCalendar currentCalendar];

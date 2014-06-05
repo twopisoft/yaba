@@ -109,7 +109,7 @@ static NSString * const kClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0
     self.bmTagsField.text = [bm.tags componentsJoinedByString:@","];
     
     if (bm.hasNotify) {
-        self.bmNotifyDateField.text = [YabaUtil formatDate:[bm notifyOn]];
+        self.bmNotifyDateField.text = [YabaUtil formatDate:[YabaUtil dateFromUTCString:[bm notifyOn]]];
     } else {
         self.bmNotifyDateField.text = @"Not Set";
     }
