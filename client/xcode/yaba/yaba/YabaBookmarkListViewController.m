@@ -169,9 +169,11 @@ typedef void(^handlerBlock)(NSHTTPURLResponse* response,NSData* data,NSError *er
     YabaBookmarkDetailsViewController *detailViewController = [[YabaBookmarkDetailsViewController alloc] init];
     
     NSArray * bms = [self.store allBookmarks];
+    //NSLog(@"count=%d",[bms count]);
     YabaBookmark * selectedBm = [bms objectAtIndex:indexPath.row];
     
     detailViewController.bm = selectedBm;
+    detailViewController.bmIndex = indexPath.row;
     
     [self.navigationController pushViewController:detailViewController animated:YES];
     

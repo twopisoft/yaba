@@ -7,6 +7,7 @@
 //
 
 #import "YabaBookmark.h"
+#import "YabaUtil.h"
 
 #define StringFromBoolean(value) (value ? @"YES" : @"NO")
 
@@ -67,6 +68,36 @@
     
     YabaBookmark *that = (YabaBookmark *)object;
     return [self.url isEqualToString:that.url];
+}
+
+- (void) setName:(NSString *)name
+{
+    _name = [YabaUtil NullToNil:name];
+}
+
+- (void) setUrl:(NSString *)url
+{
+    _url = [YabaUtil NullToNil:url];
+}
+
+- (void) setAdded:(NSString *)added
+{
+    _added = [YabaUtil NullToNil:added];
+}
+
+- (void) setUpdated:(NSString *)updated
+{
+    _updated = [YabaUtil NullToNil:updated];
+}
+
+- (void) setNotifyOn:(NSString *)notifyOn
+{
+    _notifyOn = [YabaUtil NullToNil:notifyOn];
+}
+
+- (void) setSynopsis:(NSString *)synopsis
+{
+    _synopsis = [YabaUtil NullToNil:synopsis];
 }
 
 + (instancetype)randomBm

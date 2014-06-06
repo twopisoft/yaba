@@ -15,5 +15,6 @@
 @interface YabaBookmarkDetailsViewController : UIViewController <GPPSignInDelegate>
 
 @property (nonatomic, strong) YabaBookmark* bm;
+@property (nonatomic, assign) NSInteger bmIndex;
 
 @end

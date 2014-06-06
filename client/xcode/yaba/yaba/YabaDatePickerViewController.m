@@ -46,7 +46,7 @@
 -(IBAction)setNotifyDate:(id)sender
 {
     self.bm.hasNotify = YES;
-    self.bm.notifyOn = [YabaUtil formatDate:[self.bmDatePicker date]];
+    self.bm.notifyOn = [YabaUtil dateToUTCDateString:[self.bmDatePicker date]];
     
     [self.navigationController popViewControllerAnimated:YES];
 }

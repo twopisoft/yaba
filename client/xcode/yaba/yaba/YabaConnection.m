@@ -7,6 +7,7 @@
 //
 
 #import "YabaConnection.h"
+#import "YabaBookmark.h"
 
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import <GooglePlus/GooglePlus.h>
@@ -225,7 +226,7 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
     [req setHTTPMethod:@"POST"];
     [req setValue:[NSString stringWithFormat:@"%lu",(unsigned long)postData.length] forHTTPHeaderField:@"Content-Length"];
-    [req setValue:@"application/x-www-form-urlencoded charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [req setValue:@"application/x-www-form-urlencoded; charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
     if (self.csrfToken) {
         [req setValue:self.csrfToken forHTTPHeaderField:@"X-CSRFToken"];
     }
@@ -332,12 +333,15 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
 
 - (NSString *)urlencode:(NSString *)unencodedString
 {
-    return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+    if (unencodedString && [unencodedString length]) {
+        return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
                                                                                  NULL,
                                                                                  (CFStringRef)unencodedString,
                                                                                  NULL,
                                                                                  (CFStringRef)@"!*'();:@&=+$,/?%#[]",
                                                                                  kCFStringEncodingUTF8 ));
+    }
+    return @"";
 }
 
 - (void) finishWithError:(handlerBlock)completionHandler
@@ -375,11 +379,19 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
             [req setHTTPMethod:@"DELETE"];
         } else {
             [req setHTTPMethod:@"PUT"];
-            NSError *err = NULL;
-            NSData * jsonData = [NSJSONSerialization dataWithJSONObject:bm options:0 error:&err];
-            NSLog(@"jsonData=%@",jsonData);
+            NSString *json = [NSString stringWithFormat:@"added=%@&updated=%@&name=%@&url=%@&description=%@&tags=%@&has_notify=%@&notify_on=%@",
+                              [self urlencode:bm.added],
+                              [self urlencode:bm.updated],
+                              [self urlencode:bm.name],
+                              [self urlencode:bm.url],
+                              [self urlencode:bm.synopsis],
+                              [self urlencode:[bm.tags componentsJoinedByString:@","]],
+                              (bm.hasNotify?@"true":@"false"),
+                              [self urlencode:bm.notifyOn]];
+            
+            NSData * jsonData = [json dataUsingEncoding:NSUTF8StringEncoding];
             [req setValue:[NSString stringWithFormat:@"%lu",(unsigned long)jsonData.length] forHTTPHeaderField:@"Content-Length"];
-            [req setValue:@"application/json charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+            [req setValue:@"application/x-www-form-urlencoded; charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
             [req setHTTPBody:jsonData];
         }
         

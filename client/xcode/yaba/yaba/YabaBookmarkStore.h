@@ -20,11 +20,13 @@
 - (YabaBookmark *) createBm;
 - (void) removeBm:(YabaBookmark*)bm withHandler:(handlerBlock)completionHandler;
 - (void) moveBmAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex;
+- (void) updateBm:(YabaBookmark *)bm atIndex:(NSInteger)index withHandler:(handlerBlock)completionHandler;
 
 - (void) refreshBookmarks:(handlerBlock)completionHandler;
 - (void) loginWithFacebookAndRefreshBookmarks:(handlerBlock)completionHandler;
 - (void) loginWithGoogleAndRefreshBookmarks:(handlerBlock)completionHandler;
-- (void) completeSignup:(NSURL *)url withProvider:(NSString*)provider withData:(NSString *)data withHandler:(handlerBlock)completionHandler;
+- (void) completeSignup:(NSURL *)url withProvider:(NSString*)provider withData:(NSString *)data
+            withHandler:(handlerBlock)completionHandler;
 - (void) logout;
 
 @end

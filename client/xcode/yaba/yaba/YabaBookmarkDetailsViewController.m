@@ -10,6 +10,7 @@
 #import "YabaBookmark.h"
 #import "YabaUtil.h"
 #import "YabaDatePickerViewController.h"
+#import "YabaBookmarkStore.h"
 
 
 #import <GoogleOpenSource/GoogleOpenSource.h>
@@ -149,6 +150,11 @@ static NSString * const kClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0
     bm.url = [self.bmUrlField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     bm.synopsis = [self.bmSynopsisView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     bm.tags = [self.bmTagsField.text componentsSeparatedByString:@","];
+    bm.updated = [YabaUtil dateToUTCDateString:[NSDate date]];
+    
+    YabaBookmarkStore * store = [YabaBookmarkStore sharedStore];
+    
+    [store updateBm:bm atIndex:self.bmIndex withHandler:nil];
     
     [self.navigationController popViewControllerAnimated:YES];
 }

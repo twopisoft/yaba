@@ -105,8 +105,21 @@
                 withHandler:^(NSHTTPURLResponse *response, NSData *data, NSError *error, BOOL dataAvailable) {
                     
                     if (!error && [response statusCode] != HTTP_FORBIDDEN) {
-                        NSLog(@"deleting");
                         [self.internalBmList removeObjectIdenticalTo:bm];
+                    }
+                    if (completionHandler) {
+                        completionHandler(response,data,error,dataAvailable);
+                    }
+                }];
+}
+
+- (void)updateBm:(YabaBookmark *)bm atIndex:(NSInteger)index withHandler:(handlerBlock)completionHandler
+{
+    [_connection updateData:bm isDelete:NO
+                withHandler:^(NSHTTPURLResponse *response, NSData *data, NSError *error, BOOL dataAvailable) {
+                    
+                    if (!error && [response statusCode] != HTTP_FORBIDDEN) {
+                        self.internalBmList[index] = bm;
                     }
                     if (completionHandler) {
                         completionHandler(response,data,error,dataAvailable);
@@ -155,7 +168,7 @@
             bm.synopsis = jsonBm[@"description"];
             bm.added = jsonBm[@"added"];
             bm.updated = jsonBm[@"updated"];
-            bm.hasNotify = jsonBm[@"has_notify"];
+            bm.hasNotify = [jsonBm[@"has_notify"] boolValue];
             bm.notifyOn = jsonBm[@"notify_on"];
             bm.user = jsonBm[@"user"];
             NSString * tags = jsonBm[@"tags"];
