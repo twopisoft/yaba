@@ -36,7 +36,7 @@
     
     YabaBookmark * bm = self.bm;
     if (bm.hasNotify) {
-        [self.bmDatePicker setDate:[YabaUtil dateFromUTCString:bm.notifyOn]];
+        [self.bmDatePicker setDate:bm.notifyOn];
     }
     [self.bmDatePicker setMinimumDate:[YabaUtil addDays:nil withDays:1]];
     [self.bmDatePicker setMaximumDate:[YabaUtil addDays:nil withDays:30]];
@@ -46,7 +46,7 @@
 -(IBAction)setNotifyDate:(id)sender
 {
     self.bm.hasNotify = YES;
-    self.bm.notifyOn = [YabaUtil dateToUTCDateString:[self.bmDatePicker date]];
+    self.bm.notifyOn = [self.bmDatePicker date];
     
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -54,7 +54,7 @@
 -(IBAction)unSetNotifyDate:(id)sender
 {
     self.bm.hasNotify = NO;
-    self.bm.notifyOn = @"1970-01-01T00:00:00Z";
+    self.bm.notifyOn = [YabaUtil dateFromUTCString:@"1970-01-01T00:00:00Z"];
     
     [self.navigationController popViewControllerAnimated:YES];
 }

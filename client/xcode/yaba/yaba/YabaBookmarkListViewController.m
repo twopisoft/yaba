@@ -11,15 +11,17 @@
 #import "YabaBookmark.h"
 #import "YabaBookmarkStore.h"
 #import "YabaBookmarkCell.h"
+#import "YabaDefines.h"
+#import "YabaUtil.h"
+#import "YabaWebViewController.h"
+
+#import <Social/Social.h>
 
 #import <SDCAlertView.h>
 #import <SDCAutoLayout/UIView+SDCAutoLayout.h>
 
-#define HTTP_FORBIDDEN      403
-
 #define EMAIL_FIELD_TAG     1010
 
-typedef void(^handlerBlock)(NSHTTPURLResponse* response,NSData* data,NSError *error, BOOL dataAvailable);
 
 @interface YabaBookmarkListViewController ()
 @property (nonatomic,strong) YabaBookmarkStore *store;
@@ -71,15 +73,17 @@ typedef void(^handlerBlock)(NSHTTPURLResponse* response,NSData* data,NSError *er
     [super viewDidLoad];
 	
     
-    //[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
     
-    UINib *nib = [UINib nibWithNibName:@"YabaBookmarkCell" bundle:nil];
+    //UINib *nib = [UINib nibWithNibName:@"YabaBookmarkCell" bundle:nil];
     
-    [self.tableView registerNib:nib forCellReuseIdentifier:@"YabaBookmarkCell"];
+    //[self.tableView registerNib:nib forCellReuseIdentifier:@"YabaBookmarkCell"];
     
-    UIRefreshControl *refresfControl = [[UIRefreshControl alloc] init];
-    [refresfControl addTarget:self action:@selector(refreshBookmarks) forControlEvents:UIControlEventValueChanged];
-    self.refreshControl = refresfControl;
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refreshBookmarks) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
+    
+    [self refreshBookmarks];
 }
 
 - (void)didReceiveMemoryWarning
@@ -105,19 +109,24 @@ typedef void(^handlerBlock)(NSHTTPURLResponse* response,NSData* data,NSError *er
 {
     //UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCell"];
     
-    //UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
     
-    YabaBookmarkCell *cell = [tableView dequeueReusableCellWithIdentifier:@"YabaBookmarkCell" forIndexPath:indexPath];
+    //YabaBookmarkCell *cell = [tableView dequeueReusableCellWithIdentifier:@"YabaBookmarkCell" forIndexPath:indexPath];
     
     NSArray *bms = [self.store allBookmarks];
     
-    if ([bms count]) {
+    /*if ([bms count]) {
         YabaBookmark *bm = bms[indexPath.row];
         
         cell.bmNameLabel.text = [bm name];
+        cell.bmNameLabel.textAlignment = NSTextAlignmentLeft;
+        cell.bmImage.image = nil;
         [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[bm imageUrl]]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
             [bm setThumbnailFromImage:[UIImage imageWithData:data] withRect:CGRectMake(0, 0, 134, 75)];
             cell.bmImage.image = bm.thumbnail;
+            cell.bmImage.contentMode = UIViewContentModeScaleAspectFill;
+            cell.bmImage.clipsToBounds = YES;
+            
         }];
     } else {
         if (indexPath.row == 0) {
@@ -125,6 +134,45 @@ typedef void(^handlerBlock)(NSHTTPURLResponse* response,NSData* data,NSError *er
             cell.bmNameLabel.textAlignment = NSTextAlignmentCenter;
             cell.bmImage.image = nil;
         }
+    }*/
+    
+    if ([bms count]) {
+        YabaBookmark *bm = bms[indexPath.row];
+        
+        cell.textLabel.text = bm.name;
+        cell.textLabel.textAlignment = NSTextAlignmentLeft;
+        cell.imageView.image = [UIImage imageNamed:@"spacer"];
+        cell.editingAccessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+        if ([cell.contentView subviews]) {
+            for (UIView *subview in [cell.contentView subviews]) {
+                [subview removeFromSuperview];
+            }
+        }
+        
+        UIImageView *iv = [[UIImageView alloc] initWithFrame:(CGRect){.size={70, tableView.rowHeight}}];
+        iv.contentMode = UIViewContentModeScaleAspectFill;
+        iv.clipsToBounds = YES;
+        iv.center = CGPointMake(iv.center.x+5,cell.contentView.bounds.size.height/2);
+        
+        if (!bm.thumbnail) {
+            [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[bm imageUrl]]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                
+                UIImage *thumbnail = [UIImage imageWithData:data];
+                [bm setThumbnailFromImage:thumbnail withRect:CGRectMake(0, 0, 134, 75)];
+                iv.image = bm.thumbnail;
+                
+                [cell.contentView addSubview:iv];
+                
+            }];
+        } else {
+            iv.image = bm.thumbnail;
+            [cell.contentView addSubview:iv];
+        }
+        
+    } else {
+        cell.imageView.image = nil;
+        cell.textLabel.text = @"Pull down to login/refresh";
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
     }
     
     return cell;
@@ -156,6 +204,11 @@ typedef void(^handlerBlock)(NSHTTPURLResponse* response,NSData* data,NSError *er
     [self.tableView reloadData];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 70;
+}
+
 /*- (void)tableView:(UITableView *)tableView
                     moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
 {
@@ -179,6 +232,20 @@ typedef void(^handlerBlock)(NSHTTPURLResponse* response,NSData* data,NSError *er
     
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray * bms = [self.store allBookmarks];
+    YabaBookmark * bm = [bms objectAtIndex:indexPath.row];
+    NSURL *url = [NSURL URLWithString:bm.url];
+    
+    YabaWebViewController *webViewController = [[YabaWebViewController alloc] init];
+    webViewController.title = bm.name;
+    webViewController.url = url;
+    
+    [self.navigationController pushViewController:webViewController animated:YES];
+}
+
+
 - (void)refreshBookmarks
 {
     [self.store refreshBookmarks:self.completionHandler];
@@ -188,18 +255,30 @@ typedef void(^handlerBlock)(NSHTTPURLResponse* response,NSData* data,NSError *er
 {
     [self.loginView dismissWithClickedButtonIndex:0 animated:YES];
     
-    [self.store loginWithFacebookAndRefreshBookmarks:self.completionHandler];
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+    
+        [YabaUtil saveLastUserChosenLoginProvider:YabaSignInProviderFacebook];
+        [self.store loginWithFacebookAndRefreshBookmarks:self.completionHandler];
+    } else {
+        SDCAlertView *alert = [[SDCAlertView alloc] initWithTitle:@"Facebook not setup on this device"
+                                                          message:@"Please setup Facebook app and Facebook account"
+                                                         delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
 }
 
 - (void)loginWithGoogle
 {
     [self.loginView dismissWithClickedButtonIndex:0 animated:YES];
     
+    [YabaUtil saveLastUserChosenLoginProvider:YabaSignInProviderGoogle];
     [self.store loginWithGoogleAndRefreshBookmarks:self.completionHandler];
 }
 
 - (void) logout
 {
+    [YabaUtil saveLastSuccessfulLoginProvider:YabaSignInProviderNone];
+    [YabaUtil saveLastUserChosenLoginProvider:YabaSignInProviderNone];
     [self.store logout];
     [self.tableView reloadData];
 }
@@ -212,19 +291,50 @@ typedef void(^handlerBlock)(NSHTTPURLResponse* response,NSData* data,NSError *er
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf.refreshControl endRefreshing];
             
-            if (error && [error code]  != HTTP_FORBIDDEN) {
+            if (error) {
+                if (error.code == HTTP_FORBIDDEN) {
+                    //NSLog(@"error=%@",error);
+                    [YabaUtil saveLastSuccessfulLoginProvider:YabaSignInProviderNone];
+                    [weakSelf.loginView show];
+                } else {
+                    [YabaUtil saveLastSuccessfulLoginProvider:YabaSignInProviderNone];
+                    
+                    NSString *title = nil;
+                    NSString * message = nil;
+                    
+                    if (error.code == FB_ACCESS_NOT_GRANTED) {
+                        title = @"Facebook Login Error";
+                        message = @"Problem while getting permission to access your Facebook account. Please check your Facebook account setup in Settings";
+                    } else if (response.statusCode != HTTP_FORBIDDEN) {
+                        title = @"Communication Problem";
+                        message = @"Unable to Connect to YABA server. Please try again later.";
+                    }
+                    SDCAlertView *alert = [[SDCAlertView alloc] initWithTitle:title
+                                                                      message:message
+                                                                     delegate:nil
+                                                            cancelButtonTitle:@"OK"
+                                                            otherButtonTitles:nil, nil];
+                    [alert show];
+                }
+            } else if (response.statusCode == HTTP_FORBIDDEN) {
                 
-                SDCAlertView *alert = [[SDCAlertView alloc] initWithTitle:@"Communication Problem"
-                                                                  message:@"Unable to Connect to YABA server. Please try again later."
-                                                                 delegate:nil
-                                                        cancelButtonTitle:@"OK"
-                                                        otherButtonTitles:nil, nil];
-                [alert show];
-            } else if (response.statusCode == HTTP_FORBIDDEN || error.code == HTTP_FORBIDDEN) {
-                [weakSelf.loginView show];
+                switch ([YabaUtil readLastSuccessfulLoginProvider]) {
+                    case YabaSignInProviderFacebook :
+                        [weakSelf loginWithFacebook];
+                        break;
+                    
+                    case YabaSignInProviderGoogle:
+                        [weakSelf loginWithGoogle];
+                        break;
+                        
+                    default:
+                        [weakSelf.loginView show];
+                        
+                }
             } else if ([weakSelf isSignupResponse:response]) {
                 [weakSelf processSignup:response.URL provider:[weakSelf extractProvider:response] email:[weakSelf extractEmail:data]];
             } else {
+                [YabaUtil saveLastSuccessfulLoginProvider:[YabaUtil readLastUserChosenLoginProvider]];
                 [weakSelf.tableView reloadData];
             }
         });

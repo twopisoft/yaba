@@ -8,16 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-#import "YabaConnection.h"
+#import "YabaDefines.h"
 
 @class YabaBookmark;
 
 @interface YabaBookmarkStore : NSObject
 
 @property (nonatomic, readonly) NSArray * allBookmarks;
+@property (atomic, readonly) BOOL syncInProgress;
 
 + (instancetype)sharedStore;
-- (YabaBookmark *) createBm;
+//- (YabaBookmark *) createBm;
 - (void) removeBm:(YabaBookmark*)bm withHandler:(handlerBlock)completionHandler;
 - (void) moveBmAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex;
 - (void) updateBm:(YabaBookmark *)bm atIndex:(NSInteger)index withHandler:(handlerBlock)completionHandler;
@@ -29,4 +30,7 @@
             withHandler:(handlerBlock)completionHandler;
 - (void) logout;
 
+- (BOOL) saveChanges;
+
+//- (void) startSync;
 @end

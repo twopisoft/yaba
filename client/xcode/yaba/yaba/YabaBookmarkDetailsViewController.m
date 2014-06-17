@@ -9,12 +9,13 @@
 #import "YabaBookmarkDetailsViewController.h"
 #import "YabaBookmark.h"
 #import "YabaUtil.h"
-#import "YabaDatePickerViewController.h"
 #import "YabaBookmarkStore.h"
-
 
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import <Social/Social.h>
+
+#import <SDCAlertView.h>
+#import <SDCAutoLayout/UIView+SDCAutoLayout.h>
 
 #define NOTIFY_DATE_FIELD_TAG 99
 
@@ -42,10 +43,24 @@ static NSString * const kClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0
 
 
 @implementation YabaBookmarkDetailsViewController
+{
+    SDCAlertView *_datePickerAlertView;
+    UIDatePicker *_datePicker;
+}
 
 - (IBAction)backgroundTapped:(id)sender
 {
     [self.view endEditing:YES];
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self _createDatePickerView];
+    }
+    
+    return self;
 }
 
 - (void)viewDidLoad
@@ -107,13 +122,21 @@ static NSString * const kClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0
     self.bmNameField.text = bm.name;
     self.bmUrlField.text = bm.url;
     self.bmSynopsisView.text = bm.synopsis;
-    self.bmTagsField.text = [bm.tags componentsJoinedByString:@","];
+    self.bmTagsField.text = [[[bm.tags  allObjects] valueForKey:@"tagValue"] componentsJoinedByString:@","];
     
     if (bm.hasNotify) {
-        self.bmNotifyDateField.text = [YabaUtil formatDate:[YabaUtil dateFromUTCString:[bm notifyOn]]];
+        self.bmNotifyDateField.text = [YabaUtil formatDate:bm.notifyOn];
     } else {
         self.bmNotifyDateField.text = @"Not Set";
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self.view endEditing:YES];
+    
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -142,6 +165,8 @@ static NSString * const kClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0
         
 }
 
+#pragma mark - Save
+
 -(IBAction)saveBm:(id)sender
 {
     YabaBookmark * bm = self.bm;
@@ -149,8 +174,8 @@ static NSString * const kClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0
     bm.name = [self.bmNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     bm.url = [self.bmUrlField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     bm.synopsis = [self.bmSynopsisView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    bm.tags = [self.bmTagsField.text componentsSeparatedByString:@","];
-    bm.updated = [YabaUtil dateToUTCDateString:[NSDate date]];
+    bm.tags = [NSSet setWithArray:[self.bmTagsField.text componentsSeparatedByString:@","]];
+    bm.updated = [NSDate date];
     
     YabaBookmarkStore * store = [YabaBookmarkStore sharedStore];
     
@@ -261,7 +286,7 @@ static NSString * const kClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0
     [signInButton sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
 
-#pragma mark GPPSignInDelegate
+#pragma mark - GPPSignInDelegate
 
 - (void)finishedWithAuth: (GTMOAuth2Authentication *)auth
                    error: (NSError *) error
@@ -290,14 +315,6 @@ static NSString * const kClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0
 {
     NSLog(@"presentSignInViewController");
     [[self navigationController] pushViewController:viewController animated:YES];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    [self.view endEditing:YES];
-    
 }
 
 #pragma mark - UITextFieldDelegate/UITextViewDelegate
@@ -329,10 +346,29 @@ static NSString * const kClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0
         return YES;
     }
     
-    YabaDatePickerViewController *datePicker = [[YabaDatePickerViewController alloc] init];
+    if (self.bm.hasNotify) {
+        [_datePicker setDate:self.bm.notifyOn];
+    }
+    
+    [_datePicker setMinimumDate:[YabaUtil addDays:nil withDays:1]];
+    [_datePicker setMaximumDate:[YabaUtil addDays:nil withDays:30]];
+    
+    [_datePickerAlertView showWithDismissHandler:^(NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            self.bm.hasNotify = YES;
+            self.bm.notifyOn = [_datePicker date];
+            self.bmNotifyDateField.text = [YabaUtil formatDate:self.bm.notifyOn];
+        } else if (buttonIndex == 2) {
+            self.bm.hasNotify = NO;
+            self.bm.notifyOn = [YabaUtil dateFromUTCString:@"1970-01-01T00:00:00Z"];
+            self.bmNotifyDateField.text = @"Not Set";
+        }
+    }];
+    
+    /*YabaDatePickerViewController *datePicker = [[YabaDatePickerViewController alloc] init];
     datePicker.bm = self.bm;
     
-    [self.navigationController pushViewController:datePicker animated:YES];
+    [self.navigationController pushViewController:datePicker animated:YES];*/
     
     return NO;
 }
@@ -361,5 +397,19 @@ static NSString * const kClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0
     self.scrollView.scrollIndicatorInsets = contentInsets;
 }
 
+#pragma mark - Misc
+
+- (void) _createDatePickerView
+{
+    _datePickerAlertView = [[SDCAlertView alloc] initWithTitle:@"Select Date"
+                                                       message:nil delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:@"Set",@"Unset", nil];
+    _datePicker = [[UIDatePicker alloc] init];
+    _datePicker.datePickerMode = UIDatePickerModeDate;
+    [_datePicker setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    [_datePickerAlertView.contentView addSubview:_datePicker];
+    [_datePicker sdc_horizontallyCenterInSuperview];
+    //[_datePicker sdc_setMaximumWidthToSuperviewWidth];
+}
 
 @end

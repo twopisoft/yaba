@@ -8,17 +8,15 @@
 
 #import "YabaConnection.h"
 #import "YabaBookmark.h"
+#import "YabaUtil.h"
 
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import <GooglePlus/GooglePlus.h>
 
-#define HTTP_OK             200
-#define HTTP_FORBIDDEN      403
-
 static NSString * const kGoogleClientId = @"686846857890-9qcfffctjp7lavjg2h1sferucp0s0k48.apps.googleusercontent.com";
 static NSString * const kFacebookClientId = @"1439153039661620";
 
-static NSString * const baseUrl = @"http://192.168.1.6:8000";
+static NSString * const baseUrl = @"http://192.168.1.8:8000";
 
 @import Accounts;
 
@@ -80,7 +78,6 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
 @implementation YabaConnection
 {
     GPPSignIn * _glSignIn;
-    NSURLSessionDataTask *_dataTask;
 }
 
 - (instancetype)initWithDelegate:(id<YabaConnectionDelegate>)delegate
@@ -89,7 +86,7 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
     if (self) {
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
         _session = [NSURLSession sessionWithConfiguration:config delegate:nil delegateQueue:nil];
-        _loggedIn = NO;
+        _loggedIn = ([YabaUtil readLastSuccessfulLoginProvider] != YabaSignInProviderNone);
         _glSignIn = [GPPSignIn sharedInstance];
         _delegate = delegate;
     }
@@ -118,8 +115,7 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
         ACAccountType *fbAccountType = [store accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
             
         NSDictionary *options = @{ ACFacebookAppIdKey: kFacebookClientId,
-                                   ACFacebookPermissionsKey: @[@"email", @"user_about_me"],
-                                   ACFacebookAudienceKey: ACFacebookAudienceOnlyMe};
+                                   ACFacebookPermissionsKey: @[@"email",@"user_about_me"]};
         
         [store requestAccessToAccountsWithType:fbAccountType options:options completion:^(BOOL granted, NSError *error) {
             if (granted) {
@@ -134,9 +130,11 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
                 req = [self makePostRequestForLogin:url withPostData:postData];
                 [self fetchBms:req forProvider:YabaSignInProviderFacebook withHandler:completionHandler];
             } else {
-                NSLog(@"Access not granted");
+                NSLog(@"Access not granted: error=%@",error);
                 self.loggedIn = NO;
-                
+                if (!error) {
+                    error = [NSError errorWithDomain:@"FB" code:FB_ACCESS_NOT_GRANTED userInfo:nil];
+                }
                 if (completionHandler) {
                     completionHandler(nil, nil, error, NO);
                 } else if (self.delegate) {
@@ -238,21 +236,20 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
 - (void)fetchBms:(NSURLRequest *)req forProvider:(YabaSignInProviderType)provider withHandler:(handlerBlock)completionHandler
 {
     NSURLSessionDataTask *dataTask =
-    //_dataTask =
         [self.session dataTaskWithRequest:req completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
             if (completionHandler) {
                 BOOL dataAvailable = NO;
-                if (error ||
-                    httpResponse.statusCode == HTTP_FORBIDDEN ||
-                    [[httpResponse.URL path] rangeOfString:@"signup"].location != NSNotFound) {
+                if (httpResponse.statusCode == HTTP_FORBIDDEN ||
+                    (httpResponse.URL && [[httpResponse.URL path] rangeOfString:@"signup"].location != NSNotFound)) {
                     self.loggedIn = NO;
-                } else {
+                } else if (!error){
                     self.loggedIn = YES;
                     self.loginProvider = provider;
                     dataAvailable = YES;
                     [self readCsrfToken:req];
                 }
+                //NSLog(@"error=%@, loggedIn=%d, response.statusCode=%ld, response.URL=%@",error,self.loggedIn,(long)httpResponse.statusCode,httpResponse.URL);
                 completionHandler(httpResponse,data,error,dataAvailable);
             } else if (self.delegate) {
                 if (error) {
@@ -346,7 +343,7 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
 
 - (void) finishWithError:(handlerBlock)completionHandler
 {
-    NSError *err = [[NSError alloc] initWithDomain:NSOSStatusErrorDomain code:HTTP_FORBIDDEN userInfo:nil];
+    NSError *err = [NSError errorWithDomain:@"YABA" code:HTTP_FORBIDDEN userInfo:nil];
     
     if (completionHandler) {
         completionHandler(nil,nil,err,NO);
@@ -380,14 +377,14 @@ static NSString * const baseUrl = @"http://192.168.1.6:8000";
         } else {
             [req setHTTPMethod:@"PUT"];
             NSString *json = [NSString stringWithFormat:@"added=%@&updated=%@&name=%@&url=%@&description=%@&tags=%@&has_notify=%@&notify_on=%@",
-                              [self urlencode:bm.added],
-                              [self urlencode:bm.updated],
+                              [self urlencode:[YabaUtil dateToUTCDateString:bm.added]],
+                              [self urlencode:[YabaUtil dateToUTCDateString:bm.updated]],
                               [self urlencode:bm.name],
                               [self urlencode:bm.url],
                               [self urlencode:bm.synopsis],
-                              [self urlencode:[bm.tags componentsJoinedByString:@","]],
+                              [self urlencode:[[bm.tags allObjects] componentsJoinedByString:@","]],
                               (bm.hasNotify?@"true":@"false"),
-                              [self urlencode:bm.notifyOn]];
+                              [self urlencode:[YabaUtil dateToUTCDateString:bm.notifyOn]]];
             
             NSData * jsonData = [json dataUsingEncoding:NSUTF8StringEncoding];
             [req setValue:[NSString stringWithFormat:@"%lu",(unsigned long)jsonData.length] forHTTPHeaderField:@"Content-Length"];

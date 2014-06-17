@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="YabaBookmark" representedClassName="YabaBookmark" syncable="YES">
+        <attribute name="added" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="hasNotify" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notifyOn" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="oid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="syncStatus" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="synopsis" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbnail" optional="YES" attributeType="Transformable" valueTransformerName="YabaImageTransformer" syncable="YES"/>
+        <attribute name="updated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="YabaBookmarkTag" inverseName="bookmarks" inverseEntity="YabaBookmarkTag" syncable="YES"/>
+    </entity>
+    <entity name="YabaBookmarkTag" representedClassName="YabaBookmarkTag" syncable="YES">
+        <attribute name="syncStatus" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="tagValue" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="bookmarks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="YabaBookmark" inverseName="tags" inverseEntity="YabaBookmark" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="YabaBookmark" positionX="-63" positionY="-18" width="128" height="238"/>
+        <element name="YabaBookmarkTag" positionX="-54" positionY="90" width="128" height="88"/>
+    </elements>
+</model>

@@ -73,7 +73,7 @@
                                         <outlet property="delegate" destination="-1" id="n9T-fp-Ckz"/>
                                     </connections>
                                 </textField>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="100" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="rS5-RF-vDh">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="rS5-RF-vDh">
                                     <rect key="frame" x="20" y="310" width="279" height="130"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" red="0.85808938639999999" green="0.87843919839999995" blue="0.87235304160000005" alpha="1" colorSpace="calibratedRGB"/>

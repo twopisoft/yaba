@@ -8,6 +8,7 @@
 
 #import "YabaAppDelegate.h"
 #import "YabaBookmarkListViewController.h"
+#import "YabaBookmarkStore.h"
 
 //#import <FacebookSDK/FacebookSDK.h>
 #import <GooglePlus/GooglePlus.h>
@@ -41,6 +42,12 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    BOOL success = [[YabaBookmarkStore sharedStore] saveChanges];
+    if (success) {
+        NSLog(@"Saved all of Bookmarks");
+    } else {
+        NSLog(@"Could not save any of Bookmarks");
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -58,26 +65,13 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-/*- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    NSLog(@"Source Application=%@",sourceApplication);
-    
-    if ([sourceApplication isEqualToString:@"com.facebook.Facebook"]) {
-        return [FBAppCall handleOpenURL:url
-                               sourceApplication:sourceApplication
-                                 fallbackHandler:^(FBAppCall *call) {
-                                     NSLog(@"Unhandled deep link: %@", url);
-                                     // Here goes the code to handle the links
-                                     // Use the links to show a relevant view of your app to the user
-                                 }];
-    } else {
-        return [GPPURLHandler handleURL:url
-                      sourceApplication:sourceApplication
-                             annotation:annotation];
+    NSLog(@"Source Application:%@",sourceApplication);
+    if ([sourceApplication isEqualToString:@"com.google.GooglePlus"]) {
+        return [GPPURLHandler handleURL:url sourceApplication:sourceApplication annotation:annotation];
     }
-    
-    
     return NO;
-}*/
+}
 
 @end

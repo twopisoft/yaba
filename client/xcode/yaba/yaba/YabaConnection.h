@@ -8,17 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+#import "YabaDefines.h"
+
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import "YabaBookmark.h"
 
-typedef enum
-{
-    YabaSignInProviderNone,
-    YabaSignInProviderFacebook,
-    YabaSignInProviderGoogle
-} YabaSignInProviderType;
-
-typedef void(^handlerBlock)(NSHTTPURLResponse* response,NSData* data,NSError *error,BOOL dataAvailable);
 
 @class YabaConnection;
 

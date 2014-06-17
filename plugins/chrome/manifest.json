@@ -2,11 +2,11 @@
     "manifest_version": 2,
     "name": "YABA",
     "description": "Yet Another Bookmarking App",
-    "version": "0.0.2",
+    "version": "0.0.4",
 
     "permissions": [
-        //"http://localhost:8000/",
-        "http://getyaba-staging.herokuapp.com/",
+        "http://192.168.1.6:8000/",
+        //"http://getyaba-staging.herokuapp.com/",
         "tabs",
         "background",
         "cookies",

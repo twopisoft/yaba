@@ -12,8 +12,8 @@ var titles = {
     saving: "Saving Bookmark.."
 }
 
-var yaba_url = 'http://getyaba-staging.herokuapp.com/'
-//var yaba_url = 'http://localhost:8000/'
+//var yaba_url = 'http://getyaba-staging.herokuapp.com/'
+var yaba_url = 'http://192.168.1.6:8000/'
 
 chrome.browserAction.onClicked.addListener(function(tab) {
     saveBookmark(tab);

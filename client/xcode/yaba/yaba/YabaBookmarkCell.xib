@@ -17,9 +17,6 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iUu-zY-9TM">
                         <rect key="frame" x="5" y="0.0" width="80" height="63"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="80" id="8aB-wm-tMb"/>
-                        </constraints>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FCP-xU-viF">
                         <rect key="frame" x="93" y="0.0" width="274" height="58"/>
@@ -30,8 +27,10 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="centerY" secondItem="iUu-zY-9TM" secondAttribute="centerY" id="6E9-8G-e9Y"/>
                     <constraint firstAttribute="bottom" secondItem="FCP-xU-viF" secondAttribute="bottom" constant="5" id="QZA-GW-X6J"/>
                     <constraint firstItem="iUu-zY-9TM" firstAttribute="top" secondItem="DIl-CH-pJ3" secondAttribute="top" id="XOf-HR-A01"/>
+                    <constraint firstItem="FCP-xU-viF" firstAttribute="leading" secondItem="iUu-zY-9TM" secondAttribute="leading" constant="88" id="djw-K6-nqe"/>
                     <constraint firstAttribute="bottom" secondItem="iUu-zY-9TM" secondAttribute="bottom" id="glv-Lz-R03"/>
                     <constraint firstItem="iUu-zY-9TM" firstAttribute="leading" secondItem="DIl-CH-pJ3" secondAttribute="leading" constant="5" id="m1X-uo-MK1"/>
                     <constraint firstAttribute="trailing" secondItem="FCP-xU-viF" secondAttribute="trailing" constant="20" id="onz-Ra-tvH"/>

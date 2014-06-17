@@ -6,6 +6,7 @@ chrome.extension.onMessage.addListener(function(request, sender, response) {
         var title = request.title
 
         var elem = $(".ytp-time-current")
+        console.log('elem='+$(elem))
         if (elem && elem.length > 0) {
             var timeElems = $(elem).first().text().split(':')
             if (timeElems.length==3) {

@@ -2,34 +2,38 @@
 //  YabaBookmark.h
 //  yaba
 //
-//  Created by TwoPi on 14/5/14.
+//  Created by TwoPi on 9/6/14.
 //  Copyright (c) 2014 TwoPi. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface YabaBookmark : NSObject
+#import "YabaBookmarkTag.h"
 
-@property (nonatomic, copy) NSString *oid;
-@property (nonatomic, copy) NSString *added;
-@property (nonatomic, copy) NSString *updated;
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *url;
-@property (nonatomic, copy) NSString *imageUrl;
-@property (nonatomic, copy) NSString *synopsis;
-@property (nonatomic, assign) BOOL hasNotify;
-@property (nonatomic) NSArray *tags;
-@property (nonatomic) NSString *notifyOn;
-@property (nonatomic) NSString *user;
 
-@property (nonatomic, strong) UIImage *thumbnail;
+@interface YabaBookmark : NSManagedObject
 
-- (instancetype)initWithName:(NSString *)name withUrl:(NSString *)url;
-+ (instancetype)randomBm;
+@property (nonatomic, strong) NSString * oid;
+@property (nonatomic, strong) NSDate * added;
+@property (nonatomic, strong) NSDate * updated;
+@property (nonatomic, strong) NSString * name;
+@property (nonatomic, strong) NSString * url;
+@property (nonatomic, strong) NSString * imageUrl;
+@property (nonatomic, strong) NSString * synopsis;
+@property (nonatomic) BOOL hasNotify;
+@property (nonatomic, strong) NSDate * notifyOn;
+@property (nonatomic, strong) NSString * user;
+@property (nonatomic, strong) UIImage * thumbnail;
+@property (nonatomic, strong) NSNumber * syncStatus;
+@property (nonatomic, strong) NSSet *tags;
+@end
 
--(void)addTag:(NSString*)tag;
--(void)removeTag:(NSString*)tag;
+@interface YabaBookmark (CoreDataGeneratedAccessors)
 
--(void)setThumbnailFromImage:(UIImage *)image withRect:(CGRect)rect;
-
+- (void)addTagsObject:(YabaBookmarkTag *)value;
+- (void)removeTagsObject:(YabaBookmarkTag *)value;
+- (void)addTags:(NSSet *)values;
+- (void)removeTags:(NSSet *)values;
+- (void)setThumbnailFromImage:(UIImage *)image withRect:(CGRect)rect;
 @end
